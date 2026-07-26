@@ -8,36 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3b4620e1bd139443",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2026-05-12.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "2026-05-12"
-            }
-          },
-          {
             "id": "4cacafef020ae3b8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Pablo Neruda - Lagano umire onaj....md",
+                "file": "Søren Kierkegaard.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,11 +28,275 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Pablo Neruda - Lagano umire onaj..."
+              "title": "Søren Kierkegaard"
+            }
+          },
+          {
+            "id": "a7081fd2806e924b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hermes setup.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Hermes setup"
+            }
+          },
+          {
+            "id": "98f35e71d71dd8c4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Task Delegation.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Task Delegation"
+            }
+          },
+          {
+            "id": "de06630f003d0b34",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Epistemological Razors Overview.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Epistemological Razors Overview"
+            }
+          },
+          {
+            "id": "6f09dab626987aee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hitchens's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Hitchens's Razor"
+            }
+          },
+          {
+            "id": "dfd88440c0d67c86",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Occam's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Occam's Razor"
+            }
+          },
+          {
+            "id": "55333323005ebfcd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hanlon's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Hanlon's Razor"
+            }
+          },
+          {
+            "id": "f198831246a51ae2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hume's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Hume's Razor"
+            }
+          },
+          {
+            "id": "d371219337a1d7be",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sagan Standard.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Sagan Standard"
+            }
+          },
+          {
+            "id": "d492a57e88dcba09",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Alder's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Alder's Razor"
+            }
+          },
+          {
+            "id": "8501b652b570ee78",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Popper's Falsifiability Principle.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Popper's Falsifiability Principle"
+            }
+          },
+          {
+            "id": "6df4029e33b82212",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ruslan Kuvatov.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Ruslan Kuvatov"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 11
       }
     ],
     "direction": "vertical"
@@ -88,7 +328,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#mindtricks",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -109,7 +349,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -218,9 +459,28 @@
       "bases:Create new base": false
     }
   },
-  "active": "4cacafef020ae3b8",
+  "active": "6df4029e33b82212",
   "lastOpenFiles": [
+    "Grice's Razor.md",
+    "Popper's Falsifiability Principle.md",
+    "Alder's Razor.md",
+    "Sagan Standard.md",
+    "Hume's Razor.md",
+    "Hanlon's Razor.md",
+    "Occam's Razor.md",
+    "Hitchens's Razor.md",
+    "Epistemological Razors Overview.md",
+    "Task Delegation.md",
+    "Volume Correction.md",
+    "Pastafarianism.md",
+    "Društvo.md",
     "Søren Kierkegaard.md",
+    "Hermes setup.md",
+    "Pasted image 20260523085546.png",
+    "Pasted image 20260523085520.png",
+    "Pasted image 20260523085123.png",
+    "2026-05-12.md",
+    "Pablo Neruda - Lagano umire onaj....md",
     "Fiercely Kind.md",
     "Pasted image 20260514094244.png",
     "Good news.md",
@@ -230,25 +490,10 @@
     "Pasted image 20260514092605.png",
     "To bear the manifestation of others is a big thing.md",
     "Michel De Montaigne.md",
-    "Pablo Neruda - Lagano umire onaj....md",
     "Gurdjieff Đorđe.md",
     "KEEPING QUIET by Pablo Neruda.md",
     "Musings - Richard Dawkins.md",
     "Pablo Neruda, “It is Born,”from The Poetry of Pablo Neruda.md",
-    "Mary Oliver.md",
-    "Milan Kundera, Immortality.md",
-    "James Innell Packer.md",
-    "POROĐAJ.md",
-    "I will meet you yet again -Amrita Pritam.md",
-    "2026-05-12.md",
-    "2026-05-13.md",
-    "(Susan Sontag, Illness as Metaphor).md",
-    "The Momentby Margaret Atwood.md",
-    "Mudrac Bela Hamvas, učitelj života.md",
-    "La nuit ou la lune découpée - Kees van Dongen.md",
-    "(Chinese proverb).md",
-    "Gurdjieff.md",
-    "_templates/ConnectedThought.md",
     "Daily thougths.base",
     "Pasted image 20260513145718.png",
     "Pasted image 20260513145706.png",
