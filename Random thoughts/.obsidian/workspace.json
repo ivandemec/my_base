@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "686cf6e6657980f8",
+        "id": "e2fe446c32629e3c",
         "type": "tabs",
         "children": [
           {
-            "id": "4cacafef020ae3b8",
+            "id": "ee75feb21a0fc4ea",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Søren Kierkegaard.md",
+                "file": "(Chinese proverb).md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,16 +28,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Søren Kierkegaard"
+              "title": "(Chinese proverb)"
             }
           },
           {
-            "id": "a7081fd2806e924b",
+            "id": "e2c8afb3581aa8ee",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hermes setup.md",
+                "file": "Odumiranje ega.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,40 +52,26 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Hermes setup"
+              "title": "Odumiranje ega"
             }
           },
           {
-            "id": "98f35e71d71dd8c4",
+            "id": "6c82191a212c04f6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Task Delegation.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Task Delegation"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           },
           {
-            "id": "de06630f003d0b34",
+            "id": "282e6232224ec5aa",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Epistemological Razors Overview.md",
+                "file": "Nothing Is Important.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -100,16 +86,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Epistemological Razors Overview"
+              "title": "Nothing Is Important"
             }
           },
           {
-            "id": "6f09dab626987aee",
+            "id": "fe167c67d6352e04",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hitchens's Razor.md",
+                "file": "How Distant Everything Is!.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -124,16 +110,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Hitchens's Razor"
+              "title": "How Distant Everything Is!"
             }
           },
           {
-            "id": "dfd88440c0d67c86",
+            "id": "563cb6a32ade0c06",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Occam's Razor.md",
+                "file": "Ecstasy.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -148,16 +134,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Occam's Razor"
+              "title": "Ecstasy"
             }
           },
           {
-            "id": "55333323005ebfcd",
+            "id": "21d1e8f1328f9f76",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hanlon's Razor.md",
+                "file": "The World in Which Nothing Is Solved.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -172,16 +158,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Hanlon's Razor"
+              "title": "The World in Which Nothing Is Solved"
             }
           },
           {
-            "id": "f198831246a51ae2",
+            "id": "0b9e829753919613",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hume's Razor.md",
+                "file": "The Contradictory and the Inconsequential.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -196,16 +182,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Hume's Razor"
+              "title": "The Contradictory and the Inconsequential"
             }
           },
           {
-            "id": "d371219337a1d7be",
+            "id": "242ad222f19bee4d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sagan Standard.md",
+                "file": "Total Dissatisfaction.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -220,16 +206,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Sagan Standard"
+              "title": "Total Dissatisfaction"
             }
           },
           {
-            "id": "d492a57e88dcba09",
+            "id": "733ae29c05b9ba8e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Alder's Razor.md",
+                "file": "The Bath of Fire.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -244,16 +230,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Alder's Razor"
+              "title": "The Bath of Fire"
             }
           },
           {
-            "id": "8501b652b570ee78",
+            "id": "69a27aefc41663bd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Popper's Falsifiability Principle.md",
+                "file": "Disintegration.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -268,16 +254,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Popper's Falsifiability Principle"
+              "title": "Disintegration"
             }
           },
           {
-            "id": "6df4029e33b82212",
+            "id": "0f036c68be1ba959",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Ruslan Kuvatov.md",
+                "file": "On the Reality of the Body.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -292,11 +278,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Ruslan Kuvatov"
+              "title": "On the Reality of the Body"
+            }
+          },
+          {
+            "id": "ca2ce06892f47a6a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "I Do Not Know.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "I Do Not Know"
             }
           }
         ],
-        "currentTab": 11
+        "currentTab": 12
       }
     ],
     "direction": "vertical"
@@ -328,7 +338,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#mindtricks",
+                "query": "tag:#human-behavior",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -459,41 +469,41 @@
       "bases:Create new base": false
     }
   },
-  "active": "6df4029e33b82212",
+  "active": "ca2ce06892f47a6a",
   "lastOpenFiles": [
-    "Grice's Razor.md",
+    "On the Reality of the Body.md",
+    "I Do Not Know.md",
+    "Disintegration.md",
+    "The Bath of Fire.md",
+    "Total Dissatisfaction.md",
+    "The Contradictory and the Inconsequential.md",
+    "The World in Which Nothing Is Solved.md",
+    "Ecstasy.md",
+    "How Distant Everything Is!.md",
+    "Nothing Is Important.md",
+    "On the Heights of Despair.md",
+    "Odumiranje ega.md",
+    "духовни успон.md",
+    "Igra.md",
+    "(Chinese proverb).md",
+    "Metanoja.md",
+    "_templates/ConnectedThought.md",
     "Popper's Falsifiability Principle.md",
+    "Ruslan Kuvatov.md",
+    "Grice's Razor.md",
     "Alder's Razor.md",
     "Sagan Standard.md",
     "Hume's Razor.md",
     "Hanlon's Razor.md",
     "Occam's Razor.md",
     "Hitchens's Razor.md",
-    "Epistemological Razors Overview.md",
-    "Task Delegation.md",
-    "Volume Correction.md",
-    "Pastafarianism.md",
-    "Društvo.md",
-    "Søren Kierkegaard.md",
-    "Hermes setup.md",
     "Pasted image 20260523085546.png",
     "Pasted image 20260523085520.png",
     "Pasted image 20260523085123.png",
-    "2026-05-12.md",
-    "Pablo Neruda - Lagano umire onaj....md",
-    "Fiercely Kind.md",
     "Pasted image 20260514094244.png",
-    "Good news.md",
     "Pasted image 20260514092519.png",
     "Pasted image 20260514092650.png",
-    "Psychic Origami.md",
     "Pasted image 20260514092605.png",
-    "To bear the manifestation of others is a big thing.md",
-    "Michel De Montaigne.md",
-    "Gurdjieff Đorđe.md",
-    "KEEPING QUIET by Pablo Neruda.md",
-    "Musings - Richard Dawkins.md",
-    "Pablo Neruda, “It is Born,”from The Poetry of Pablo Neruda.md",
     "Daily thougths.base",
     "Pasted image 20260513145718.png",
     "Pasted image 20260513145706.png",

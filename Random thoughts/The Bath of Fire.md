@@ -1,0 +1,7 @@
+---
+Topics: "[[A serious perspective on Life]]"
+tags:
+  - Emil-Cioran
+---
+There are so many ways to achieve the sensation of immateriality that it would be difficult, if not futile, to make a classification. Nevertheless, I think that the bath of fire is one of the best. The bath of fire: your being ablaze, all flashes and sparks, consumed by flames as in Hell. The bath of fire purifies so radically that it does away with existence. Its heat waves and scorching flames burn the kernel of life, smothering its vital elan, turning its aggressiveness into aspiration. To live in a bath of fire, transfigured by its rich glow — such is the state of immaterial purity where one is nothing but a dancing flame. Freed from the laws of gravity, life becomes illusion or dream. But this is not all: at the end, a most curious and paradoxical sensation occurs, the feeling of dreamy unreality gives way to the sensation of becoming ash. The bath of  
+fire invariable ends thus: when the inner conflagration has scorched the ground of your being, when all is ashes, what else is there left to experience? There is both mad delight and infinite irony in the thought of my ashes scattered to the four winds, sown frenetically in space, an eternal reproach to the world.
