@@ -1,0 +1,10 @@
+---
+Topics: "[[A serious perspective on Life]]"
+---
+Zamisli veliki kružni pijačni trg s mnoštvom tezgi i tačno u središtu jednu jedinu kapiju, tako usku da kroz nju može da prođe samo po jedan čovek i to isključivo ako u rukama ne nosi ništa. Svaka tezga na trgu nudi nešto što izgleda kao da je najvažnija stvar na svetu: pripadnost, priznanje, smisao, potvrdu, utehu, ljubav… Čovek zakoračuje na trg i zastaje kod tezge koja najviše obećava i dokle god mu ta tezga zaista pruža ono što je obećala, on se od nje ne udaljava i ne ispušta iz ruku ono što je dobio. Iza celog žagora trga, iz pravca kapije u središtu pijace, dopire tih zov, tako tih da ga skoro niko ne čuje, jer sve tezge zajedno proizvode zaglušujuću buku.
+
+Do kapije mogu da dođu svi jer je put slobodan, ali kroz nju mogu da prođu samo oni čije su ruke prazne. Kapija je tako uska da je kroz nju nemoguće proći punih ruku. Zeznuto je što čovek ne može prosto da odluči da ispusti ono što nosi, budući da se sama odluka da ispusti pretvara u novu stvar koju drži u ruci i postaje nova tezga kojoj se vraća. Zapravo mora da se dogodi nešto sasvim drugo: tezge, jedna za drugom, prestaju da isporučuju ono što nude jer se to nešto iscrpelo. Tek kada ruka sama od sebe ostane prazna zato što više nema šta da drži, čovek postaje kadar da čuje tihi zvuk iz pravca kapije.
+
+Otežavajuća okolnost je i to što se pražnjenje ne odvija samo zato što to želimo i ne dolazi u trenutku koji je čovek odabrao, nego dolazi kada dođe i niko to ne može da ubrza svojim htenjem. To objašnjava zašto se veoma retko dešava da neko prođe kroz kapiju: gotovo svako stigne do nje bar jednom u životu, ali malo ko se pred njom nađe praznih ruku. Svako ko dotle dođe punih ruku, stoji pred otvorom i ne može da prođe jer je prolaz naprosto preuzak. Kapija nikoga ne odbija. Ona naprosto po prirodi stvari ne propušta nikoga ko nosi bilo kakav višak ili, drugim rečima, samo onaj ko više ništa ne nosi može kroz nju da prođe.
+
+#poljeoponašanja
