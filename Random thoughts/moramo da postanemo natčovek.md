@@ -1,0 +1,7 @@
+---
+Topics: "[[A serious perspective on Life]]"
+tags:
+---
+Ako težimo da pojednostavimo složenost i ako tražimo zajednički imenitelj koji ima snagu da vavilonsku kakofoniju zamršenih ideoloških, filozofskih, religijskih glasova preobrazi u harmoničnu melodiju, onda sasvim prirodno pronalazimo čovekovu najvažniju osobinu: ljudskost. Samo što ljudskost u ovim našim vremenima nema dobru prođu; nije privlačna, od nje nema neke velike koristi. Čak je i ne opažamo kao nešto posebno. Širom sveta poznatija je pod nazivom humanost, podmentnutog joj poput kukavičjeg jajeta. Pri tome je ljudskost primenjena duhovnost, dok je humanost mimikrija dobrote. U međuvremenu (koje traje i traje) smo kao ljudi tako uslovljeni i programirani da nam ništa nije dovoljno dobro. Možemo to da posmatramo u svim životnim oblastima, i na materjalnoj i na duhovnoj ravni. NIJE NAM DOVOLJNO DA BUDEMO ČOVEK, nego moramo da postanemo natčovek, nije dovoljno da steknemo unutarnji mir, želimo i posebne duhovne sposobnosti, u svemu želimo više svega. Iako je logično da jedinstvenost postojanja svake jedinke jemči posebnost, mi želimo po svaku cenu da budemo još posebniji, veći, snažniji, lepši, pametniji, duhovniji, prosvetljeniji… Pritom je Bog, Svemir, Zakon ili Priroda – šta god nam od toga više odgovara – sve tako lepo uredio, da čovek, pod uslovom da postoji svesnost, uz pomoć poklonjenog mu oruđa koje nazivamo savest, može da živi pravu pravcijatu ljudskost. Jer smisao ljudskog života nije ništa drugo doli da uistinu budemo čovek.
+
+#poljeoponašanja

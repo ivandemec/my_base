@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "949e0b87a4309a69",
+        "id": "db96c9224c9672b6",
         "type": "tabs",
         "children": [
           {
-            "id": "a4c87380a7649b1a",
+            "id": "9cb62c65042874c6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Contradictory and the Inconsequential.md",
+                "file": "There is no escape..md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,16 +28,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Contradictory and the Inconsequential"
+              "title": "There is no escape."
             }
           },
           {
-            "id": "a127f4f0fd804ceb",
+            "id": "94f761841d992da1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Truth, What a Word!.md",
+                "file": "look in the mirror.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,16 +52,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Truth, What a Word!"
+              "title": "look in the mirror"
             }
           },
           {
-            "id": "3d67c3cee99bf4fe",
+            "id": "64d536f4d6fc5d8e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Beauty of Flames.md",
+                "file": "Vanity.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -76,16 +76,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Beauty of Flames"
+              "title": "Vanity"
             }
           },
           {
-            "id": "0f8fa687c3e44672",
+            "id": "c9a0e816ce77ce02",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Paucity of Wisdom.md",
+                "file": "Belief.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -100,16 +100,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Paucity of Wisdom"
+              "title": "Belief"
             }
           },
           {
-            "id": "337277c6098e2c67",
+            "id": "b64e7484f7ab8282",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Return to Chaos.md",
+                "file": "Man never is happy.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -124,16 +124,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Return to Chaos"
+              "title": "Man never is happy"
             }
           },
           {
-            "id": "031f4d3a289dabe8",
+            "id": "95f19ce786f5387b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Passion for the Absurd.md",
+                "file": "moramo da postanemo natčovek.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -148,16 +148,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Passion for the Absurd"
+              "title": "moramo da postanemo natčovek"
             }
           },
           {
-            "id": "9e393c49dee1aada",
+            "id": "84c45579b6d67b05",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The World and I.md",
+                "file": "Kako mi je dano na zemlji.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -172,11 +172,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The World and I"
+              "title": "Kako mi je dano na zemlji"
+            }
+          },
+          {
+            "id": "b19d92e37236d0fa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Tamo gdje je um neustrašiv.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Tamo gdje je um neustrašiv"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -339,10 +363,21 @@
       "bases:Create new base": false
     }
   },
-  "active": "fb226c58d36fc558",
+  "active": "b19d92e37236d0fa",
   "lastOpenFiles": [
-    "The Passion for the Absurd.md",
+    "Kako mi je dano na zemlji.md",
+    "Tamo gdje je um neustrašiv.md",
+    "moramo da postanemo natčovek.md",
+    "Man never is happy.md",
+    "Belief.md",
+    "Vanity.md",
+    "look in the mirror.md",
+    "There is no escape..md",
+    "Clippings/Clip web pages.md",
+    "Clippings",
+    "Presentation.md",
     "The World and I.md",
+    "The Passion for the Absurd.md",
     "The Return to Chaos.md",
     "The Paucity of Wisdom.md",
     "The Beauty of Flames.md",
@@ -357,16 +392,6 @@
     "The World in Which Nothing Is Solved.md",
     "Ecstasy.md",
     "How Distant Everything Is!.md",
-    "Nothing Is Important.md",
-    "On the Heights of Despair.md",
-    "Odumiranje ega.md",
-    "духовни успон.md",
-    "Igra.md",
-    "(Chinese proverb).md",
-    "Metanoja.md",
-    "_templates/ConnectedThought.md",
-    "Popper's Falsifiability Principle.md",
-    "Ruslan Kuvatov.md",
     "Pasted image 20260523085546.png",
     "Pasted image 20260523085520.png",
     "Pasted image 20260523085123.png",
