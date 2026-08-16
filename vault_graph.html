@@ -1,0 +1,166 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body { margin: 0; padding: 0; overflow: hidden; background-color: #1e1e1e; }
+            .node { cursor: move; }
+            .link { stroke: #999; stroke-opacity: 0.6; }
+            text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: #fff; }
+            svg { width: 100vw; height: 100vh; }
+        </style>
+    </head>
+    <body>
+        <div id="graph"></div>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script>
+            var nodes = [{"id": "nothing is important.md", "label": "Nothing is important", "link_count": 2, "color": "#d65c5c"}, {"id": "to bear the manifestation of others is a big thing.md", "label": "To bear the manifestation of others is a big thing", "link_count": 1, "color": "#d65c5c"}, {"id": "vanity.md", "label": "Vanity", "link_count": 3, "color": "#d6ad5c"}, {"id": "the world in which nothing is solved.md", "label": "The world in which nothing is solved", "link_count": 2, "color": "#d65c5c"}, {"id": "gurdjieff.md", "label": "Gurdjieff", "link_count": 1, "color": "#d65c5c"}, {"id": "kako mi je dano na zemlji.md", "label": "Kako mi je dano na zemlji", "link_count": 2, "color": "#d6ad5c"}, {"id": "i do not know.md", "label": "I do not know", "link_count": 2, "color": "#d65c5c"}, {"id": "there is no escape..md", "label": "There is no escape.", "link_count": 1, "color": "#d6ad5c"}, {"id": "gurdjieff \u0111or\u0111e.md", "label": "Gurdjieff \u0111or\u0111e", "link_count": 1, "color": "#d65c5c"}, {"id": "psychic origami.md", "label": "Psychic origami", "link_count": 3, "color": "#d65c5c"}, {"id": "task delegation.md", "label": "Task delegation", "link_count": 1, "color": "#7f7f7f"}, {"id": "(susan sontag, illness as metaphor).md", "label": "(susan sontag, illness as metaphor)", "link_count": 1, "color": "#d6ad5c"}, {"id": "sagan standard.md", "label": "Sagan standard", "link_count": 9, "color": "#7f7f7f"}, {"id": "belief.md", "label": "Belief", "link_count": 3, "color": "#d65c5c"}, {"id": "\u0434\u0443\u0445\u043e\u0432\u043d\u0438 \u0443\u0441\u043f\u043e\u043d.md", "label": "\u0414\u0443\u0445\u043e\u0432\u043d\u0438 \u0443\u0441\u043f\u043e\u043d", "link_count": 1, "color": "#d65c5c"}, {"id": "grice's razor.md", "label": "Grice's razor", "link_count": 6, "color": "#7f7f7f"}, {"id": "truth, what a word!.md", "label": "Truth, what a word!", "link_count": 2, "color": "#d65c5c"}, {"id": "pablo neruda, \u201cit is born,\u201dfrom the poetry of pablo neruda.md", "label": "Pablo neruda, \u201cit is born,\u201dfrom the poetry of pablo neruda", "link_count": 2, "color": "#d65c5c"}, {"id": "hermes setup.md", "label": "Hermes setup", "link_count": 8, "color": "#7f7f7f"}, {"id": "man never is happy.md", "label": "Man never is happy", "link_count": 3, "color": "#d65c5c"}, {"id": "a humorous perspective on life.md", "label": "A humorous perspective on life", "link_count": 12, "color": "#7f7f7f"}, {"id": "dru\u0161tvo.md", "label": "Dru\u0161tvo", "link_count": 1, "color": "#d65c5c"}, {"id": "michel de montaigne.md", "label": "Michel de montaigne", "link_count": 1, "color": "#d6ad5c"}, {"id": "kapija.md", "label": "Kapija", "link_count": 2, "color": "#d65c5c"}, {"id": "borges, the south.md", "label": "Borges, the south", "link_count": 2, "color": "#d6ad5c"}, {"id": "presentation.md", "label": "Presentation", "link_count": 1, "color": "#7f7f7f"}, {"id": "mudrac bela hamvas, u\u010ditelj \u017eivota.md", "label": "Mudrac bela hamvas, u\u010ditelj \u017eivota", "link_count": 2, "color": "#d65c5c"}, {"id": "poro\u0111aj.md", "label": "Poro\u0111aj", "link_count": 1, "color": "#d65c5c"}, {"id": "metanoja.md", "label": "Metanoja", "link_count": 2, "color": "#d65c5c"}, {"id": "the return to chaos.md", "label": "The return to chaos", "link_count": 2, "color": "#d65c5c"}, {"id": "the contradictory and the inconsequential.md", "label": "The contradictory and the inconsequential", "link_count": 2, "color": "#d65c5c"}, {"id": "hume's razor.md", "label": "Hume's razor", "link_count": 7, "color": "#7f7f7f"}, {"id": "s\u00f8ren kierkegaard.md", "label": "S\u00f8ren kierkegaard", "link_count": 1, "color": "#d65c5c"}, {"id": "how distant everything is!.md", "label": "How distant everything is!", "link_count": 2, "color": "#d65c5c"}, {"id": "(chinese proverb).md", "label": "(chinese proverb)", "link_count": 1, "color": "#d65c5c"}, {"id": "good news.md", "label": "Good news", "link_count": 3, "color": "#d6ad5c"}, {"id": "milan kundera, immortality.md", "label": "Milan kundera, immortality", "link_count": 1, "color": "#d65c5c"}, {"id": "fiercely kind.md", "label": "Fiercely kind", "link_count": 5, "color": "#d65c5c"}, {"id": "mary oliver.md", "label": "Mary oliver", "link_count": 2, "color": "#d65c5c"}, {"id": "occam's razor.md", "label": "Occam's razor", "link_count": 8, "color": "#7f7f7f"}, {"id": "2026-05-12.md", "label": "2026-05-12", "link_count": 0, "color": "#7f7f7f"}, {"id": "popper's falsifiability principle.md", "label": "Popper's falsifiability principle", "link_count": 7, "color": "#7f7f7f"}, {"id": "musings - richard dawkins.md", "label": "Musings - richard dawkins", "link_count": 1, "color": "#d65c5c"}, {"id": "james innell packer.md", "label": "James innell packer", "link_count": 2, "color": "#d6ad5c"}, {"id": "epistemological razors overview.md", "label": "Epistemological razors overview", "link_count": 21, "color": "#7f7f7f"}, {"id": "the bath of fire.md", "label": "The bath of fire", "link_count": 2, "color": "#d65c5c"}, {"id": "igra.md", "label": "Igra", "link_count": 2, "color": "#d6ad5c"}, {"id": "ecstasy.md", "label": "Ecstasy", "link_count": 2, "color": "#d65c5c"}, {"id": "the momentby margaret atwood.md", "label": "The momentby margaret atwood", "link_count": 1, "color": "#d65c5c"}, {"id": "pastafarianism.md", "label": "Pastafarianism", "link_count": 2, "color": "#d6ad5c"}, {"id": "the paucity of wisdom.md", "label": "The paucity of wisdom", "link_count": 2, "color": "#d65c5c"}, {"id": "ruslan kuvatov.md", "label": "Ruslan kuvatov", "link_count": 2, "color": "#d6ad5c"}, {"id": "hitchens's razor.md", "label": "Hitchens's razor", "link_count": 7, "color": "#7f7f7f"}, {"id": "on the reality of the body.md", "label": "On the reality of the body", "link_count": 2, "color": "#d65c5c"}, {"id": "a serious perspective on life.md", "label": "A serious perspective on life", "link_count": 44, "color": "#7f7f7f"}, {"id": "pablo neruda - lagano umire onaj....md", "label": "Pablo neruda - lagano umire onaj...", "link_count": 2, "color": "#d65c5c"}, {"id": "on the heights of despair.md", "label": "On the heights of despair", "link_count": 3, "color": "#d65c5c"}, {"id": "taking voice notes.md", "label": "Taking voice notes", "link_count": 0, "color": "#7f7f7f"}, {"id": "tamo gdje je um neustra\u0161iv.md", "label": "Tamo gdje je um neustra\u0161iv", "link_count": 3, "color": "#d6ad5c"}, {"id": "keeping quiet by pablo neruda.md", "label": "Keeping quiet by pablo neruda", "link_count": 2, "color": "#d65c5c"}, {"id": "alder's razor.md", "label": "Alder's razor", "link_count": 7, "color": "#7f7f7f"}, {"id": "the passion for the absurd.md", "label": "The passion for the absurd", "link_count": 2, "color": "#d65c5c"}, {"id": "look in the mirror.md", "label": "Look in the mirror", "link_count": 2, "color": "#d65c5c"}, {"id": "disintegration.md", "label": "Disintegration", "link_count": 2, "color": "#d65c5c"}, {"id": "the beauty of flames.md", "label": "The beauty of flames", "link_count": 2, "color": "#d65c5c"}, {"id": "total dissatisfaction.md", "label": "Total dissatisfaction", "link_count": 2, "color": "#d65c5c"}, {"id": "hanlon's razor.md", "label": "Hanlon's razor", "link_count": 7, "color": "#7f7f7f"}, {"id": "la nuit ou la lune d\u00e9coup\u00e9e - kees van dongen.md", "label": "La nuit ou la lune d\u00e9coup\u00e9e - kees van dongen", "link_count": 1, "color": "#d65c5c"}, {"id": "i will meet you yet again -amrita pritam.md", "label": "I will meet you yet again -amrita pritam", "link_count": 2, "color": "#d65c5c"}, {"id": "moramo da postanemo nat\u010dovek.md", "label": "Moramo da postanemo nat\u010dovek", "link_count": 2, "color": "#d65c5c"}, {"id": "the world and i.md", "label": "The world and i", "link_count": 2, "color": "#d65c5c"}, {"id": "odumiranje ega.md", "label": "Odumiranje ega", "link_count": 2, "color": "#d65c5c"}, {"id": "volume correction.md", "label": "Volume correction", "link_count": 0, "color": "#7f7f7f"}, {"id": "source template.md", "label": "Source template", "link_count": 1, "color": "#7f7f7f"}, {"id": "clip web pages.md", "label": "Clip web pages", "link_count": 15, "color": "#7f7f7f"}, {"id": "#Emil-Cioran", "label": "#Emil-Cioran", "link_count": 18, "color": "#4caf50"}, {"id": "#Bertrand-Russell", "label": "#Bertrand-Russell", "link_count": 1, "color": "#4caf50"}, {"id": "#poetry", "label": "#poetry", "link_count": 6, "color": "#4caf50"}, {"id": "#philosophy/razor", "label": "#philosophy/razor", "link_count": 8, "color": "#4caf50"}, {"id": "#science", "label": "#science", "link_count": 3, "color": "#4caf50"}, {"id": "#skepticism", "label": "#skepticism", "link_count": 1, "color": "#4caf50"}, {"id": "#Jean-Paul-Sartre", "label": "#Jean-Paul-Sartre", "link_count": 1, "color": "#4caf50"}, {"id": "#linguistics", "label": "#linguistics", "link_count": 1, "color": "#4caf50"}, {"id": "#communication", "label": "#communication", "link_count": 1, "color": "#4caf50"}, {"id": "#Arthur-Schopenhauer", "label": "#Arthur-Schopenhauer", "link_count": 1, "color": "#4caf50"}, {"id": "#poljeopona\u0161anja", "label": "#poljeopona\u0161anja", "link_count": 5, "color": "#4caf50"}, {"id": "#cat", "label": "#cat", "link_count": 1, "color": "#4caf50"}, {"id": "#BelaHamvas", "label": "#BelaHamvas", "link_count": 1, "color": "#4caf50"}, {"id": "#epistemology", "label": "#epistemology", "link_count": 3, "color": "#4caf50"}, {"id": "#miracles", "label": "#miracles", "link_count": 1, "color": "#4caf50"}, {"id": "#religion", "label": "#religion", "link_count": 3, "color": "#4caf50"}, {"id": "#logic", "label": "#logic", "link_count": 1, "color": "#4caf50"}, {"id": "#simplicity", "label": "#simplicity", "link_count": 1, "color": "#4caf50"}, {"id": "#philosophy", "label": "#philosophy", "link_count": 1, "color": "#4caf50"}, {"id": "#critical-thinking", "label": "#critical-thinking", "link_count": 1, "color": "#4caf50"}, {"id": "#overview", "label": "#overview", "link_count": 1, "color": "#4caf50"}, {"id": "#mindtricks", "label": "#mindtricks", "link_count": 1, "color": "#4caf50"}, {"id": "#evidence", "label": "#evidence", "link_count": 1, "color": "#4caf50"}, {"id": "#Rabindranath-Tagore", "label": "#Rabindranath-Tagore", "link_count": 1, "color": "#4caf50"}, {"id": "#experimental", "label": "#experimental", "link_count": 1, "color": "#4caf50"}, {"id": "#psychology", "label": "#psychology", "link_count": 1, "color": "#4caf50"}, {"id": "#human-behavior", "label": "#human-behavior", "link_count": 1, "color": "#4caf50"}, {"id": "#Source", "label": "#Source", "link_count": 1, "color": "#4caf50"}, {"id": "#clippings", "label": "#clippings", "link_count": 1, "color": "#4caf50"}];
+            var links = [{"source": "nothing is important.md", "target": "a serious perspective on life.md"}, {"source": "to bear the manifestation of others is a big thing.md", "target": "a serious perspective on life.md"}, {"source": "vanity.md", "target": "a humorous perspective on life.md"}, {"source": "the world in which nothing is solved.md", "target": "a serious perspective on life.md"}, {"source": "gurdjieff.md", "target": "a serious perspective on life.md"}, {"source": "kako mi je dano na zemlji.md", "target": "a humorous perspective on life.md"}, {"source": "i do not know.md", "target": "a serious perspective on life.md"}, {"source": "there is no escape..md", "target": "a humorous perspective on life.md"}, {"source": "gurdjieff \u0111or\u0111e.md", "target": "a serious perspective on life.md"}, {"source": "psychic origami.md", "target": "a serious perspective on life.md"}, {"source": "task delegation.md", "target": "hermes setup.md"}, {"source": "(susan sontag, illness as metaphor).md", "target": "a humorous perspective on life.md"}, {"source": "sagan standard.md", "target": "hitchens's razor.md"}, {"source": "sagan standard.md", "target": "hume's razor.md"}, {"source": "sagan standard.md", "target": "epistemological razors overview.md"}, {"source": "belief.md", "target": "a serious perspective on life.md"}, {"source": "\u0434\u0443\u0445\u043e\u0432\u043d\u0438 \u0443\u0441\u043f\u043e\u043d.md", "target": "a serious perspective on life.md"}, {"source": "grice's razor.md", "target": "occam's razor.md"}, {"source": "grice's razor.md", "target": "epistemological razors overview.md"}, {"source": "truth, what a word!.md", "target": "a serious perspective on life.md"}, {"source": "pablo neruda, \u201cit is born,\u201dfrom the poetry of pablo neruda.md", "target": "a serious perspective on life.md"}, {"source": "hermes setup.md", "target": "hermes setup.md"}, {"source": "man never is happy.md", "target": "a serious perspective on life.md"}, {"source": "dru\u0161tvo.md", "target": "a serious perspective on life.md"}, {"source": "michel de montaigne.md", "target": "a humorous perspective on life.md"}, {"source": "kapija.md", "target": "a serious perspective on life.md"}, {"source": "borges, the south.md", "target": "a humorous perspective on life.md"}, {"source": "presentation.md", "target": "hermes setup.md"}, {"source": "mudrac bela hamvas, u\u010ditelj \u017eivota.md", "target": "a serious perspective on life.md"}, {"source": "poro\u0111aj.md", "target": "a serious perspective on life.md"}, {"source": "metanoja.md", "target": "a serious perspective on life.md"}, {"source": "the return to chaos.md", "target": "a serious perspective on life.md"}, {"source": "the contradictory and the inconsequential.md", "target": "a serious perspective on life.md"}, {"source": "hume's razor.md", "target": "sagan standard.md"}, {"source": "hume's razor.md", "target": "epistemological razors overview.md"}, {"source": "s\u00f8ren kierkegaard.md", "target": "a serious perspective on life.md"}, {"source": "how distant everything is!.md", "target": "a serious perspective on life.md"}, {"source": "(chinese proverb).md", "target": "a serious perspective on life.md"}, {"source": "good news.md", "target": "a humorous perspective on life.md"}, {"source": "milan kundera, immortality.md", "target": "a serious perspective on life.md"}, {"source": "fiercely kind.md", "target": "a serious perspective on life.md"}, {"source": "mary oliver.md", "target": "a serious perspective on life.md"}, {"source": "occam's razor.md", "target": "hanlon's razor.md"}, {"source": "occam's razor.md", "target": "epistemological razors overview.md"}, {"source": "popper's falsifiability principle.md", "target": "alder's razor.md"}, {"source": "popper's falsifiability principle.md", "target": "epistemological razors overview.md"}, {"source": "musings - richard dawkins.md", "target": "a serious perspective on life.md"}, {"source": "james innell packer.md", "target": "a humorous perspective on life.md"}, {"source": "epistemological razors overview.md", "target": "hitchens's razor.md"}, {"source": "epistemological razors overview.md", "target": "occam's razor.md"}, {"source": "epistemological razors overview.md", "target": "hanlon's razor.md"}, {"source": "epistemological razors overview.md", "target": "hume's razor.md"}, {"source": "epistemological razors overview.md", "target": "sagan standard.md"}, {"source": "epistemological razors overview.md", "target": "alder's razor.md"}, {"source": "epistemological razors overview.md", "target": "popper's falsifiability principle.md"}, {"source": "epistemological razors overview.md", "target": "grice's razor.md"}, {"source": "epistemological razors overview.md", "target": "epistemological razors overview.md"}, {"source": "the bath of fire.md", "target": "a serious perspective on life.md"}, {"source": "igra.md", "target": "a humorous perspective on life.md"}, {"source": "ecstasy.md", "target": "a serious perspective on life.md"}, {"source": "the momentby margaret atwood.md", "target": "a serious perspective on life.md"}, {"source": "pastafarianism.md", "target": "a humorous perspective on life.md"}, {"source": "the paucity of wisdom.md", "target": "a serious perspective on life.md"}, {"source": "ruslan kuvatov.md", "target": "a humorous perspective on life.md"}, {"source": "hitchens's razor.md", "target": "sagan standard.md"}, {"source": "hitchens's razor.md", "target": "epistemological razors overview.md"}, {"source": "on the reality of the body.md", "target": "a serious perspective on life.md"}, {"source": "pablo neruda - lagano umire onaj....md", "target": "a serious perspective on life.md"}, {"source": "on the heights of despair.md", "target": "a serious perspective on life.md"}, {"source": "tamo gdje je um neustra\u0161iv.md", "target": "a humorous perspective on life.md"}, {"source": "keeping quiet by pablo neruda.md", "target": "a serious perspective on life.md"}, {"source": "alder's razor.md", "target": "popper's falsifiability principle.md"}, {"source": "alder's razor.md", "target": "epistemological razors overview.md"}, {"source": "the passion for the absurd.md", "target": "a serious perspective on life.md"}, {"source": "look in the mirror.md", "target": "a serious perspective on life.md"}, {"source": "disintegration.md", "target": "a serious perspective on life.md"}, {"source": "the beauty of flames.md", "target": "a serious perspective on life.md"}, {"source": "total dissatisfaction.md", "target": "a serious perspective on life.md"}, {"source": "hanlon's razor.md", "target": "occam's razor.md"}, {"source": "hanlon's razor.md", "target": "epistemological razors overview.md"}, {"source": "la nuit ou la lune d\u00e9coup\u00e9e - kees van dongen.md", "target": "a serious perspective on life.md"}, {"source": "i will meet you yet again -amrita pritam.md", "target": "a serious perspective on life.md"}, {"source": "moramo da postanemo nat\u010dovek.md", "target": "a serious perspective on life.md"}, {"source": "the world and i.md", "target": "a serious perspective on life.md"}, {"source": "odumiranje ega.md", "target": "a serious perspective on life.md"}, {"source": "nothing is important.md", "target": "#Emil-Cioran"}, {"source": "vanity.md", "target": "#Bertrand-Russell"}, {"source": "the world in which nothing is solved.md", "target": "#Emil-Cioran"}, {"source": "kako mi je dano na zemlji.md", "target": "#poetry"}, {"source": "i do not know.md", "target": "#Emil-Cioran"}, {"source": "sagan standard.md", "target": "#philosophy/razor"}, {"source": "sagan standard.md", "target": "#science"}, {"source": "sagan standard.md", "target": "#skepticism"}, {"source": "belief.md", "target": "#Jean-Paul-Sartre"}, {"source": "grice's razor.md", "target": "#philosophy/razor"}, {"source": "grice's razor.md", "target": "#linguistics"}, {"source": "grice's razor.md", "target": "#communication"}, {"source": "truth, what a word!.md", "target": "#Emil-Cioran"}, {"source": "pablo neruda, \u201cit is born,\u201dfrom the poetry of pablo neruda.md", "target": "#poetry"}, {"source": "man never is happy.md", "target": "#Arthur-Schopenhauer"}, {"source": "kapija.md", "target": "#poljeopona\u0161anja"}, {"source": "borges, the south.md", "target": "#cat"}, {"source": "mudrac bela hamvas, u\u010ditelj \u017eivota.md", "target": "#BelaHamvas"}, {"source": "metanoja.md", "target": "#poljeopona\u0161anja"}, {"source": "the return to chaos.md", "target": "#Emil-Cioran"}, {"source": "the contradictory and the inconsequential.md", "target": "#Emil-Cioran"}, {"source": "hume's razor.md", "target": "#philosophy/razor"}, {"source": "hume's razor.md", "target": "#epistemology"}, {"source": "hume's razor.md", "target": "#miracles"}, {"source": "how distant everything is!.md", "target": "#Emil-Cioran"}, {"source": "mary oliver.md", "target": "#religion"}, {"source": "occam's razor.md", "target": "#philosophy/razor"}, {"source": "occam's razor.md", "target": "#logic"}, {"source": "occam's razor.md", "target": "#simplicity"}, {"source": "popper's falsifiability principle.md", "target": "#philosophy/razor"}, {"source": "popper's falsifiability principle.md", "target": "#science"}, {"source": "popper's falsifiability principle.md", "target": "#epistemology"}, {"source": "james innell packer.md", "target": "#religion"}, {"source": "epistemological razors overview.md", "target": "#philosophy"}, {"source": "epistemological razors overview.md", "target": "#critical-thinking"}, {"source": "epistemological razors overview.md", "target": "#overview"}, {"source": "the bath of fire.md", "target": "#Emil-Cioran"}, {"source": "igra.md", "target": "#poljeopona\u0161anja"}, {"source": "ecstasy.md", "target": "#Emil-Cioran"}, {"source": "pastafarianism.md", "target": "#religion"}, {"source": "the paucity of wisdom.md", "target": "#Emil-Cioran"}, {"source": "ruslan kuvatov.md", "target": "#mindtricks"}, {"source": "hitchens's razor.md", "target": "#philosophy/razor"}, {"source": "hitchens's razor.md", "target": "#epistemology"}, {"source": "hitchens's razor.md", "target": "#evidence"}, {"source": "on the reality of the body.md", "target": "#Emil-Cioran"}, {"source": "pablo neruda - lagano umire onaj....md", "target": "#poetry"}, {"source": "on the heights of despair.md", "target": "#Emil-Cioran"}, {"source": "tamo gdje je um neustra\u0161iv.md", "target": "#poetry"}, {"source": "tamo gdje je um neustra\u0161iv.md", "target": "#Rabindranath-Tagore"}, {"source": "keeping quiet by pablo neruda.md", "target": "#poetry"}, {"source": "alder's razor.md", "target": "#philosophy/razor"}, {"source": "alder's razor.md", "target": "#science"}, {"source": "alder's razor.md", "target": "#experimental"}, {"source": "the passion for the absurd.md", "target": "#Emil-Cioran"}, {"source": "look in the mirror.md", "target": "#Emil-Cioran"}, {"source": "disintegration.md", "target": "#Emil-Cioran"}, {"source": "the beauty of flames.md", "target": "#Emil-Cioran"}, {"source": "total dissatisfaction.md", "target": "#Emil-Cioran"}, {"source": "hanlon's razor.md", "target": "#philosophy/razor"}, {"source": "hanlon's razor.md", "target": "#psychology"}, {"source": "hanlon's razor.md", "target": "#human-behavior"}, {"source": "i will meet you yet again -amrita pritam.md", "target": "#poetry"}, {"source": "moramo da postanemo nat\u010dovek.md", "target": "#poljeopona\u0161anja"}, {"source": "the world and i.md", "target": "#Emil-Cioran"}, {"source": "odumiranje ega.md", "target": "#poljeopona\u0161anja"}, {"source": "source template.md", "target": "#Source"}, {"source": "clip web pages.md", "target": "#clippings"}];
+            var colorGroups = [{"query": "A serious perspective on Life", "color": "#d65c5c"}, {"query": "A humorous perspective on life", "color": "#d6ad5c"}];
+
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            var svg = d3.select("#graph")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            var g = svg.append("g");
+
+            var zoom = d3.zoom()
+                .scaleExtent([0.1, 4])
+                .on("zoom", zoomed);
+
+            svg.call(zoom);
+
+            function zoomed() {
+                g.attr("transform", d3.event.transform);
+            }
+
+            function customForce(alpha) {
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const strength = 0.05;
+
+                for (let i = 0; i < nodes.length; i++) {
+                    const node = nodes[i];
+                    node.vx += (centerX - node.x) * strength * alpha;
+                    node.vy += (centerY - node.y) * strength * alpha;
+                }
+            }
+
+            var simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(d => {
+                    const sourceLinks = links.filter(link => link.source.id === d.source.id || link.target.id === d.source.id).length;
+                    const targetLinks = links.filter(link => link.source.id === d.target.id || link.target.id === d.target.id).length;
+                    return Math.min(150, Math.max(50, (sourceLinks + targetLinks) * 10));
+                }))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("custom", customForce)
+                .force("collision", labelCollision())
+                .alphaDecay(0.02)
+                .alphaMin(0.001)
+                .on("tick", ticked);
+
+            var link = g.append("g")
+                .attr("class", "links")
+                .selectAll("line")
+                .data(links)
+                .enter().append("line")
+                .attr("class", "link");
+
+            var node = g.append("g")
+                .attr("class", "nodes")
+                .selectAll("circle")
+                .data(nodes)
+                .enter().append("circle")
+                .attr("class", "node")
+                .attr("r", function(d) {
+                    var radius = 5 + Math.sqrt(d.link_count);
+                    return radius;
+                })
+                .attr("fill", function(d) {
+                    return d.color;
+                })
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+
+            var text = g.append("g")
+                .attr("class", "texts")
+                .selectAll("text")
+                .data(nodes)
+                .enter().append("text")
+                .attr("x", 8)
+                .attr("y", ".31em")
+                .text(d => d.label);
+
+            function ticked() {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+
+                text
+                    .attr("x", d => d.x + 8)
+                    .attr("y", d => d.y + 3);
+            }
+
+            function dragstarted(d) {
+                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(d) {
+                d.fx = d3.event.x;
+                d.fy = d3.event.y;
+            }
+
+            function dragended(d) {
+                if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            function labelCollision() {
+                var alpha = 0.5;
+                return function() {
+                    for (var i = 0; i < nodes.length; i++) {
+                        for (var j = i + 1; j < nodes.length; j++) {
+                            var nodeA = nodes[i];
+                            var nodeB = nodes[j];
+                            if (nodeA === nodeB) continue;
+
+                            var dx = nodeA.x - nodeB.x;
+                            var dy = nodeA.y - nodeB.y;
+                            var distance = Math.sqrt(dx * dx + dy * dy);
+                            var minDistance = 20;
+
+                            if (distance < minDistance) {
+                                var moveFactor = (minDistance - distance) / distance * alpha;
+                                var mx = dx * moveFactor;
+                                var my = dy * moveFactor;
+                                nodeA.x += mx;
+                                nodeA.y += my;
+                                nodeB.x -= mx;
+                                nodeB.y -= my;
+                            }
+                        }
+                    }
+                };
+            }
+
+        </script>
+    </body>
+    </html>
+    

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vault Wiki</title>
+    <style>
+        :root { --bg: #1e1e1e; --fg: #e6e6e6; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; overflow: hidden; background-color: var(--bg); font-family: Arial, sans-serif; }
+        .node { cursor: pointer; }
+        .link { stroke: #999; stroke-opacity: 0.6; }
+        text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: #fff; }
+        svg { width: 100vw; height: 100vh; }
+
+        #topbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 46px;
+            display: flex; align-items: center; gap: 12px; padding: 0 16px;
+            background: rgba(30,30,30,.85); backdrop-filter: blur(6px);
+            border-bottom: 1px solid #333; z-index: 20;
+        }
+        #topbar h1 { font-size: 15px; color: var(--fg); margin: 0; font-weight: 600; }
+        #search {
+            margin-left: auto; background: #2a2a2a; border: 1px solid #444;
+            color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
+        }
+        #search:focus { border-color: #4caf50; }
+
+        #preview {
+            position: fixed; max-width: 360px; max-height: 60vh; overflow: hidden;
+            background: #252526; color: var(--fg); border: 1px solid #3a3a3a;
+            border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,.5);
+            padding: 14px 16px; z-index: 30; pointer-events: none;
+            opacity: 0; transition: opacity .12s ease; display: none; font-size: 13px; line-height: 1.5;
+        }
+        #preview.visible { opacity: 1; display: block; }
+        #preview h3 { margin: 0 0 8px; font-size: 15px; color: #fff; border-bottom: 1px solid #3a3a3a; padding-bottom: 6px; }
+        #preview .body { max-height: 44vh; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+        #preview img { max-width: 100%; }
+        #preview p { margin: 6px 0; }
+        #preview .hint { margin-top: 10px; font-size: 11px; color: #888; }
+    </style>
+</head>
+<body>
+    <div id="topbar">
+        <h1>🕸️ Vault Wiki</h1>
+        <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
+    </div>
+    <div id="graph"></div>
+    <div id="preview">
+        <h3></h3>
+        <div class="body"></div>
+        <div class="hint">Click to open →</div>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        var nodes = {{ nodes|safe }};
+        var links = {{ links|safe }};
+        var colorGroups = {{ color_groups|safe }};
+
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+
+        var svg = d3.select("#graph").append("svg")
+            .attr("width", width).attr("height", height);
+        var g = svg.append("g");
+
+        var zoom = d3.zoom().scaleExtent([0.1, 4]).on("zoom", function () {
+            g.attr("transform", d3.event.transform);
+        });
+        svg.call(zoom);
+
+        function customForce(alpha) {
+            const cx = width / 2, cy = height / 2, strength = 0.05;
+            for (let i = 0; i < nodes.length; i++) {
+                nodes[i].vx += (cx - nodes[i].x) * strength * alpha;
+                nodes[i].vy += (cy - nodes[i].y) * strength * alpha;
+            }
+        }
+
+        var simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id).distance(d => {
+                const s = links.filter(l => l.source.id === d.source.id || l.target.id === d.source.id).length;
+                const t = links.filter(l => l.source.id === d.target.id || l.target.id === d.target.id).length;
+                return Math.min(150, Math.max(50, (s + t) * 10));
+            }))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("custom", customForce)
+            .force("collision", labelCollision())
+            .alphaDecay(0.02).alphaMin(0.001)
+            .on("tick", ticked);
+
+        var link = g.append("g").attr("class", "links").selectAll("line")
+            .data(links).enter().append("line").attr("class", "link");
+
+        var node = g.append("g").attr("class", "nodes").selectAll("circle")
+            .data(nodes).enter().append("circle")
+            .attr("class", "node")
+            .attr("r", d => 5 + Math.sqrt(d.link_count))
+            .attr("fill", d => d.color)
+            .call(d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended))
+            .on("mouseover", nodeOver)
+            .on("mousemove", nodeMove)
+            .on("mouseout", nodeOut)
+            .on("click", nodeClick);
+
+        var text = g.append("g").attr("class", "texts").selectAll("text")
+            .data(nodes).enter().append("text")
+            .attr("x", 8).attr("y", ".31em").text(d => d.label);
+
+        function ticked() {
+            link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+            node.attr("cx", d => d.x).attr("cy", d => d.y);
+            text.attr("x", d => d.x + 8).attr("y", d => d.y + 3);
+        }
+
+        function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x; d.fy = d.y;
+        }
+        function dragged(d) { d.fx = d3.event.x; d.fy = d3.event.y; }
+        function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null; d.fy = null;
+        }
+
+        function labelCollision() {
+            var alpha = 0.5;
+            return function () {
+                for (var i = 0; i < nodes.length; i++) {
+                    for (var j = i + 1; j < nodes.length; j++) {
+                        var a = nodes[i], b = nodes[j];
+                        if (a === b) continue;
+                        var dx = a.x - b.x, dy = a.y - b.y;
+                        var dist = Math.sqrt(dx * dx + dy * dy), min = 20;
+                        if (dist < min) {
+                            var f = (min - dist) / dist * alpha;
+                            var mx = dx * f, my = dy * f;
+                            a.x += mx; a.y += my; b.x -= mx; b.y -= my;
+                        }
+                    }
+                }
+            };
+        }
+
+        // ---- Hover preview + click navigation ----
+        var previewEl = document.getElementById("preview");
+        var previewTitle = previewEl.querySelector("h3");
+        var previewBody = previewEl.querySelector(".body");
+        var previewHint = previewEl.querySelector(".hint");
+        var previewCache = {};
+        var hoverToken = 0;
+
+        function noteUrl(d) { return "/note/" + encodeURIComponent(d.id); }
+
+        function nodeClick(d) {
+            if (d.type === "tag") return; // tags have no page
+            window.location.href = noteUrl(d);
+        }
+
+        function nodeOver(d) {
+            d3.select(this).attr("stroke", "#fff").attr("stroke-width", 1.5);
+            var token = ++hoverToken;
+
+            if (d.type === "tag") {
+                previewTitle.textContent = d.label;
+                previewBody.innerHTML = "<p>" + d.link_count + " note(s) tagged with this.</p>";
+                previewHint.style.display = "none";
+                showPreview();
+                return;
+            }
+            previewHint.style.display = "block";
+
+            if (previewCache[d.id]) {
+                renderPreview(previewCache[d.id]);
+                return;
+            }
+            previewTitle.textContent = d.label;
+            previewBody.innerHTML = "<p style='color:#888'>Loading…</p>";
+            showPreview();
+
+            fetch("/api/preview/" + encodeURIComponent(d.id))
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(data => {
+                    previewCache[d.id] = data;
+                    if (token === hoverToken) renderPreview(data);
+                })
+                .catch(() => {
+                    if (token === hoverToken) previewBody.innerHTML = "<p style='color:#c66'>No preview.</p>";
+                });
+        }
+
+        function renderPreview(data) {
+            previewTitle.textContent = data.title;
+            previewBody.innerHTML = data.html;
+            showPreview();
+        }
+
+        function showPreview() { previewEl.classList.add("visible"); }
+
+        function nodeMove() {
+            var pad = 16, ex = d3.event.clientX, ey = d3.event.clientY;
+            var w = previewEl.offsetWidth, h = previewEl.offsetHeight;
+            var x = ex + pad, y = ey + pad;
+            if (x + w > window.innerWidth) x = ex - w - pad;
+            if (y + h > window.innerHeight) y = window.innerHeight - h - pad;
+            if (y < 52) y = 52;
+            previewEl.style.left = x + "px";
+            previewEl.style.top = y + "px";
+        }
+
+        function nodeOut() {
+            d3.select(this).attr("stroke", null);
+            hoverToken++;
+            previewEl.classList.remove("visible");
+        }
+
+        // ---- Search: highlight & focus matching nodes ----
+        var search = document.getElementById("search");
+        search.addEventListener("input", function () {
+            var q = this.value.trim().toLowerCase();
+            node.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.12);
+            text.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.08);
+        });
+    </script>
+</body>
+</html>

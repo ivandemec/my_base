@@ -155,52 +155,14 @@
             "id": "84c45579b6d67b05",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Kako mi je dano na zemlji.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Kako mi je dano na zemlji"
-            }
-          },
-          {
-            "id": "b19d92e37236d0fa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tamo gdje je um neustrašiv.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Tamo gdje je um neustrašiv"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -232,7 +194,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#poetry",
+                "query": "tag:#poljeoponašanja",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -363,10 +325,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "b19d92e37236d0fa",
+  "active": "84c45579b6d67b05",
   "lastOpenFiles": [
+    "A serious perspective on Life.md",
     "Kako mi je dano na zemlji.md",
+    "Epistemological Razors Overview.md",
+    "A humorous perspective on life.md",
+    "Kapija.md",
     "Tamo gdje je um neustrašiv.md",
+    "vault_graph.html",
     "moramo da postanemo natčovek.md",
     "Man never is happy.md",
     "Belief.md",
@@ -383,15 +350,11 @@
     "The Beauty of Flames.md",
     "Truth, What a Word!.md",
     "The Contradictory and the Inconsequential.md",
-    "Kapija.md",
     "I Do Not Know.md",
     "On the Reality of the Body.md",
     "Disintegration.md",
     "The Bath of Fire.md",
     "Total Dissatisfaction.md",
-    "The World in Which Nothing Is Solved.md",
-    "Ecstasy.md",
-    "How Distant Everything Is!.md",
     "Pasted image 20260523085546.png",
     "Pasted image 20260523085520.png",
     "Pasted image 20260523085123.png",
