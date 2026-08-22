@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "db96c9224c9672b6",
+        "id": "0b87611045e7fa83",
         "type": "tabs",
         "children": [
           {
-            "id": "9cb62c65042874c6",
+            "id": "a2d997b4ab6acec9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "There is no escape..md",
+                "file": "The life of a man.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,16 +28,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "There is no escape."
+              "title": "The life of a man"
             }
           },
           {
-            "id": "94f761841d992da1",
+            "id": "087792dcf7483edb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "look in the mirror.md",
+                "file": "Svaki dan - jedan život.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,16 +52,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "look in the mirror"
+              "title": "Svaki dan - jedan život"
             }
           },
           {
-            "id": "64d536f4d6fc5d8e",
+            "id": "85e537bacd31db0f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vanity.md",
+                "file": "Even an error has its reason for existence.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -76,16 +76,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Vanity"
+              "title": "Even an error has its reason for existence"
             }
           },
           {
-            "id": "c9a0e816ce77ce02",
+            "id": "addbd69e9adaa887",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Belief.md",
+                "file": "Time as the Emergent Order of Changing Relations.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -100,16 +100,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Belief"
+              "title": "Time as the Emergent Order of Changing Relations"
             }
           },
           {
-            "id": "b64e7484f7ab8282",
+            "id": "2e1a316bf760c590",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Man never is happy.md",
+                "file": "Spinoza’s Percentages of Knowledge - A Symbolic Measure of Human Understanding.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -124,16 +124,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Man never is happy"
+              "title": "Spinoza’s Percentages of Knowledge - A Symbolic Measure of Human Understanding"
             }
           },
           {
-            "id": "95f19ce786f5387b",
+            "id": "1be890f09788e2a3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "moramo da postanemo natčovek.md",
+                "file": "LAFČINA.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -148,21 +148,59 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "moramo da postanemo natčovek"
+              "title": "LAFČINA"
             }
           },
           {
-            "id": "84c45579b6d67b05",
+            "id": "83b10c06a4c6f37c",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Џорџ Бернард Шо.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Џорџ Бернард Шо"
+            }
+          },
+          {
+            "id": "77682c40143b9022",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "James Innell Packer.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "James Innell Packer"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -182,7 +220,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -215,8 +255,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -325,8 +364,17 @@
       "bases:Create new base": false
     }
   },
-  "active": "84c45579b6d67b05",
+  "active": "77682c40143b9022",
   "lastOpenFiles": [
+    "Man's brain lives in the twentieth century.md",
+    "Џорџ Бернард Шо.md",
+    "LAFČINA.md",
+    "Spinoza’s Percentages of Knowledge - A Symbolic Measure of Human Understanding.md",
+    "Time as the Emergent Order of Changing Relations.md",
+    "Pasted image 20260822084156.png",
+    "Even an error has its reason for existence.md",
+    "Svaki dan - jedan život.md",
+    "The life of a man.md",
     "A serious perspective on Life.md",
     "Kako mi je dano na zemlji.md",
     "Epistemological Razors Overview.md",
@@ -347,14 +395,6 @@
     "The Passion for the Absurd.md",
     "The Return to Chaos.md",
     "The Paucity of Wisdom.md",
-    "The Beauty of Flames.md",
-    "Truth, What a Word!.md",
-    "The Contradictory and the Inconsequential.md",
-    "I Do Not Know.md",
-    "On the Reality of the Body.md",
-    "Disintegration.md",
-    "The Bath of Fire.md",
-    "Total Dissatisfaction.md",
     "Pasted image 20260523085546.png",
     "Pasted image 20260523085520.png",
     "Pasted image 20260523085123.png",

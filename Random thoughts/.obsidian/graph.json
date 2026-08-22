@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": true,
+  "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
@@ -20,18 +20,25 @@
         "a": 1,
         "rgb": 14069084
       }
+    },
+    {
+      "query": "tag:#mindtricks",
+      "color": {
+        "a": 1,
+        "rgb": 11392604
+      }
     }
   ],
   "collapse-display": false,
   "showArrow": false,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
+  "nodeSizeMultiplier": 0.961586145823084,
   "lineSizeMultiplier": 1,
   "collapse-forces": false,
   "centerStrength": 0.518713248970312,
   "repelStrength": 11.7692057291667,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.6666666666666666,
+  "scale": 0.347145764557385,
   "close": false
 }
