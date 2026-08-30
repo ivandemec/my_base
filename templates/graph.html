@@ -5,46 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vault Wiki</title>
     <style>
-        :root { --bg: #1e1e1e; --fg: #e6e6e6; }
+        :root {
+            --bg: #1e1e1e; --fg: #e6e6e6; --panel: #252526; --border: #3a3a3a;
+            --topbar-bg: rgba(30,30,30,.85); --topbar-border: #333;
+            --input-bg: #2a2a2a; --input-border: #444;
+            --strong: #fff; --muted: #888; --link-stroke: #999; --node-stroke: #fff;
+            --shadow: 0 8px 30px rgba(0,0,0,.5);
+        }
+        :root[data-theme="light"] {
+            --bg: #fafafa; --fg: #24292f; --panel: #fff; --border: #d8dee4;
+            --topbar-bg: rgba(255,255,255,.85); --topbar-border: #d8dee4;
+            --input-bg: #fff; --input-border: #d0d7de;
+            --strong: #111; --muted: #6a737d; --link-stroke: #b0b0b0; --node-stroke: #333;
+            --shadow: 0 8px 30px rgba(0,0,0,.15);
+        }
         * { box-sizing: border-box; }
         body { margin: 0; padding: 0; overflow: hidden; background-color: var(--bg); font-family: Arial, sans-serif; }
         .node { cursor: pointer; }
-        .link { stroke: #999; stroke-opacity: 0.6; }
-        text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: #fff; }
+        .link { stroke: var(--link-stroke); stroke-opacity: 0.6; }
+        text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: var(--fg); }
         svg { width: 100vw; height: 100vh; }
 
         #topbar {
             position: fixed; top: 0; left: 0; right: 0; height: 46px;
             display: flex; align-items: center; gap: 12px; padding: 0 16px;
-            background: rgba(30,30,30,.85); backdrop-filter: blur(6px);
-            border-bottom: 1px solid #333; z-index: 20;
+            background: var(--topbar-bg); backdrop-filter: blur(6px);
+            border-bottom: 1px solid var(--topbar-border); z-index: 20;
         }
         #topbar h1 { font-size: 15px; color: var(--fg); margin: 0; font-weight: 600; }
         #search {
-            margin-left: auto; background: #2a2a2a; border: 1px solid #444;
+            margin-left: auto; background: var(--input-bg); border: 1px solid var(--input-border);
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
         }
         #search:focus { border-color: #4caf50; }
+        #theme-toggle {
+            background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
+            padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
+        }
+        #theme-toggle:hover { border-color: #4caf50; }
 
         #preview {
             position: fixed; max-width: 360px; max-height: 60vh; overflow: hidden;
-            background: #252526; color: var(--fg); border: 1px solid #3a3a3a;
-            border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,.5);
+            background: var(--panel); color: var(--fg); border: 1px solid var(--border);
+            border-radius: 8px; box-shadow: var(--shadow);
             padding: 14px 16px; z-index: 30; pointer-events: none;
             opacity: 0; transition: opacity .12s ease; display: none; font-size: 13px; line-height: 1.5;
         }
         #preview.visible { opacity: 1; display: block; }
-        #preview h3 { margin: 0 0 8px; font-size: 15px; color: #fff; border-bottom: 1px solid #3a3a3a; padding-bottom: 6px; }
+        #preview h3 { margin: 0 0 8px; font-size: 15px; color: var(--strong); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
         #preview .body { max-height: 44vh; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
         #preview img { max-width: 100%; }
         #preview p { margin: 6px 0; }
-        #preview .hint { margin-top: 10px; font-size: 11px; color: #888; }
+        #preview .hint { margin-top: 10px; font-size: 11px; color: var(--muted); }
     </style>
+    <script>
+        (function () {
+            var saved = localStorage.getItem("vault-theme");
+            if (!saved) saved = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", saved);
+        })();
+    </script>
 </head>
 <body>
     <div id="topbar">
         <h1>🕸️ Vault Wiki</h1>
         <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
+        <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
     </div>
     <div id="graph"></div>
     <div id="preview">
@@ -162,7 +188,8 @@
         }
 
         function nodeOver(d) {
-            d3.select(this).attr("stroke", "#fff").attr("stroke-width", 1.5);
+            var strokeColor = getComputedStyle(document.documentElement).getPropertyValue("--node-stroke").trim();
+            d3.select(this).attr("stroke", strokeColor).attr("stroke-width", 1.5);
             var token = ++hoverToken;
 
             if (d.type === "tag") {
@@ -179,7 +206,7 @@
                 return;
             }
             previewTitle.textContent = d.label;
-            previewBody.innerHTML = "<p style='color:#888'>Loading…</p>";
+            previewBody.innerHTML = "<p style='color:var(--muted)'>Loading…</p>";
             showPreview();
 
             fetch("/api/preview/" + encodeURIComponent(d.id))
@@ -225,6 +252,20 @@
             node.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.12);
             text.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.08);
         });
+
+        // ---- Theme toggle ----
+        var themeToggle = document.getElementById("theme-toggle");
+        function syncThemeButton() {
+            var dark = document.documentElement.getAttribute("data-theme") !== "light";
+            themeToggle.textContent = dark ? "☀️" : "🌙";
+        }
+        themeToggle.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("vault-theme", next);
+            syncThemeButton();
+        });
+        syncThemeButton();
     </script>
 </body>
 </html>
