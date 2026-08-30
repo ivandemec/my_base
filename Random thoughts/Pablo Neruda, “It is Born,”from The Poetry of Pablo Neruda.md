@@ -1,6 +1,7 @@
 ---
 tags:
   - poetry
+  - Neruda
 Topics: "[[A serious perspective on Life]]"
 ---
 Here I came to the very edge

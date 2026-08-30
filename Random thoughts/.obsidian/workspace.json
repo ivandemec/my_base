@@ -157,7 +157,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Џорџ Бернард Шо.md",
+                "file": "Psychic Origami.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -172,16 +172,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Џорџ Бернард Шо"
+              "title": "Psychic Origami"
             }
           },
           {
-            "id": "77682c40143b9022",
+            "id": "8aed8c3fdcfad28d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "James Innell Packer.md",
+                "file": "Man needs but little earth for enjoyment.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -196,11 +196,213 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "James Innell Packer"
+              "title": "Man needs but little earth for enjoyment"
+            }
+          },
+          {
+            "id": "7dbf094291350589",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Future evolution must be prepared for.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Future evolution must be prepared for"
+            }
+          },
+          {
+            "id": "aa86673e551bed25",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ahriman's realm.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Ahriman's realm"
+            }
+          },
+          {
+            "id": "8af3669446fc68c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Meditation - A living force that makes the soul strong and powerful.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Meditation - A living force that makes the soul strong and powerful"
+            }
+          },
+          {
+            "id": "8a09f5d83c71e0e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Seraphim, Cherubim, Thrones.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Seraphim, Cherubim, Thrones"
+            }
+          },
+          {
+            "id": "258a15a7f4a0cbc7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "A FREE MAN THINKS OF DEATH LEAST OF ALL THINGS.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "A FREE MAN THINKS OF DEATH LEAST OF ALL THINGS"
+            }
+          },
+          {
+            "id": "ff2d99062a65ae74",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "THE TOTALITARIAN WORLD IS A WORLD OF ANSWERS RATHER THAN QUESTIONS.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "THE TOTALITARIAN WORLD IS A WORLD OF ANSWERS RATHER THAN QUESTIONS"
+            }
+          },
+          {
+            "id": "efad23004be31011",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Oživi mene, noći - Aleksa Šantić.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Oživi mene, noći - Aleksa Šantić"
+            }
+          },
+          {
+            "id": "c4f3f436c608e9c2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sadness is a way into a mystery.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Sadness is a way into a mystery"
+            }
+          },
+          {
+            "id": "119864add694a709",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 16
       }
     ],
     "direction": "vertical"
@@ -234,7 +436,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#poljeoponašanja",
+                "query": "nerud",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -255,7 +457,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -364,37 +567,37 @@
       "bases:Create new base": false
     }
   },
-  "active": "77682c40143b9022",
+  "active": "119864add694a709",
   "lastOpenFiles": [
-    "Man's brain lives in the twentieth century.md",
+    "The first thing you learn in life is you're a fool..md",
+    "Sadness is a way into a mystery.md",
+    "Oživi mene, noći - Aleksa Šantić.md",
+    "Susan Sontag - The Aesthetics of Silence.md",
+    "Pablo Neruda, “It is Born,”from The Poetry of Pablo Neruda.md",
+    "Pablo Neruda - Lagano umire onaj....md",
+    "KEEPING QUIET by Pablo Neruda.md",
+    "Pablo Nerudafrom 'One Hundred Love Sonnets'.md",
+    "THE TOTALITARIAN WORLD IS A WORLD OF ANSWERS RATHER THAN QUESTIONS.md",
+    "A FREE MAN THINKS OF DEATH LEAST OF ALL THINGS.md",
+    "Seraphim, Cherubim, Thrones.md",
+    "Meditation - A living force that makes the soul strong and powerful.md",
+    "Ahriman's realm.md",
+    "Future evolution must be prepared for.md",
+    "Man needs but little earth for enjoyment.md",
+    "Psychic Origami.md",
+    "Mudrac Bela Hamvas, učitelj života.md",
+    "Truth What a Word.md",
+    "The World in Which Nothing Is Solved.md",
     "Џорџ Бернард Шо.md",
-    "LAFČINA.md",
-    "Spinoza’s Percentages of Knowledge - A Symbolic Measure of Human Understanding.md",
-    "Time as the Emergent Order of Changing Relations.md",
-    "Pasted image 20260822084156.png",
     "Even an error has its reason for existence.md",
-    "Svaki dan - jedan život.md",
-    "The life of a man.md",
-    "A serious perspective on Life.md",
-    "Kako mi je dano na zemlji.md",
-    "Epistemological Razors Overview.md",
-    "A humorous perspective on life.md",
-    "Kapija.md",
-    "Tamo gdje je um neustrašiv.md",
+    "Time as the Emergent Order of Changing Relations.md",
+    "Spinoza’s Percentages of Knowledge - A Symbolic Measure of Human Understanding.md",
+    "James Innell Packer.md",
+    "Man's brain lives in the twentieth century.md",
+    "LAFČINA.md",
+    "Pasted image 20260822084156.png",
     "vault_graph.html",
-    "moramo da postanemo natčovek.md",
-    "Man never is happy.md",
-    "Belief.md",
-    "Vanity.md",
-    "look in the mirror.md",
-    "There is no escape..md",
-    "Clippings/Clip web pages.md",
     "Clippings",
-    "Presentation.md",
-    "The World and I.md",
-    "The Passion for the Absurd.md",
-    "The Return to Chaos.md",
-    "The Paucity of Wisdom.md",
     "Pasted image 20260523085546.png",
     "Pasted image 20260523085520.png",
     "Pasted image 20260523085123.png",
