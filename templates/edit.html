@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editing {{ title }} — Vault Wiki</title>
+    <style>
+        :root { --bg: #1e1e1e; --panel: #252526; --fg: #d8d8d8; --accent: #4caf50; --link: #7cb7ff; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--fg);
+            font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.7; }
+        header {
+            position: sticky; top: 0; display: flex; align-items: center; gap: 14px;
+            padding: 12px 24px; background: rgba(30,30,30,.9); backdrop-filter: blur(6px);
+            border-bottom: 1px solid #333; z-index: 10;
+        }
+        header a.back { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px; }
+        header a.back:hover { text-decoration: underline; }
+        header .crumb { color: #888; font-size: 13px; }
+        main { max-width: 760px; margin: 0 auto; padding: 32px 24px 120px; }
+        h1.page-title { font-size: 30px; margin: 0 0 20px; color: #fff; border-bottom: 1px solid #333; padding-bottom: 14px; }
+        form { display: flex; flex-direction: column; gap: 16px; }
+
+        .toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+            background: var(--panel); border: 1px solid #3a3a3a; border-radius: 8px; padding: 8px; }
+        .toolbar button { background: transparent; color: var(--fg); border: 1px solid transparent;
+            border-radius: 6px; padding: 6px 10px; font-size: 14px; cursor: pointer; min-width: 34px; }
+        .toolbar button:hover { background: #333; }
+        .toolbar .sep { width: 1px; height: 22px; background: #3a3a3a; margin: 0 4px; }
+        .toolbar .spacer { flex: 1; }
+        .toolbar .toggle { border-color: #3a3a3a; font-weight: 600; font-size: 13px; }
+        .toolbar .toggle.active { background: var(--accent); color: #10240f; border-color: var(--accent); }
+
+        /* WYSIWYG surface — mirrors the rendered note look */
+        .editor {
+            min-height: 55vh; background: var(--panel); color: var(--fg);
+            border: 1px solid #3a3a3a; border-radius: 8px; padding: 20px 24px; line-height: 1.7;
+        }
+        .editor:focus { outline: none; border-color: var(--accent); }
+        .editor h1, .editor h2, .editor h3, .editor h4 { color: #fff; margin: 1.2em 0 .5em; }
+        .editor h1 { font-size: 26px; } .editor h2 { font-size: 22px; } .editor h3 { font-size: 19px; }
+        .editor p { margin: 0 0 1em; }
+        .editor a { color: var(--link); text-decoration: none; }
+        .editor blockquote { border-left: 3px solid var(--accent); margin: 1em 0; padding: 2px 16px; color: #b8b8b8; background: #232323; }
+        .editor code { background: #2d2d2d; padding: 2px 6px; border-radius: 4px; font-size: .9em; }
+        .editor pre { background: #2d2d2d; padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+        .editor pre code { background: none; padding: 0; }
+        .editor hr { border: none; border-top: 1px solid #333; margin: 2em 0; }
+        .editor img { max-width: 100%; border-radius: 6px; }
+        .editor .wikilink { color: var(--link); border-bottom: 1px dashed var(--link); cursor: default; }
+        .editor .embed { color: #b58bff; }
+        .editor .tag { color: var(--accent); }
+
+        textarea {
+            display: none; width: 100%; min-height: 55vh; resize: vertical;
+            background: var(--panel); color: var(--fg); border: 1px solid #3a3a3a;
+            border-radius: 8px; padding: 20px 24px; line-height: 1.6;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 14px;
+        }
+        textarea:focus { outline: none; border-color: var(--accent); }
+        body.source .editor { display: none; }
+        body.source textarea { display: block; }
+        body.source .toolbar .fmt { opacity: .35; pointer-events: none; }
+
+        .actions { display: flex; gap: 12px; }
+        .actions button, .actions a.cancel {
+            font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 8px;
+            text-decoration: none; cursor: pointer; border: 1px solid #3a3a3a;
+        }
+        .actions button.save { background: var(--accent); color: #10240f; border-color: var(--accent); }
+        .actions a.cancel { background: transparent; color: var(--fg); }
+        .actions a.cancel:hover { border-color: #666; }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="back" href="/">← Graph</a>
+        <span class="crumb">Editing {{ title }}</span>
+    </header>
+    <main>
+        <h1 class="page-title">Editing {{ title }}</h1>
+        <form id="edit-form" method="post" action="{{ url_for('edit', note_id=note_id) }}">
+            <div class="toolbar">
+                <button type="button" class="fmt" data-cmd="h2" title="Heading">H</button>
+                <button type="button" class="fmt" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+                <button type="button" class="fmt" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+                <button type="button" class="fmt" data-cmd="strike" title="Strikethrough"><s>S</s></button>
+                <span class="sep"></span>
+                <button type="button" class="fmt" data-cmd="ul" title="Bullet list">• List</button>
+                <button type="button" class="fmt" data-cmd="quote" title="Quote">❝</button>
+                <button type="button" class="fmt" data-cmd="code" title="Inline code">&lt;/&gt;</button>
+                <button type="button" class="fmt" data-cmd="link" title="Link">🔗</button>
+                <span class="spacer"></span>
+                <button type="button" class="toggle" id="toggle-source" title="Toggle raw markdown">&lt;/&gt; Source</button>
+            </div>
+
+            <div id="editor" class="editor" contenteditable="true" spellcheck="true"></div>
+            <textarea id="raw" name="content" spellcheck="false">{{ content }}</textarea>
+
+            <div class="actions">
+                <button type="submit" class="save">Save</button>
+                <a class="cancel" href="{{ url_for('note', note_id=note_id) }}">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <script>
+    (function () {
+        const form = document.getElementById('edit-form');
+        const editor = document.getElementById('editor');
+        const raw = document.getElementById('raw');
+        const toggle = document.getElementById('toggle-source');
+
+        // ---- helpers ---------------------------------------------------
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function escAttr(s) {
+            return escHtml(s).replace(/"/g, '&quot;');
+        }
+
+        // ---- markdown -> HTML (for the WYSIWYG surface) ----------------
+        function isBlockStart(line) {
+            return /^(#{1,6})\s+/.test(line) || /^\s*>/.test(line) ||
+                /^\s*[-*+]\s+/.test(line) || /^\s*\d+[.)]\s+/.test(line) ||
+                /^\s*([-*_])(\s*\1){2,}\s*$/.test(line) || /^(```|~~~)/.test(line);
+        }
+
+        function inlineToHtml(src) {
+            let out = '', i = 0;
+            const isWord = c => /\w/.test(c || '');
+            while (i < src.length) {
+                const rest = src.slice(i);
+                let m;
+                if (src[i] === '`' && (m = rest.match(/^`([^`]+)`/))) {
+                    out += '<code>' + escHtml(m[1]) + '</code>'; i += m[0].length; continue;
+                }
+                if (rest.startsWith('![[') && (m = rest.match(/^!\[\[([^\]]+)\]\]/))) {
+                    out += '<span class="embed" contenteditable="false" data-md="' + escAttr(m[0]) + '">📎 ' + escHtml(m[1]) + '</span>';
+                    i += m[0].length; continue;
+                }
+                if (rest.startsWith('[[') && (m = rest.match(/^\[\[([^\]]+)\]\]/))) {
+                    const text = (m[1].split('|')[1] || m[1].split('#')[0]).trim();
+                    out += '<span class="wikilink" contenteditable="false" data-md="' + escAttr(m[0]) + '">' + escHtml(text) + '</span>';
+                    i += m[0].length; continue;
+                }
+                if (rest.startsWith('![') && (m = rest.match(/^!\[([^\]]*)\]\(([^)]+)\)/))) {
+                    out += '<img data-md="' + escAttr(m[0]) + '" src="' + escAttr(m[2]) + '" alt="' + escAttr(m[1]) + '">';
+                    i += m[0].length; continue;
+                }
+                if (src[i] === '[' && (m = rest.match(/^\[([^\]]+)\]\(([^)]+)\)/))) {
+                    out += '<a href="' + escAttr(m[2]) + '">' + inlineToHtml(m[1]) + '</a>'; i += m[0].length; continue;
+                }
+                if ((rest.startsWith('**') || rest.startsWith('__')) &&
+                    (m = rest.match(rest[0] === '*' ? /^\*\*([\s\S]+?)\*\*/ : /^__([\s\S]+?)__/))) {
+                    out += '<strong>' + inlineToHtml(m[1]) + '</strong>'; i += m[0].length; continue;
+                }
+                if (src[i] === '*' && (m = rest.match(/^\*([^\s*][\s\S]*?)\*/))) {
+                    out += '<em>' + inlineToHtml(m[1]) + '</em>'; i += m[0].length; continue;
+                }
+                if (src[i] === '_' && !isWord(src[i - 1]) && (m = rest.match(/^_([^\s_][\s\S]*?)_/)) && !isWord(src[i + m[0].length])) {
+                    out += '<em>' + inlineToHtml(m[1]) + '</em>'; i += m[0].length; continue;
+                }
+                if (rest.startsWith('~~') && (m = rest.match(/^~~([\s\S]+?)~~/))) {
+                    out += '<del>' + inlineToHtml(m[1]) + '</del>'; i += m[0].length; continue;
+                }
+                if (src[i] === '#' && !isWord(src[i - 1]) && (m = rest.match(/^#([^\W\d][\w\/\-]*)/))) {
+                    out += '<span class="tag" contenteditable="false" data-md="' + escAttr(m[0]) + '">' + escHtml(m[0]) + '</span>';
+                    i += m[0].length; continue;
+                }
+                out += escHtml(src[i]); i++;
+            }
+            return out;
+        }
+
+        function mdToHtml(md) {
+            const lines = md.replace(/\r\n/g, '\n').split('\n');
+            let html = '', i = 0;
+            while (i < lines.length) {
+                const line = lines[i];
+                if (/^\s*$/.test(line)) { i++; continue; }
+                let m = line.match(/^(```|~~~)(.*)$/);
+                if (m) {
+                    const marker = m[1], buf = []; i++;
+                    while (i < lines.length && !lines[i].startsWith(marker)) { buf.push(lines[i]); i++; }
+                    i++;
+                    const src = marker + m[2] + '\n' + buf.join('\n') + '\n' + marker;
+                    html += '<pre data-md="' + escAttr(src) + '"><code>' + escHtml(buf.join('\n')) + '</code></pre>';
+                    continue;
+                }
+                if ((m = line.match(/^(#{1,6})\s+(.*)$/))) {
+                    const l = m[1].length; html += '<h' + l + '>' + inlineToHtml(m[2]) + '</h' + l + '>'; i++; continue;
+                }
+                if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { html += '<hr>'; i++; continue; }
+                if (/^\s*>/.test(line)) {
+                    const buf = [];
+                    while (i < lines.length && /^\s*>/.test(lines[i])) { buf.push(lines[i].replace(/^\s*>\s?/, '')); i++; }
+                    html += '<blockquote>' + buf.map(inlineToHtml).join('<br>') + '</blockquote>'; continue;
+                }
+                if (/^\s*[-*+]\s+/.test(line)) {
+                    const items = [];
+                    while (i < lines.length && /^\s*[-*+]\s+/.test(lines[i])) { items.push(lines[i].replace(/^\s*[-*+]\s+/, '')); i++; }
+                    html += '<ul>' + items.map(t => '<li>' + inlineToHtml(t) + '</li>').join('') + '</ul>'; continue;
+                }
+                if (/^\s*\d+[.)]\s+/.test(line)) {
+                    const items = [];
+                    while (i < lines.length && /^\s*\d+[.)]\s+/.test(lines[i])) { items.push(lines[i].replace(/^\s*\d+[.)]\s+/, '')); i++; }
+                    html += '<ol>' + items.map(t => '<li>' + inlineToHtml(t) + '</li>').join('') + '</ol>'; continue;
+                }
+                const buf = [];
+                while (i < lines.length && !/^\s*$/.test(lines[i]) && !isBlockStart(lines[i])) { buf.push(lines[i]); i++; }
+                html += '<p>' + buf.map(inlineToHtml).join('<br>') + '</p>';
+            }
+            return html || '<p><br></p>';
+        }
+
+        // ---- HTML -> markdown (for saving) -----------------------------
+        function inlineToMd(node) {
+            let md = '';
+            node.childNodes.forEach(ch => {
+                if (ch.nodeType === 3) { md += ch.textContent; return; }
+                if (ch.nodeType !== 1) return;
+                const dm = ch.getAttribute && ch.getAttribute('data-md');
+                if (dm) { md += dm; return; }
+                const tag = ch.tagName.toLowerCase();
+                if (tag === 'br') { md += '\n'; return; }
+                if (tag === 'strong' || tag === 'b') { md += '**' + inlineToMd(ch) + '**'; return; }
+                if (tag === 'em' || tag === 'i') { md += '*' + inlineToMd(ch) + '*'; return; }
+                if (tag === 'del' || tag === 's' || tag === 'strike') { md += '~~' + inlineToMd(ch) + '~~'; return; }
+                if (tag === 'code') { md += '`' + ch.textContent + '`'; return; }
+                if (tag === 'a') { md += '[' + inlineToMd(ch) + '](' + (ch.getAttribute('href') || '') + ')'; return; }
+                if (tag === 'img') { md += '![' + (ch.getAttribute('alt') || '') + '](' + (ch.getAttribute('src') || '') + ')'; return; }
+                if (tag === 'div' || tag === 'p') { md += (md && !md.endsWith('\n') ? '\n' : '') + inlineToMd(ch); return; }
+                md += inlineToMd(ch);
+            });
+            return md;
+        }
+
+        function blockToMd(n) {
+            if (n.nodeType === 3) { const t = n.textContent.trim(); return t || null; }
+            if (n.nodeType !== 1) return null;
+            const tag = n.tagName.toLowerCase();
+            if (/^h[1-6]$/.test(tag)) return '#'.repeat(+tag[1]) + ' ' + inlineToMd(n);
+            if (tag === 'hr') return '---';
+            if (tag === 'pre') return n.getAttribute('data-md') || ('```\n' + n.textContent + '\n```');
+            if (tag === 'blockquote') return inlineToMd(n).split('\n').map(l => '> ' + l).join('\n');
+            if (tag === 'ul') return [...n.children].map(li => '- ' + inlineToMd(li)).join('\n');
+            if (tag === 'ol') return [...n.children].map((li, idx) => (idx + 1) + '. ' + inlineToMd(li)).join('\n');
+            return inlineToMd(n);
+        }
+
+        function domToMd(root) {
+            const blocks = [];
+            root.childNodes.forEach(n => {
+                const b = blockToMd(n);
+                if (b !== null && b.trim() !== '') blocks.push(b);
+            });
+            return blocks.join('\n\n').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+        }
+
+        // ---- toolbar ---------------------------------------------------
+        function wrapInlineCode() {
+            const sel = window.getSelection();
+            if (!sel.rangeCount || sel.isCollapsed) return;
+            const range = sel.getRangeAt(0);
+            const code = document.createElement('code');
+            code.textContent = range.toString();
+            range.deleteContents();
+            range.insertNode(code);
+            sel.removeAllRanges();
+        }
+
+        const commands = {
+            h2: () => document.execCommand('formatBlock', false, 'H2'),
+            bold: () => document.execCommand('bold'),
+            italic: () => document.execCommand('italic'),
+            strike: () => document.execCommand('strikeThrough'),
+            ul: () => document.execCommand('insertUnorderedList'),
+            quote: () => document.execCommand('formatBlock', false, 'BLOCKQUOTE'),
+            code: wrapInlineCode,
+            link: () => {
+                const url = prompt('Link URL:');
+                if (url) document.execCommand('createLink', false, url);
+            },
+        };
+
+        document.querySelectorAll('.toolbar .fmt').forEach(btn => {
+            btn.addEventListener('mousedown', e => e.preventDefault()); // keep selection
+            btn.addEventListener('click', () => {
+                editor.focus();
+                const fn = commands[btn.dataset.cmd];
+                if (fn) fn();
+            });
+        });
+
+        // ---- source toggle ---------------------------------------------
+        function toWysiwyg() {
+            editor.innerHTML = mdToHtml(raw.value);
+            document.body.classList.remove('source');
+            toggle.classList.remove('active');
+        }
+        function toSource() {
+            raw.value = domToMd(editor);
+            document.body.classList.add('source');
+            toggle.classList.add('active');
+        }
+        toggle.addEventListener('click', () => {
+            document.body.classList.contains('source') ? toWysiwyg() : toSource();
+        });
+
+        // ---- save ------------------------------------------------------
+        form.addEventListener('submit', () => {
+            if (!document.body.classList.contains('source')) raw.value = domToMd(editor);
+        });
+
+        // ---- init ------------------------------------------------------
+        toWysiwyg();
+    })();
+    </script>
+</body>
+</html>

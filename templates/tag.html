@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ tag }} — Vault Wiki</title>
+    <style>
+        :root { --bg: #1e1e1e; --panel: #252526; --fg: #d8d8d8; --accent: #4caf50; --link: #7cb7ff; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--fg);
+            font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.7; }
+        header {
+            position: sticky; top: 0; display: flex; align-items: center; gap: 14px;
+            padding: 12px 24px; background: rgba(30,30,30,.9); backdrop-filter: blur(6px);
+            border-bottom: 1px solid #333; z-index: 10;
+        }
+        header a.back { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px; }
+        header a.back:hover { text-decoration: underline; }
+        header .crumb { color: #888; font-size: 13px; }
+        main { max-width: 760px; margin: 0 auto; padding: 40px 24px 120px; }
+        h1.page-title { font-size: 30px; margin: 0 0 6px; color: #fff; }
+        h1.page-title .hash { color: var(--accent); }
+        .count { color: #888; font-size: 14px; margin: 0 0 24px; border-bottom: 1px solid #333; padding-bottom: 14px; }
+        ul.notes { list-style: none; margin: 0; padding: 0; }
+        ul.notes li { margin: 0 0 4px; }
+        ul.notes a { display: block; color: var(--link); text-decoration: none;
+            padding: 12px 16px; background: var(--panel); border: 1px solid #3a3a3a; border-radius: 8px; }
+        ul.notes a:hover { border-color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="back" href="/">← Graph</a>
+        <span class="crumb">{{ tag }}</span>
+    </header>
+    <main>
+        <h1 class="page-title"><span class="hash">#</span>{{ tag.lstrip('#') }}</h1>
+        <p class="count">{{ notes|length }} note{{ '' if notes|length == 1 else 's' }} tagged</p>
+        <ul class="notes">
+            {% for n in notes %}
+            <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>
