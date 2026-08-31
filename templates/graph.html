@@ -38,11 +38,30 @@
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
         }
         #search:focus { border-color: #4caf50; }
-        #theme-toggle {
+        #theme-toggle, #colors-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
         }
-        #theme-toggle:hover { border-color: #4caf50; }
+        #theme-toggle:hover, #colors-toggle:hover { border-color: #4caf50; }
+
+        #colors-panel {
+            position: fixed; top: 52px; right: 16px; z-index: 25; display: none;
+            background: var(--panel); color: var(--fg); border: 1px solid var(--border);
+            border-radius: 8px; box-shadow: var(--shadow); padding: 12px 14px; font-size: 13px;
+        }
+        #colors-panel.visible { display: block; }
+        #colors-panel label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        #colors-panel label span { flex: 1; }
+        #colors-panel input[type="color"] {
+            width: 34px; height: 24px; padding: 0; background: none;
+            border: 1px solid var(--input-border); border-radius: 4px; cursor: pointer;
+        }
+        #colors-panel .hint { color: var(--muted); font-size: 11px; margin: 0 0 10px; max-width: 210px; }
+        #colors-reset {
+            background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
+            padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; width: 100%;
+        }
+        #colors-reset:hover { border-color: #4caf50; }
 
         #preview {
             position: fixed; max-width: 360px; max-height: 60vh; overflow: hidden;
@@ -70,7 +89,14 @@
     <div id="topbar">
         <h1>🕸️ Vault Wiki</h1>
         <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
+        <button id="colors-toggle" type="button" title="Change node colors" aria-label="Change node colors">🎨</button>
         <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
+    </div>
+    <div id="colors-panel">
+        <label><span>Topics</span><input id="color-note" type="color"></label>
+        <label><span>Tags</span><input id="color-tag" type="color"></label>
+        <p class="hint">Notes colored by an Obsidian color group keep their own color.</p>
+        <button id="colors-reset" type="button">Reset to defaults</button>
     </div>
     <div id="graph"></div>
     <div id="preview">
@@ -84,6 +110,19 @@
         var nodes = {{ nodes|safe }};
         var links = {{ links|safe }};
         var colorGroups = {{ color_groups|safe }};
+
+        var DEFAULT_COLORS = { note: "#7f7f7f", tag: "#4caf50" };
+        var userColors = {
+            note: localStorage.getItem("vault-color-note") || DEFAULT_COLORS.note,
+            tag: localStorage.getItem("vault-color-tag") || DEFAULT_COLORS.tag
+        };
+        nodes.forEach(function (d) { d.baseColor = d.color; });
+
+        // Obsidian color-group nodes keep their color; only default-colored ones follow the picker.
+        function nodeColor(d) {
+            var type = d.type === "tag" ? "tag" : "note";
+            return d.baseColor === DEFAULT_COLORS[type] ? userColors[type] : d.baseColor;
+        }
 
         var width = window.innerWidth;
         var height = window.innerHeight;
@@ -125,7 +164,7 @@
             .data(nodes).enter().append("circle")
             .attr("class", "node")
             .attr("r", d => 5 + Math.sqrt(d.link_count))
-            .attr("fill", d => d.color)
+            .attr("fill", nodeColor)
             .call(d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended))
             .on("mouseover", nodeOver)
             .on("mousemove", nodeMove)
@@ -254,6 +293,40 @@
             node.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.12);
             text.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.08);
         });
+
+        // ---- Node color pickers ----
+        var colorsPanel = document.getElementById("colors-panel");
+        var colorInputs = { note: document.getElementById("color-note"), tag: document.getElementById("color-tag") };
+
+        function applyColors() {
+            colorInputs.note.value = userColors.note;
+            colorInputs.tag.value = userColors.tag;
+            node.attr("fill", nodeColor);
+        }
+
+        Object.keys(colorInputs).forEach(function (type) {
+            colorInputs[type].addEventListener("input", function () {
+                userColors[type] = this.value;
+                localStorage.setItem("vault-color-" + type, this.value);
+                node.attr("fill", nodeColor);
+            });
+        });
+
+        document.getElementById("colors-reset").addEventListener("click", function () {
+            userColors = { note: DEFAULT_COLORS.note, tag: DEFAULT_COLORS.tag };
+            localStorage.removeItem("vault-color-note");
+            localStorage.removeItem("vault-color-tag");
+            applyColors();
+        });
+
+        document.getElementById("colors-toggle").addEventListener("click", function (e) {
+            e.stopPropagation();
+            colorsPanel.classList.toggle("visible");
+        });
+        colorsPanel.addEventListener("click", function (e) { e.stopPropagation(); });
+        document.addEventListener("click", function () { colorsPanel.classList.remove("visible"); });
+
+        applyColors();
 
         // ---- Theme toggle ----
         var themeToggle = document.getElementById("theme-toggle");
