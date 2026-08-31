@@ -181,10 +181,10 @@
         var hoverToken = 0;
 
         function noteUrl(d) { return "/note/" + encodeURIComponent(d.id); }
+        function tagUrl(d) { return "/tag/" + encodeURIComponent(d.id.replace(/^#/, "")); }
 
         function nodeClick(d) {
-            if (d.type === "tag") return; // tags have no page
-            window.location.href = noteUrl(d);
+            window.location.href = d.type === "tag" ? tagUrl(d) : noteUrl(d);
         }
 
         function nodeOver(d) {
@@ -195,10 +195,12 @@
             if (d.type === "tag") {
                 previewTitle.textContent = d.label;
                 previewBody.innerHTML = "<p>" + d.link_count + " note(s) tagged with this.</p>";
-                previewHint.style.display = "none";
+                previewHint.textContent = "Click to list notes \u2192";
+                previewHint.style.display = "block";
                 showPreview();
                 return;
             }
+            previewHint.textContent = "Click to open \u2192";
             previewHint.style.display = "block";
 
             if (previewCache[d.id]) {

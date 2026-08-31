@@ -46,6 +46,19 @@
         .content table { border-collapse: collapse; width: 100%; margin: 1em 0; }
         .content th, .content td { border: 1px solid var(--border-soft); padding: 8px 12px; }
         .content hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+
+        .tags { margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .tags a { color: var(--accent); text-decoration: none; font-size: 13px;
+            padding: 3px 10px; background: var(--quote-bg); border: 1px solid var(--border-soft); border-radius: 999px; }
+        .tags a:hover { background: var(--code-bg); }
+        .related { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 24px; }
+        .related h2 { font-size: 15px; color: var(--muted); text-transform: uppercase;
+            letter-spacing: .05em; margin: 0 0 12px; }
+        .related + .related { margin-top: 28px; }
+        .related ul { list-style: none; margin: 0; padding: 0; }
+        .related li { margin: 0 0 4px; }
+        .related a { color: var(--link); text-decoration: none; }
+        .related a:hover { text-decoration: underline; }
     </style>
     <script>
         (function () {
@@ -59,11 +72,42 @@
     <header>
         <a class="back" href="/">← Graph</a>
         <span class="crumb">{{ title }}</span>
-        <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
+        <a class="back" href="{{ url_for('edit', note_id=note_id) }}" style="margin-left:auto">Edit ✎</a>
+        <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme" style="margin-left:0"></button>
     </header>
     <main>
         <h1 class="page-title">{{ title }}</h1>
         <div class="content">{{ body|safe }}</div>
+
+        {% if tags %}
+        <div class="tags">
+            {% for t in tags %}
+            <a href="{{ url_for('tag_view', tag=t) }}">#{{ t }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if linked %}
+        <section class="related">
+            <h2>Linked notes</h2>
+            <ul>
+                {% for n in linked %}
+                <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if backlinks %}
+        <section class="related">
+            <h2>Referenced by</h2>
+            <ul>
+                {% for n in backlinks %}
+                <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
     </main>
     <script>
         var themeToggle = document.getElementById("theme-toggle");

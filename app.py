@@ -11,7 +11,7 @@ from collections import defaultdict
 from urllib.parse import quote
 
 import markdown
-from flask import Flask, abort, render_template, url_for
+from flask import Flask, abort, redirect, render_template, request, url_for
 
 # Vault directory: the folder that contains the notes. Defaults to the folder
 # this script lives in, matching how vault_graph.html was generated.
@@ -193,7 +193,45 @@ def load_vault():
     VAULT['notes'] = notes
     VAULT['nodes'] = nodes
     VAULT['edges'] = edges
+    VAULT['note_tags'] = note_tags
     VAULT['color_groups'] = color_groups
+
+
+def note_summary(key):
+    """Return a link-ready descriptor for a note key."""
+    return {
+        'id': key,
+        'title': capitalize_first_letter(os.path.splitext(key)[0]),
+        'url': url_for('note', note_id=key),
+    }
+
+
+def notes_for_tag(tag):
+    """Return note summaries for every note carrying the given tag."""
+    tag_key = tag.lower().lstrip('#')
+    matches = [note_summary(key)
+               for key, tags in VAULT['note_tags'].items()
+               if any(t.lower() == tag_key for t in tags)]
+    matches.sort(key=lambda n: n['title'].lower())
+    return matches
+
+
+def related_notes(key):
+    """Return (linked, backlinks) note summaries connected to the given note."""
+    note_ids = set(VAULT['notes'].keys())
+    linked, backlinks = set(), set()
+    for edge in VAULT['edges']:
+        src, dst = edge['source'], edge['target']
+        if src == key and dst in note_ids and dst != key:
+            linked.add(dst)
+        elif dst == key and src in note_ids and src != key:
+            backlinks.add(src)
+
+    def fmt(ids):
+        return sorted((note_summary(k) for k in ids),
+                      key=lambda n: n['title'].lower())
+
+    return fmt(linked), fmt(backlinks)
 
 
 def resolve_note_key(note_id):
@@ -267,7 +305,46 @@ def note(note_id):
     content = strip_frontmatter(VAULT['notes'][key]['content'])
     html = render_markdown(content)
     title = capitalize_first_letter(os.path.splitext(key)[0])
-    return render_template('note.html', title=title, body=html)
+    linked, backlinks = related_notes(key)
+    tags = VAULT['note_tags'].get(key, [])
+    return render_template(
+        'note.html', title=title, body=html, note_id=key,
+        linked=linked, backlinks=backlinks, tags=tags)
+
+
+@app.route('/tag/<path:tag>')
+def tag_view(tag):
+    tag_key = tag.lower().lstrip('#')
+    matches = notes_for_tag(tag_key)
+    if not matches:
+        abort(404)
+    return render_template('tag.html', tag='#' + tag_key, notes=matches)
+
+
+@app.route('/edit/<path:note_id>', methods=['GET', 'POST'])
+def edit(note_id):
+    key = resolve_note_key(note_id)
+    if not key:
+        abort(404)
+    file_path = VAULT['notes'][key]['path']
+    # Confine writes to the vault: reject any path escaping VAULT_DIR.
+    real_path = os.path.realpath(file_path)
+    vault_root = os.path.realpath(VAULT_DIR)
+    if os.path.commonpath([real_path, vault_root]) != vault_root:
+        abort(403)
+    title = capitalize_first_letter(os.path.splitext(key)[0])
+
+    if request.method == 'POST':
+        content = request.form.get('content', '')
+        content = content.replace('\r\n', '\n')
+        with open(real_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        load_vault()
+        return redirect(url_for('note', note_id=key))
+
+    return render_template(
+        'edit.html', title=title, note_id=key,
+        content=VAULT['notes'][key]['content'])
 
 
 @app.route('/api/preview/<path:note_id>')
