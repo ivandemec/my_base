@@ -11,13 +11,56 @@
             "id": "74126f3522040c4f",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Random thoughts/Solomon's paradox.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Solomon's paradox"
+            }
+          },
+          {
+            "id": "e6841fcc11cc8359",
+            "type": "leaf",
+            "state": {
               "type": "graph",
               "state": {},
               "icon": "lucide-git-fork",
               "title": "Graph view"
             }
+          },
+          {
+            "id": "9e0dca15afc6e41e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Random thoughts/Intuition.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Intuition"
+            }
+          },
+          {
+            "id": "93499a9ad0ed84e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Random thoughts/Solomon's paradox.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Solomon's paradox"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -95,6 +138,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,6 +157,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -155,6 +200,7 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -181,6 +227,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "74126f3522040c4f",
-  "lastOpenFiles": []
+  "active": "e6841fcc11cc8359",
+  "lastOpenFiles": [
+    "Random thoughts/Ahriman's realm.md",
+    "Random thoughts/Intuition.md",
+    "Random thoughts/Solomon's paradox.md",
+    "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md"
+  ]
 }
