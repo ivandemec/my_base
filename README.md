@@ -67,8 +67,11 @@ python app.py
 
 Then open http://127.0.0.1:5000 in your browser.
 
-By default the app serves the folder it lives in. Point it at a different vault
-with the `VAULT_DIR` environment variable:
+By default the app serves the `Random thoughts` folder in the project root.
+Click **Open vault** in the graph toolbar and choose another directory in the
+native Windows, macOS, or Linux folder picker to switch vaults while the app is
+running. You can also choose the startup vault with the `VAULT_DIR` environment
+variable:
 
 ```bash
 VAULT_DIR=/path/to/your/vault python app.py
@@ -79,6 +82,7 @@ VAULT_DIR=/path/to/your/vault python app.py
 | Route | Description |
 | --- | --- |
 | `/` | Interactive graph landing page. |
+| `/vault` | Selects and loads an existing vault directory. |
 | `/note/<id>` | Rendered note view. |
 | `/api/preview/<id>` | JSON preview snippet used for hover cards. |
 | `/reload` | Re-parses the vault without restarting the server. |

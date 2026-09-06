@@ -33,6 +33,16 @@
             border-bottom: 1px solid var(--topbar-border); z-index: 20;
         }
         #topbar h1 { font-size: 15px; color: var(--fg); margin: 0; font-weight: 600; }
+        #vault-form { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        #vault-path {
+            color: var(--muted); font-size: 12px; max-width: min(28vw, 320px);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        #vault-submit {
+            background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
+            padding: 6px 10px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+        }
+        #vault-submit:hover { border-color: #4caf50; }
         #search {
             margin-left: auto; background: var(--input-bg); border: 1px solid var(--input-border);
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
@@ -88,6 +98,10 @@
 <body>
     <div id="topbar">
         <h1>🕸️ Vault Wiki</h1>
+        <form id="vault-form" action="/vault" method="post">
+            <button id="vault-submit" type="submit">Open vault</button>
+            <span id="vault-path" title="{{ vault_dir }}">{{ vault_dir }}</span>
+        </form>
         <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
         <button id="colors-toggle" type="button" title="Change node colors" aria-label="Change node colors">🎨</button>
         <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>

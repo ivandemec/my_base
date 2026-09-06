@@ -6,17 +6,20 @@ preview of the note; clicking a node opens the note with its Markdown rendered.
 
 import json
 import os
+import platform
 import re
+import subprocess
 from collections import defaultdict
 from urllib.parse import quote
 
 import markdown
 from flask import Flask, abort, redirect, render_template, request, url_for
 
-# Vault directory: the folder that contains the notes. Defaults to the folder
-# this script lives in, matching how vault_graph.html was generated.
-VAULT_DIR = os.environ.get(
-    "VAULT_DIR", os.path.dirname(os.path.abspath(__file__)))
+# Vault directory: the folder that contains the notes. It can be overridden at
+# startup or changed from the graph view while the app is running.
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_VAULT_DIR = os.path.join(APP_ROOT, 'Random thoughts')
+VAULT_DIR = os.path.realpath(os.environ.get('VAULT_DIR', DEFAULT_VAULT_DIR))
 
 app = Flask(__name__)
 
@@ -287,6 +290,68 @@ def strip_frontmatter(content):
     return content
 
 
+def choose_vault_directory(initial_dir):
+    """Open the operating system's directory picker for the local app."""
+    system = platform.system()
+    if system == 'Windows':
+        env = os.environ.copy()
+        env['MYBASE_INITIAL_DIR'] = initial_dir
+        script = (
+            'Add-Type -AssemblyName System.Windows.Forms; '
+            '$dialog = New-Object System.Windows.Forms.FolderBrowserDialog; '
+            '$dialog.Description = "Select vault directory"; '
+            '$dialog.SelectedPath = $env:MYBASE_INITIAL_DIR; '
+            'if ($dialog.ShowDialog() -eq '
+            '[System.Windows.Forms.DialogResult]::OK) '
+            '{ $dialog.SelectedPath }'
+        )
+        result = subprocess.run(
+            ['powershell.exe', '-NoProfile', '-NonInteractive', '-STA',
+             '-Command', script],
+            capture_output=True,
+            text=True,
+            check=False,
+            env=env,
+            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0),
+        )
+        return result.stdout.strip() if result.returncode == 0 else ''
+
+    if system == 'Darwin':
+        script = (
+            'on run argv\n'
+            'set selectedFolder to choose folder with prompt '
+            '"Select vault directory" default location '
+            'POSIX file (item 1 of argv)\n'
+            'return POSIX path of selectedFolder\n'
+            'end run'
+        )
+        result = subprocess.run(
+            ['osascript', '-e', script, initial_dir],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return result.stdout.strip() if result.returncode == 0 else ''
+
+    import tkinter as tk
+    from tkinter import filedialog
+
+    root = tk.Tk()
+    root.withdraw()
+    try:
+        root.attributes('-topmost', True)
+    except tk.TclError:
+        pass
+    try:
+        return filedialog.askdirectory(
+            parent=root,
+            initialdir=initial_dir,
+            title='Select vault directory',
+        )
+    finally:
+        root.destroy()
+
+
 @app.route('/')
 def index():
     return render_template(
@@ -294,7 +359,23 @@ def index():
         nodes=json.dumps(VAULT['nodes']),
         links=json.dumps(VAULT['edges']),
         color_groups=json.dumps(VAULT['color_groups']),
+        vault_dir=VAULT_DIR,
     )
+
+
+@app.route('/vault', methods=['POST'])
+def select_vault():
+    global VAULT_DIR
+
+    selected_dir = choose_vault_directory(VAULT_DIR)
+    if not selected_dir:
+        return redirect(url_for('index'))
+    if not os.path.isdir(selected_dir):
+        abort(400, description='Selected vault directory does not exist.')
+
+    VAULT_DIR = os.path.realpath(selected_dir)
+    load_vault()
+    return redirect(url_for('index'))
 
 
 @app.route('/note/<path:note_id>')
