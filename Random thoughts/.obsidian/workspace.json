@@ -11,13 +11,110 @@
             "id": "0a3a40604be3026d",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fate.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Fate"
+            }
+          },
+          {
+            "id": "d654d07c8728ffe9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ралф Валдо Емерсон, „Самопоуздање“.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Ралф Валдо Емерсон, „Самопоуздање“"
+            }
+          },
+          {
+            "id": "f6e03122ffaf8299",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "the realm of elemental life, of nocturnal life.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "the realm of elemental life, of nocturnal life"
+            }
+          },
+          {
+            "id": "5b10728a261ec92b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ahriman's realm.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Ahriman's realm"
+            }
+          },
+          {
+            "id": "754e1decaae443ab",
+            "type": "leaf",
+            "state": {
               "type": "graph",
               "state": {},
               "icon": "lucide-git-fork",
               "title": "Graph view"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -51,7 +148,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:Becket",
+                "query": "normal",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -75,7 +172,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,8 +282,20 @@
       "bases:Create new base": false
     }
   },
-  "active": "24eb415b04039e5a",
+  "active": "754e1decaae443ab",
   "lastOpenFiles": [
+    "Emil Cioran - Nothing Matters.md",
+    "The Passion for the Absurd.md",
+    "Ahriman's realm.md",
+    "Kvarnost.md",
+    "The World and I.md",
+    "The World in Which Nothing Is Solved.md",
+    "On the Reality of the Body.md",
+    "Mudrac Bela Hamvas, učitelj života.md",
+    "Christ did not die for nations.md",
+    "the realm of elemental life, of nocturnal life.md",
+    "Ралф Валдо Емерсон, „Самопоуздање“.md",
+    "Fate.md",
     "Genius.md",
     "We, as living beings, must create the opportunity for the dead to perceive us..md",
     "The time for prophets and founding religions is over.md",
@@ -193,7 +303,6 @@
     "It is as pernicious to hate a fellow-being as it is to strike him..md",
     "Reality is something we create.md",
     "The human development from 800 AD to 1600 AD.md",
-    "Fate.md",
     "The True Mysteries of Human Nature.md",
     "Life is a strange thing..md",
     "Omnipotent.md",
@@ -201,17 +310,6 @@
     "There are more fools in the world than there are people..md",
     "Just society.md",
     "Suffering.md",
-    "Words.md",
-    "Nemoć.md",
-    "Aedh Wishes for the Cloths of Heaven.md",
-    "The first thing you learn in life is you're a fool..md",
-    "Sadness is a way into a mystery.md",
-    "Oživi mene, noći - Aleksa Šantić.md",
-    "Susan Sontag - The Aesthetics of Silence.md",
-    "Pablo Neruda, “It is Born,”from The Poetry of Pablo Neruda.md",
-    "Pablo Neruda - Lagano umire onaj....md",
-    "KEEPING QUIET by Pablo Neruda.md",
-    "Pablo Nerudafrom 'One Hundred Love Sonnets'.md",
     "Pasted image 20260822084156.png",
     "vault_graph.html",
     "Clippings",
