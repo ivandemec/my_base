@@ -21,8 +21,16 @@
         }
         * { box-sizing: border-box; }
         body { margin: 0; padding: 0; overflow: hidden; background-color: var(--bg); font-family: Arial, sans-serif; }
+        body.arc-mode { overflow-y: auto; }
+        body.arc-mode .texts text { pointer-events: auto; cursor: pointer; }
         .node { cursor: pointer; }
-        .link { stroke: var(--link-stroke); stroke-opacity: 0.6; }
+        .link { fill: none; stroke: var(--link-stroke); stroke-opacity: 0.6; }
+        .pack-group { fill: none; stroke: var(--border); stroke-width: 1.5; }
+        .pack-node { cursor: pointer; stroke: var(--bg); stroke-width: 1; }
+        .pack-label { text-anchor: middle; font-weight: 600; }
+        .pack-note-label { text-anchor: middle; }
+        .treemap-node { cursor: pointer; stroke: var(--bg); stroke-width: 1; }
+        .treemap-label { dominant-baseline: hanging; }
         text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: var(--fg); }
         svg { width: 100vw; height: 100vh; }
 
@@ -48,6 +56,12 @@
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
         }
         #search:focus { border-color: #4caf50; }
+        #graph-type, #arc-order, #pack-order, #treemap-tiling {
+            background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
+            padding: 6px 28px 6px 10px; border-radius: 6px; outline: none; cursor: pointer;
+        }
+        #graph-type:focus, #arc-order:focus, #pack-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
+        #arc-order[hidden], #pack-order[hidden], #treemap-tiling[hidden] { display: none; }
         #theme-toggle, #colors-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
@@ -86,6 +100,17 @@
         #preview img { max-width: 100%; }
         #preview p { margin: 6px 0; }
         #preview .hint { margin-top: 10px; font-size: 11px; color: var(--muted); }
+
+        @media (max-width: 700px) {
+            #topbar { height: auto; min-height: 86px; flex-wrap: wrap; gap: 6px; padding: 6px 10px; }
+            #topbar h1, #vault-form { order: 1; }
+            #vault-form { flex: 1; min-width: auto; }
+            #vault-path { display: none; }
+            #graph-type, #arc-order, #pack-order, #treemap-tiling, #search, #colors-toggle, #theme-toggle { order: 2; }
+            #graph-type { flex: 0 0 155px; min-width: 0; }
+            #arc-order, #pack-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
+            #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
+        }
     </style>
     <script>
         (function () {
@@ -102,6 +127,27 @@
             <button id="vault-submit" type="submit">Open vault</button>
             <span id="vault-path" title="{{ vault_dir }}">{{ vault_dir }}</span>
         </form>
+        <select id="graph-type" aria-label="Graph type" title="Graph type">
+            <option value="force">Force-directed</option>
+            <option value="disjoint">Disjoint force-directed</option>
+            <option value="arc">Arc diagram</option>
+            <option value="pack">Circle packing</option>
+            <option value="treemap">Treemap, CSV</option>
+        </select>
+        <select id="arc-order" aria-label="Arc diagram order" title="Arc diagram order" hidden>
+            <option value="topic">By Topic</option>
+            <option value="tag">By Tag</option>
+            <option value="name">By Name</option>
+        </select>
+        <select id="pack-order" aria-label="Circle packing group" title="Circle packing group" hidden>
+            <option value="topic">By Topic</option>
+            <option value="tag">By Tag</option>
+        </select>
+        <select id="treemap-tiling" aria-label="Treemap tiling method" title="Treemap tiling method" hidden>
+            <option value="binary">Binary</option>
+            <option value="squarify">Squarify</option>
+            <option value="slice-dice">Slice-dice</option>
+        </select>
         <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
         <button id="colors-toggle" type="button" title="Change node colors" aria-label="Change node colors">🎨</button>
         <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
@@ -158,6 +204,23 @@
             }
         }
 
+        var graphType = localStorage.getItem("vault-graph-type") || "force";
+        var graphTypeSelect = document.getElementById("graph-type");
+        var arcOrder = localStorage.getItem("vault-arc-order") || "topic";
+        var arcOrderSelect = document.getElementById("arc-order");
+        var packOrder = localStorage.getItem("vault-pack-order") || "topic";
+        var packOrderSelect = document.getElementById("pack-order");
+        var treemapTiling = localStorage.getItem("vault-treemap-tiling") || "binary";
+        var treemapTilingSelect = document.getElementById("treemap-tiling");
+        if (!["force", "disjoint", "arc", "pack", "treemap"].includes(graphType)) graphType = "force";
+        if (!["topic", "tag", "name"].includes(arcOrder)) arcOrder = "topic";
+        if (!["topic", "tag"].includes(packOrder)) packOrder = "topic";
+        if (!["binary", "squarify", "slice-dice"].includes(treemapTiling)) treemapTiling = "binary";
+        graphTypeSelect.value = graphType;
+        arcOrderSelect.value = arcOrder;
+        packOrderSelect.value = packOrder;
+        treemapTilingSelect.value = treemapTiling;
+
         var simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id).distance(d => {
                 const s = links.filter(l => l.source.id === d.source.id || l.target.id === d.source.id).length;
@@ -165,14 +228,60 @@
                 return Math.min(150, Math.max(50, (s + t) * 10));
             }))
             .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("custom", customForce)
             .force("collision", labelCollision())
             .alphaDecay(0.02).alphaMin(0.001)
             .on("tick", ticked);
 
-        var link = g.append("g").attr("class", "links").selectAll("line")
-            .data(links).enter().append("line").attr("class", "link");
+        function applyGraphType(type, restart) {
+            var arc = type === "arc";
+            var pack = type === "pack";
+            var treemap = type === "treemap";
+            var disjoint = type === "disjoint";
+            arcOrderSelect.hidden = !arc;
+            packOrderSelect.hidden = !pack;
+            treemapTilingSelect.hidden = !treemap;
+            document.body.classList.toggle("arc-mode", arc);
+            svg.call(zoom.transform, d3.zoomIdentity);
+            link.style("display", pack || treemap ? "none" : null);
+            node.style("display", pack || treemap ? "none" : null);
+            text.style("display", pack || treemap ? "none" : null);
+            packLayer.style("display", pack ? null : "none");
+            treemapLayer.style("display", treemap ? null : "none");
+
+            if (treemap) {
+                simulation.stop();
+                svg.style("height", null);
+                renderTreemap(treemapTiling);
+                return;
+            }
+
+            if (pack) {
+                simulation.stop();
+                svg.style("height", null);
+                renderPack(packOrder);
+                return;
+            }
+
+            if (arc) {
+                simulation.stop();
+                renderArc(arcOrder, restart);
+                return;
+            }
+
+            svg.style("height", null);
+            link.attr("d", d => "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y);
+            node.attr("r", d => 5 + Math.sqrt(d.link_count));
+            text.attr("text-anchor", null);
+            simulation
+                .force("center", disjoint ? null : d3.forceCenter(width / 2, height / 2))
+                .force("custom", disjoint ? null : customForce)
+                .force("x", disjoint ? d3.forceX(width / 2).strength(0.05) : null)
+                .force("y", disjoint ? d3.forceY(height / 2).strength(0.05) : null);
+            if (restart) simulation.alpha(1).restart();
+        }
+
+        var link = g.append("g").attr("class", "links").selectAll("path")
+            .data(links).enter().append("path").attr("class", "link");
 
         var node = g.append("g").attr("class", "nodes").selectAll("circle")
             .data(nodes).enter().append("circle")
@@ -187,21 +296,226 @@
 
         var text = g.append("g").attr("class", "texts").selectAll("text")
             .data(nodes).enter().append("text")
-            .attr("x", 8).attr("y", ".31em").text(d => d.label);
+            .attr("x", d => d.x + 8).attr("y", d => d.y + 3).text(d => d.label)
+            .on("mouseover", nodeOver)
+            .on("mousemove", nodeMove)
+            .on("mouseout", nodeOut)
+            .on("click", nodeClick);
+
+        var packLayer = g.append("g").attr("class", "pack").style("display", "none");
+        var packLeaf = packLayer.selectAll("circle.pack-node");
+        var treemapLayer = g.append("g").attr("class", "treemap").style("display", "none");
+        var treemapLeaf = treemapLayer.selectAll("rect.treemap-node");
 
         function ticked() {
-            link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap") return;
+            link.attr("d", d => "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y);
             node.attr("cx", d => d.x).attr("cy", d => d.y);
             text.attr("x", d => d.x + 8).attr("y", d => d.y + 3);
         }
 
+        function connectedNodes(d, type) {
+            return links.map(function (link) {
+                if (link.source.id === d.id && link.target.type === type) return link.target;
+                if (link.target.id === d.id && link.source.type === type) return link.source;
+                return null;
+            }).filter(Boolean);
+        }
+
+        function arcSortKey(d, order) {
+            if (order === "name") return d.label.toLowerCase();
+            if (order === "tag") {
+                var tags = connectedNodes(d, "tag").sort((a, b) => d3.ascending(a.label, b.label));
+                return (d.type === "tag" ? d.label : tags.length ? tags[0].label : "~untagged").toLowerCase();
+            }
+            var topics = connectedNodes(d, "note").sort((a, b) =>
+                d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label));
+            return (d.type === "note" && topics.length ? topics[0].label : d.label).toLowerCase();
+        }
+
+        function renderArc(order, animate) {
+            var top = document.getElementById("topbar").getBoundingClientRect().bottom + 20;
+            var step = 20;
+            var arcX = Math.min(300, Math.max(140, width * 0.3));
+            var ordered = nodes.slice().sort((a, b) =>
+                d3.ascending(arcSortKey(a, order), arcSortKey(b, order)) ||
+                d3.ascending(a.label.toLowerCase(), b.label.toLowerCase()));
+            var arcHeight = Math.max(height, top + ordered.length * step + 20);
+            ordered.forEach(function (d, index) { d.x = arcX; d.y = top + index * step; });
+            svg.style("height", arcHeight + "px");
+
+            var duration = animate ? 600 : 0;
+            node.transition().duration(duration)
+                .attr("cx", d => d.x).attr("cy", d => d.y)
+                .attr("r", d => 3 + Math.min(4, Math.sqrt(d.link_count)));
+            text.transition().duration(duration)
+                .attr("x", d => d.x - 8).attr("y", d => d.y + 4)
+                .attr("text-anchor", "end");
+            link.transition().duration(duration).attr("d", function (d) {
+                var radius = Math.abs(d.target.y - d.source.y) / 2;
+                return "M" + arcX + "," + d.source.y + "A" + radius + "," + radius + " 0 0,0 " + arcX + "," + d.target.y;
+            });
+        }
+
+        function packGroupKey(d, order) {
+            if (order === "tag") {
+                var tags = connectedNodes(d, "tag").sort((a, b) => d3.ascending(a.label, b.label));
+                return tags.length ? tags[0].label : "Untagged";
+            }
+            var topics = connectedNodes(d, "note").sort((a, b) =>
+                d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label));
+            return topics.length ? topics[0].label : "Unlinked";
+        }
+
+        function renderPack(order) {
+            var top = document.getElementById("topbar").getBoundingClientRect().bottom;
+            var packWidth = width;
+            var packHeight = Math.max(320, height - top);
+            var groups = d3.nest()
+                .key(d => packGroupKey(d, order))
+                .entries(nodes.filter(d => d.type === "note"))
+                .sort((a, b) => d3.ascending(a.key.toLowerCase(), b.key.toLowerCase()));
+            var hierarchy = {
+                name: "Vault",
+                children: groups.map(group => ({
+                    name: group.key,
+                    children: group.values.map(item => ({
+                        name: item.label,
+                        value: Math.max(1, item.link_count),
+                        node: item
+                    }))
+                }))
+            };
+            var root = d3.pack().size([packWidth, packHeight]).padding(4)(
+                d3.hierarchy(hierarchy).sum(d => d.value || 0).sort((a, b) => b.value - a.value));
+            var descendants = root.descendants().filter(d => d.depth > 0);
+
+            packLayer.attr("transform", "translate(0," + top + ")").selectAll("*").remove();
+            packLayer.selectAll("circle.pack-group")
+                .data(descendants.filter(d => d.depth === 1)).enter().append("circle")
+                .attr("class", "pack-group")
+                .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r);
+
+            packLeaf = packLayer.selectAll("circle.pack-node")
+                .data(descendants.filter(d => d.depth === 2)).enter().append("circle")
+                .attr("class", "pack-node")
+                .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r)
+                .attr("fill", d => nodeColor(d.data.node))
+                .attr("opacity", d => {
+                    var query = document.getElementById("search").value.trim().toLowerCase();
+                    return !query || d.data.name.toLowerCase().includes(query) ? 1 : 0.12;
+                })
+                .on("mouseover", function (d) { nodeOver.call(this, d.data.node); })
+                .on("mousemove", nodeMove)
+                .on("mouseout", function (d) { nodeOut.call(this, d.data.node); })
+                .on("click", function (d) { nodeClick(d.data.node); });
+
+            packLayer.selectAll("text.pack-label")
+                .data(descendants.filter(d => d.depth === 1 && d.r > 32)).enter().append("text")
+                .attr("class", "pack-label")
+                .attr("x", d => d.x).attr("y", d => d.y - d.r + 15)
+                .text(d => {
+                    var limit = Math.max(3, Math.floor((d.r * 2 - 12) / 7));
+                    return d.data.name.length > limit ? d.data.name.slice(0, limit - 1) + "…" : d.data.name;
+                });
+            packLayer.selectAll("text.pack-note-label")
+                .data(descendants.filter(d => d.depth === 2 && d.r > 13)).enter().append("text")
+                .attr("class", "pack-note-label")
+                .attr("x", d => d.x).attr("y", d => d.y + 4)
+                .style("font-size", d => Math.min(12, Math.max(8, d.r / 3)) + "px")
+                .text(d => {
+                    var limit = Math.max(3, Math.floor(d.r / 4));
+                    return d.data.name.length > limit ? d.data.name.slice(0, limit - 1) + "…" : d.data.name;
+                });
+        }
+
+        function renderTreemap(tiling) {
+            var top = document.getElementById("topbar").getBoundingClientRect().bottom;
+            var chartHeight = Math.max(320, height - top);
+            var rows = [{ id: "vault", parent: "", value: 0, node: null }].concat(
+                nodes.filter(d => d.type === "note").map(d => ({
+                    id: "vault/" + d.id,
+                    parent: "vault",
+                    value: Math.max(1, d.link_count),
+                    node: d
+                }))
+            );
+            var tile = {
+                binary: d3.treemapBinary,
+                squarify: d3.treemapSquarify,
+                "slice-dice": d3.treemapSliceDice
+            }[tiling];
+            var root = d3.treemap()
+                .tile(tile)
+                .size([width, chartHeight])
+                .paddingInner(2)
+                .round(true)(
+                    d3.stratify().id(d => d.id).parentId(d => d.parent || null)(rows)
+                        .sum(d => d.value || 0)
+                        .sort((a, b) => b.value - a.value)
+                );
+            var leaves = root.leaves();
+            var query = document.getElementById("search").value.trim().toLowerCase();
+
+            treemapLayer.attr("transform", "translate(0," + top + ")").selectAll("*").remove();
+            treemapLeaf = treemapLayer.selectAll("rect.treemap-node")
+                .data(leaves).enter().append("rect")
+                .attr("class", "treemap-node")
+                .attr("x", d => d.x0).attr("y", d => d.y0)
+                .attr("width", d => Math.max(0, d.x1 - d.x0))
+                .attr("height", d => Math.max(0, d.y1 - d.y0))
+                .attr("fill", d => nodeColor(d.data.node))
+                .attr("opacity", d => !query || d.data.node.label.toLowerCase().includes(query) ? 1 : 0.12)
+                .on("mouseover", function (d) { nodeOver.call(this, d.data.node); })
+                .on("mousemove", nodeMove)
+                .on("mouseout", function (d) { nodeOut.call(this, d.data.node); })
+                .on("click", function (d) { nodeClick(d.data.node); });
+
+            treemapLayer.selectAll("text.treemap-label")
+                .data(leaves.filter(d => d.x1 - d.x0 > 38 && d.y1 - d.y0 > 18))
+                .enter().append("text")
+                .attr("class", "treemap-label")
+                .attr("x", d => d.x0 + 5).attr("y", d => d.y0 + 5)
+                .text(d => {
+                    var limit = Math.max(3, Math.floor((d.x1 - d.x0 - 10) / 7));
+                    var label = d.data.node.label;
+                    return label.length > limit ? label.slice(0, limit - 1) + "…" : label;
+                });
+        }
+
+        applyGraphType(graphType, false);
+        graphTypeSelect.addEventListener("change", function () {
+            graphType = this.value;
+            localStorage.setItem("vault-graph-type", graphType);
+            applyGraphType(graphType, true);
+        });
+        arcOrderSelect.addEventListener("change", function () {
+            arcOrder = this.value;
+            localStorage.setItem("vault-arc-order", arcOrder);
+            renderArc(arcOrder, true);
+        });
+        packOrderSelect.addEventListener("change", function () {
+            packOrder = this.value;
+            localStorage.setItem("vault-pack-order", packOrder);
+            renderPack(packOrder);
+        });
+        treemapTilingSelect.addEventListener("change", function () {
+            treemapTiling = this.value;
+            localStorage.setItem("vault-treemap-tiling", treemapTiling);
+            renderTreemap(treemapTiling);
+        });
+
         function dragstarted(d) {
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap") return;
             if (!d3.event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x; d.fy = d.y;
         }
-        function dragged(d) { d.fx = d3.event.x; d.fy = d3.event.y; }
+        function dragged(d) {
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap") return;
+            d.fx = d3.event.x; d.fy = d3.event.y;
+        }
         function dragended(d) {
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap") return;
             if (!d3.event.active) simulation.alphaTarget(0);
             d.fx = null; d.fy = null;
         }
@@ -242,7 +556,10 @@
 
         function nodeOver(d) {
             var strokeColor = getComputedStyle(document.documentElement).getPropertyValue("--node-stroke").trim();
-            d3.select(this).attr("stroke", strokeColor).attr("stroke-width", 1.5);
+            if (["circle", "rect"].includes(this.tagName.toLowerCase())) {
+                d3.select(this).attr("stroke", strokeColor).attr("stroke-width", 1.5);
+            }
+            if (graphType === "arc") emphasizeArcLinks(d);
             var token = ++hoverToken;
 
             if (d.type === "tag") {
@@ -283,6 +600,20 @@
 
         function showPreview() { previewEl.classList.add("visible"); }
 
+        function emphasizeArcLinks(hovered) {
+            var connected = new Set([hovered.id]);
+            link.each(function (d) {
+                if (d.source.id === hovered.id) connected.add(d.target.id);
+                if (d.target.id === hovered.id) connected.add(d.source.id);
+            });
+            link
+                .attr("stroke", d => d.source.id === hovered.id || d.target.id === hovered.id ? "#000" : null)
+                .attr("stroke-opacity", d => d.source.id === hovered.id || d.target.id === hovered.id ? 1 : 0.04)
+                .attr("stroke-width", d => d.source.id === hovered.id || d.target.id === hovered.id ? 2 : 1);
+            node.attr("opacity", d => connected.has(d.id) ? 1 : 0.12);
+            text.attr("opacity", d => connected.has(d.id) ? 1 : 0.08);
+        }
+
         function nodeMove() {
             var pad = 16, ex = d3.event.clientX, ey = d3.event.clientY;
             var w = previewEl.offsetWidth, h = previewEl.offsetHeight;
@@ -295,18 +626,25 @@
         }
 
         function nodeOut() {
-            d3.select(this).attr("stroke", null);
+            if (["circle", "rect"].includes(this.tagName.toLowerCase())) d3.select(this).attr("stroke", null);
+            if (graphType === "arc") {
+                link.attr("stroke", null).attr("stroke-opacity", null).attr("stroke-width", null);
+                applySearchHighlight();
+            }
             hoverToken++;
             previewEl.classList.remove("visible");
         }
 
         // ---- Search: highlight & focus matching nodes ----
         var search = document.getElementById("search");
-        search.addEventListener("input", function () {
-            var q = this.value.trim().toLowerCase();
+        function applySearchHighlight() {
+            var q = search.value.trim().toLowerCase();
             node.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.12);
             text.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.08);
-        });
+            packLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
+            treemapLeaf.attr("opacity", d => !q || d.data.node.label.toLowerCase().includes(q) ? 1 : 0.12);
+        }
+        search.addEventListener("input", applySearchHighlight);
 
         // ---- Node color pickers ----
         var colorsPanel = document.getElementById("colors-panel");
@@ -316,6 +654,8 @@
             colorInputs.note.value = userColors.note;
             colorInputs.tag.value = userColors.tag;
             node.attr("fill", nodeColor);
+            packLeaf.attr("fill", d => nodeColor(d.data.node));
+            treemapLeaf.attr("fill", d => nodeColor(d.data.node));
         }
 
         Object.keys(colorInputs).forEach(function (type) {
@@ -323,6 +663,8 @@
                 userColors[type] = this.value;
                 localStorage.setItem("vault-color-" + type, this.value);
                 node.attr("fill", nodeColor);
+                packLeaf.attr("fill", d => nodeColor(d.data.node));
+                treemapLeaf.attr("fill", d => nodeColor(d.data.node));
             });
         });
 
