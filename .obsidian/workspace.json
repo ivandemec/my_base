@@ -22,7 +22,7 @@
             }
           },
           {
-            "id": "e6841fcc11cc8359",
+            "id": "9e0dca15afc6e41e",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -32,31 +32,59 @@
             }
           },
           {
-            "id": "28bedeabc1791ded",
+            "id": "b7c7a10d77b71dd4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Genius.md",
+                "file": "Don't cheat the Muse.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Genius"
+              "title": "Don't cheat the Muse"
             }
           },
           {
-            "id": "9e0dca15afc6e41e",
+            "id": "c12f7bdd8bf67d45",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Random thoughts/Intuition.md",
+                "file": "Appreciation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Intuition"
+              "title": "Appreciation"
+            }
+          },
+          {
+            "id": "f2954907a2f1cd92",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Harness Time.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Harness Time"
+            }
+          },
+          {
+            "id": "3adca74e2aee3d8c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Meaning of Life.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Meaning of Life"
             }
           },
           {
@@ -241,12 +269,17 @@
       "bases:Create new base": false
     }
   },
-  "active": "28bedeabc1791ded",
+  "active": "b7c7a10d77b71dd4",
   "lastOpenFiles": [
+    "Meaning of Life.md",
+    "Harness Time.md",
+    "Appreciation.md",
+    "Don't cheat the Muse.md",
+    "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md",
+    "SecondBrain.png",
+    "Random thoughts/Intuition.md",
     "Genius.md",
     "Random thoughts/Ahriman's realm.md",
-    "Random thoughts/Intuition.md",
-    "Random thoughts/Solomon's paradox.md",
-    "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md"
+    "Random thoughts/Solomon's paradox.md"
   ]
 }

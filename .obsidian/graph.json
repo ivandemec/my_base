@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
-  "search": "stein",
-  "showTags": false,
+  "search": "",
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
@@ -17,6 +17,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.6372987299011719,
+  "scale": 0.637298729901172,
   "close": false
 }
