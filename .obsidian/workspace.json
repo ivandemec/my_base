@@ -77,14 +77,10 @@
             "id": "c12f7bdd8bf67d45",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Appreciation.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Appreciation"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           },
           {
@@ -107,13 +103,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Meaning of Life.md",
+                "file": "Random thoughts/Omnipotent.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Meaning of Life"
-            }
+              "title": "Omnipotent"
+            },
+            "group": "6678b92f061467f8"
           },
           {
             "id": "93499a9ad0ed84e6",
@@ -130,7 +127,51 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 7
+      },
+      {
+        "id": "1e809e726694129f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "33c6fd7f92400f10",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "Random thoughts/Omnipotent.md",
+                "options": {
+                  "collapse-filter": true,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": true,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 1,
+                  "close": false
+                }
+              },
+              "icon": "lucide-git-fork",
+              "title": "Graph of Omnipotent"
+            },
+            "group": "6678b92f061467f8"
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -164,7 +205,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "mackie",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -188,7 +229,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -297,14 +339,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "c12f7bdd8bf67d45",
+  "active": "3adca74e2aee3d8c",
   "lastOpenFiles": [
-    "Forgive him, for he believes....md",
-    "unsolved in your heart.md",
-    "Don't cheat the Muse.md",
+    "Random thoughts/God is omnipotent; God is wholly good; and yet evil exists.md",
     "Meaning of Life.md",
     "Harness Time.md",
     "Appreciation.md",
+    "Forgive him, for he believes....md",
+    "unsolved in your heart.md",
+    "Don't cheat the Muse.md",
     "Random thoughts/Meditation - A living force that makes the soul strong and powerful.md",
     "SecondBrain.png",
     "Random thoughts/Intuition.md",
