@@ -109,8 +109,63 @@
               },
               "icon": "lucide-file",
               "title": "Omnipotent"
-            },
-            "group": "6678b92f061467f8"
+            }
+          },
+          {
+            "id": "582a8e5f5963a109",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Language-Silence.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Language-Silence"
+            }
+          },
+          {
+            "id": "c7831e23cdc1eff3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Comfort is a trap.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Comfort is a trap"
+            }
+          },
+          {
+            "id": "791ff779945c73a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "You were not sent here to enjoy this place.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "You were not sent here to enjoy this place"
+            }
+          },
+          {
+            "id": "d24ad9ec7d6e066e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Doing it - George Bernard Shaw.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Doing it - George Bernard Shaw"
+            }
           },
           {
             "id": "93499a9ad0ed84e6",
@@ -127,51 +182,7 @@
             }
           }
         ],
-        "currentTab": 7
-      },
-      {
-        "id": "1e809e726694129f",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "33c6fd7f92400f10",
-            "type": "leaf",
-            "state": {
-              "type": "localgraph",
-              "state": {
-                "file": "Random thoughts/Omnipotent.md",
-                "options": {
-                  "collapse-filter": true,
-                  "search": "",
-                  "localJumps": 1,
-                  "localBacklinks": true,
-                  "localForelinks": true,
-                  "localInterlinks": false,
-                  "showTags": false,
-                  "showAttachments": false,
-                  "hideUnresolved": false,
-                  "collapse-color-groups": true,
-                  "colorGroups": [],
-                  "collapse-display": true,
-                  "showArrow": false,
-                  "textFadeMultiplier": 0,
-                  "nodeSizeMultiplier": 1,
-                  "lineSizeMultiplier": 1,
-                  "collapse-forces": true,
-                  "centerStrength": 0.518713248970312,
-                  "repelStrength": 10,
-                  "linkStrength": 1,
-                  "linkDistance": 250,
-                  "scale": 1,
-                  "close": false
-                }
-              },
-              "icon": "lucide-git-fork",
-              "title": "Graph of Omnipotent"
-            },
-            "group": "6678b92f061467f8"
-          }
-        ]
+        "currentTab": 10
       }
     ],
     "direction": "vertical"
@@ -339,8 +350,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "3adca74e2aee3d8c",
+  "active": "791ff779945c73a1",
   "lastOpenFiles": [
+    "Comfort is a trap.md",
+    "You were not sent here to enjoy this place.md",
+    "Doing it - George Bernard Shaw.md",
+    "Language-Silence.md",
+    "Random thoughts/Omnipotent.md",
     "Random thoughts/God is omnipotent; God is wholly good; and yet evil exists.md",
     "Meaning of Life.md",
     "Harness Time.md",
