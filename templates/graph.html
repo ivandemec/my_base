@@ -413,7 +413,7 @@
             if (["circle", "rect"].includes(this.tagName.toLowerCase())) {
                 d3.select(this).attr("stroke", strokeColor).attr("stroke-width", 1.5);
             }
-            if (graphType === "arc") emphasizeArcLinks(d);
+            if (["force", "disjoint", "arc"].includes(graphType)) emphasizeConnectedNodes(d);
             var token = ++hoverToken;
 
             if (d.type === "tag") {
@@ -454,7 +454,7 @@
 
         function showPreview() { previewEl.classList.add("visible"); }
 
-        function emphasizeArcLinks(hovered) {
+        function emphasizeConnectedNodes(hovered) {
             var connected = new Set([hovered.id]);
             link.each(function (d) {
                 if (d.source.id === hovered.id) connected.add(d.target.id);
@@ -481,7 +481,7 @@
 
         function nodeOut() {
             if (["circle", "rect"].includes(this.tagName.toLowerCase())) d3.select(this).attr("stroke", null);
-            if (graphType === "arc") {
+            if (["force", "disjoint", "arc"].includes(graphType)) {
                 link.attr("stroke", null).attr("stroke-opacity", null).attr("stroke-width", null);
                 applySearchHighlight();
             }

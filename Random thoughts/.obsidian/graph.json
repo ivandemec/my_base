@@ -5,7 +5,7 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
+  "collapse-color-groups": false,
   "colorGroups": [
     {
       "query": "A serious perspective on Life",
@@ -39,6 +39,6 @@
   "repelStrength": 9.33779395847683,
   "linkStrength": 1,
   "linkDistance": 326,
-  "scale": 0.4373945274099247,
+  "scale": 0.656091791114887,
   "close": false
 }
