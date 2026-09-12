@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "the realm of elemental life, of nocturnal life.md",
+                "file": "LAFČINA.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -76,16 +76,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "the realm of elemental life, of nocturnal life"
+              "title": "LAFČINA"
             }
           },
           {
-            "id": "5b10728a261ec92b",
+            "id": "4e17aab51f4c2a62",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Ahriman's realm.md",
+                "file": "Wisdom and Practical Life.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -100,21 +100,83 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Ahriman's realm"
+              "title": "Wisdom and Practical Life"
             }
           },
           {
-            "id": "754e1decaae443ab",
+            "id": "9ab42476086b4766",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Brighter than the sun.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Brighter than the sun"
+            }
+          },
+          {
+            "id": "d7c576be88b5f88b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The Earth is a vast, all-encompassing organism.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "The Earth is a vast, all-encompassing organism"
+            }
+          },
+          {
+            "id": "01f12c48facbd8f8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fiercely Kind.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Fiercely Kind"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -148,7 +210,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "normal",
+                "query": "fier",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -228,8 +290,8 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
+                "showSearch": true,
+                "searchQuery": "tols"
               },
               "icon": "lucide-tags",
               "title": "Tags"
@@ -282,34 +344,35 @@
       "bases:Create new base": false
     }
   },
-  "active": "754e1decaae443ab",
+  "active": "01f12c48facbd8f8",
   "lastOpenFiles": [
+    "BE RESPONSIBLE FOR YOUR THOUGHTS.md",
+    "The Earth is a vast, all-encompassing organism.md",
+    "Brighter than the sun.md",
+    "Wisdom and Practical Life.md",
+    "LAFČINA.md",
+    "Who is a True Christian?.md",
+    "The World as the Result of Equilibrium Effects.md",
+    "Beware of anything that you hear yourself saying often..md",
+    "Sokrat - O demokratiji.md",
+    "The only absolute knowledge attainable by man is that life is meaningless.md",
+    "Све што је рђаво у срцу човековом требало би да ишчезне у додиру с природом.md",
+    "Ahriman's realm.md",
+    "Samospoznaja.md",
+    "pogled na svet očima razrogačenim od čuđenja.md",
+    "God is the only being who, to govern, need not even exist.md",
+    "Old paths.md",
+    "Prayer to the Angel.md",
+    "KADA ĆOVEK NE ZNA ŠTA ĆE BITI.md",
+    "To love somebody is not just a strong feeling.md",
+    "Dosada.md",
+    "period between death and rebirth.md",
+    "we are not everything and that we will die.md",
+    "the realm of elemental life, of nocturnal life.md",
+    "Untitled.canvas",
+    "Stranac - Charles Baudelaire.md",
     "Emil Cioran - Nothing Matters.md",
     "The Passion for the Absurd.md",
-    "Ahriman's realm.md",
-    "Kvarnost.md",
-    "The World and I.md",
-    "The World in Which Nothing Is Solved.md",
-    "On the Reality of the Body.md",
-    "Mudrac Bela Hamvas, učitelj života.md",
-    "Christ did not die for nations.md",
-    "the realm of elemental life, of nocturnal life.md",
-    "Ралф Валдо Емерсон, „Самопоуздање“.md",
-    "Fate.md",
-    "Genius.md",
-    "We, as living beings, must create the opportunity for the dead to perceive us..md",
-    "The time for prophets and founding religions is over.md",
-    "Spiritual Hierarchies and their Reflection in the Physical World.md",
-    "It is as pernicious to hate a fellow-being as it is to strike him..md",
-    "Reality is something we create.md",
-    "The human development from 800 AD to 1600 AD.md",
-    "The True Mysteries of Human Nature.md",
-    "Life is a strange thing..md",
-    "Omnipotent.md",
-    "Lightly.md",
-    "There are more fools in the world than there are people..md",
-    "Just society.md",
-    "Suffering.md",
     "Pasted image 20260822084156.png",
     "vault_graph.html",
     "Clippings",
