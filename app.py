@@ -21,7 +21,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_VAULT_DIR = os.path.join(APP_ROOT, 'Random thoughts')
 VAULT_DIR = os.path.realpath(os.environ.get('VAULT_DIR', DEFAULT_VAULT_DIR))
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='scripts', static_url_path='/scripts')
 
 
 def extract_tags(content):
