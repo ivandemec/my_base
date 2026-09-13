@@ -155,24 +155,10 @@
             "id": "01f12c48facbd8f8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Fiercely Kind.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Fiercely Kind"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ],
@@ -346,6 +332,7 @@
   },
   "active": "01f12c48facbd8f8",
   "lastOpenFiles": [
+    "Fiercely Kind.md",
     "BE RESPONSIBLE FOR YOUR THOUGHTS.md",
     "The Earth is a vast, all-encompassing organism.md",
     "Brighter than the sun.md",
@@ -372,7 +359,6 @@
     "Untitled.canvas",
     "Stranac - Charles Baudelaire.md",
     "Emil Cioran - Nothing Matters.md",
-    "The Passion for the Absurd.md",
     "Pasted image 20260822084156.png",
     "vault_graph.html",
     "Clippings",

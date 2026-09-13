@@ -65,30 +65,72 @@
         }
         #graph-type:focus, #arc-order:focus, #pack-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
         #arc-order[hidden], #pack-order[hidden], #treemap-tiling[hidden] { display: none; }
-        #theme-toggle, #colors-toggle {
+        #theme-toggle, #colors-toggle, #force-controls-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
         }
-        #theme-toggle:hover, #colors-toggle:hover { border-color: #4caf50; }
+        #theme-toggle:hover, #colors-toggle:hover, #force-controls-toggle:hover { border-color: #4caf50; }
+        #force-controls-toggle[hidden] { display: none; }
 
-        #colors-panel {
+        #force-controls-panel {
             position: fixed; top: 52px; right: 16px; z-index: 25; display: none;
             background: var(--panel); color: var(--fg); border: 1px solid var(--border);
             border-radius: 8px; box-shadow: var(--shadow); padding: 12px 14px; font-size: 13px;
         }
-        #colors-panel.visible { display: block; }
-        #colors-panel label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        #colors-panel label span { flex: 1; }
-        #colors-panel input[type="color"] {
-            width: 34px; height: 24px; padding: 0; background: none;
+        #force-controls-panel.visible { display: block; }
+        #colors-panel {
+            position: fixed; top: 46px; right: 0; bottom: 0; z-index: 25;
+            width: min(340px, 92vw); display: flex; flex-direction: column;
+            background: var(--panel); color: var(--fg); border-left: 1px solid var(--border);
+            box-shadow: var(--shadow); transform: translateX(100%);
+            transition: transform .2s ease; visibility: hidden;
+        }
+        #colors-panel.visible { transform: translateX(0); visibility: visible; }
+        .colors-header {
+            display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .colors-header h2 { flex: 1; margin: 0; font-size: 15px; }
+        #colors-close, .color-reset {
+            border: 0; background: transparent; color: var(--muted); cursor: pointer;
+        }
+        #colors-close { width: 30px; height: 30px; font-size: 20px; }
+        #colors-close:hover, .color-reset:hover { color: var(--fg); }
+        #colors-filter {
+            margin: 12px 16px 6px; padding: 7px 9px; color: var(--fg);
+            background: var(--input-bg); border: 1px solid var(--input-border);
+            border-radius: 6px; outline: none;
+        }
+        #colors-filter:focus { border-color: #4caf50; }
+        #colors-list { flex: 1; overflow-y: auto; padding: 4px 16px 16px; }
+        .color-section h3 {
+            position: sticky; top: 0; z-index: 1; margin: 10px 0 4px; padding: 7px 0;
+            background: var(--panel); color: var(--muted); font-size: 11px;
+            text-transform: uppercase; font-weight: 600;
+        }
+        .color-row {
+            display: grid; grid-template-columns: minmax(0, 1fr) 36px 26px;
+            align-items: center; gap: 8px; min-height: 34px;
+        }
+        .color-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .color-row input[type="color"] {
+            width: 36px; height: 26px; padding: 0; background: none;
             border: 1px solid var(--input-border); border-radius: 4px; cursor: pointer;
         }
-        #colors-panel .hint { color: var(--muted); font-size: 11px; margin: 0 0 10px; max-width: 210px; }
         #colors-reset {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
-            padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; width: 100%;
+            padding: 7px 10px; margin: 10px 16px 14px; border-radius: 6px;
+            cursor: pointer; font-size: 12px;
         }
         #colors-reset:hover { border-color: #4caf50; }
+        #force-controls-panel { width: 250px; }
+        #force-controls-panel .force-control {
+            display: grid; grid-template-columns: 92px 1fr 38px; align-items: center;
+            gap: 8px; margin-bottom: 12px;
+        }
+        #force-controls-panel .force-control:last-child { margin-bottom: 0; }
+        #force-controls-panel input[type="range"] { width: 100%; accent-color: #4caf50; }
+        #force-controls-panel output { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
 
         #preview {
             position: fixed; max-width: 360px; max-height: 60vh; overflow: hidden;
@@ -109,10 +151,11 @@
             #topbar h1, #vault-form { order: 1; }
             #vault-form { flex: 1; min-width: auto; }
             #vault-path { display: none; }
-            #graph-type, #arc-order, #pack-order, #treemap-tiling, #search, #colors-toggle, #theme-toggle { order: 2; }
+            #graph-type, #arc-order, #pack-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
             #graph-type { flex: 0 0 155px; min-width: 0; }
             #arc-order, #pack-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
             #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
+            #colors-panel { top: 86px; }
         }
     </style>
     <script>
@@ -153,15 +196,25 @@
             <option value="slice-dice">Slice-dice</option>
         </select>
         <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
+        <button id="force-controls-toggle" type="button" title="Adjust graph forces" aria-label="Adjust graph forces">⚙</button>
         <button id="colors-toggle" type="button" title="Change node colors" aria-label="Change node colors">🎨</button>
         <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
     </div>
-    <div id="colors-panel">
-        <label><span>Topics</span><input id="color-note" type="color"></label>
-        <label><span>Tags</span><input id="color-tag" type="color"></label>
-        <p class="hint">Notes colored by an Obsidian color group keep their own color.</p>
-        <button id="colors-reset" type="button">Reset to defaults</button>
+    <div id="force-controls-panel">
+        <div class="force-control"><label for="force-center">Center force</label><input id="force-center" type="range" min="0" max="0.2" step="0.01"><output for="force-center"></output></div>
+        <div class="force-control"><label for="force-repel">Repel force</label><input id="force-repel" type="range" min="0" max="1000" step="10"><output for="force-repel"></output></div>
+        <div class="force-control"><label for="force-link">Link force</label><input id="force-link" type="range" min="0" max="2" step="0.05"><output for="force-link"></output></div>
+        <div class="force-control"><label for="force-distance">Link distance</label><input id="force-distance" type="range" min="20" max="300" step="5"><output for="force-distance"></output></div>
     </div>
+    <aside id="colors-panel" aria-label="Node colors" inert>
+        <div class="colors-header">
+            <h2>Node colors</h2>
+            <button id="colors-close" type="button" title="Close color sidebar" aria-label="Close color sidebar">×</button>
+        </div>
+        <input id="colors-filter" type="search" placeholder="Filter topics and tags" autocomplete="off">
+        <div id="colors-list"></div>
+        <button id="colors-reset" type="button">Reset all colors</button>
+    </aside>
     <div id="graph"></div>
     <div id="preview">
         <h3></h3>
@@ -170,22 +223,47 @@
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{ url_for('static', filename='force.js') }}"></script>
+    <script src="{{ url_for('static', filename='disjoint.js') }}"></script>
+    <script src="{{ url_for('static', filename='arc.js') }}"></script>
+    <script src="{{ url_for('static', filename='pack.js') }}"></script>
+    <script src="{{ url_for('static', filename='treemap.js') }}"></script>
+    <script src="{{ url_for('static', filename='tree.js') }}"></script>
     <script>
         var nodes = {{ nodes|safe }};
         var links = {{ links|safe }};
         var colorGroups = {{ color_groups|safe }};
 
         var DEFAULT_COLORS = { note: "#7f7f7f", tag: "#4caf50" };
-        var userColors = {
-            note: localStorage.getItem("vault-color-note") || DEFAULT_COLORS.note,
-            tag: localStorage.getItem("vault-color-tag") || DEFAULT_COLORS.tag
-        };
+        var userNodeColors = {};
+        try {
+            userNodeColors = JSON.parse(localStorage.getItem("vault-node-colors") || "{}") || {};
+        } catch (error) {
+            localStorage.removeItem("vault-node-colors");
+        }
         nodes.forEach(function (d) { d.baseColor = d.color; });
 
-        // Obsidian color-group nodes keep their color; only default-colored ones follow the picker.
+        function topicColorKey(topic) {
+            return "topic:" + topic.toLowerCase();
+        }
+
         function nodeColor(d) {
-            var type = d.type === "tag" ? "tag" : "note";
-            return d.baseColor === DEFAULT_COLORS[type] ? userColors[type] : d.baseColor;
+            if (d.type === "note") {
+                var ownTopicColor = userNodeColors[
+                    topicColorKey(d.id.replace(/\.md$/i, ""))
+                ];
+                if (ownTopicColor) return ownTopicColor;
+                for (var index = 0; index < d.topics.length; index++) {
+                    var topicColor = userNodeColors[topicColorKey(d.topics[index])];
+                    if (topicColor) return topicColor;
+                }
+                for (var tagIndex = 0; tagIndex < d.tags.length; tagIndex++) {
+                    var tagColor = userNodeColors["#" + d.tags[tagIndex]];
+                    if (tagColor) return tagColor;
+                }
+                return d.baseColor;
+            }
+            return userNodeColors[d.id] || d.baseColor;
         }
 
         var width = window.innerWidth;
@@ -200,8 +278,15 @@
         });
         svg.call(zoom);
 
+        var forceSettings = {
+            center: Number(localStorage.getItem("vault-force-center") || 0.05),
+            repel: Number(localStorage.getItem("vault-force-repel") || 300),
+            link: Number(localStorage.getItem("vault-force-link") || 0.3),
+            distance: Number(localStorage.getItem("vault-force-distance") || 100)
+        };
+
         function customForce(alpha) {
-            const cx = width / 2, cy = height / 2, strength = 0.05;
+            const cx = width / 2, cy = height / 2, strength = forceSettings.center;
             for (let i = 0; i < nodes.length; i++) {
                 nodes[i].vx += (cx - nodes[i].x) * strength * alpha;
                 nodes[i].vy += (cy - nodes[i].y) * strength * alpha;
@@ -210,6 +295,8 @@
 
         var graphType = localStorage.getItem("vault-graph-type") || "force";
         var graphTypeSelect = document.getElementById("graph-type");
+        var forceControlsPanel = document.getElementById("force-controls-panel");
+        var forceControlsToggle = document.getElementById("force-controls-toggle");
         var arcOrder = localStorage.getItem("vault-arc-order") || "topic";
         var arcOrderSelect = document.getElementById("arc-order");
         var packOrder = localStorage.getItem("vault-pack-order") || "topic";
@@ -226,12 +313,8 @@
         treemapTilingSelect.value = treemapTiling;
 
         var simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(d => {
-                const s = links.filter(l => l.source.id === d.source.id || l.target.id === d.source.id).length;
-                const t = links.filter(l => l.source.id === d.target.id || l.target.id === d.target.id).length;
-                return Math.min(150, Math.max(50, (s + t) * 10));
-            }))
-            .force("charge", d3.forceManyBody().strength(-300))
+            .force("link", d3.forceLink(links).id(d => d.id).distance(forceSettings.distance).strength(forceSettings.link))
+            .force("charge", d3.forceManyBody().strength(-forceSettings.repel))
             .force("collision", labelCollision())
             .alphaDecay(0.02).alphaMin(0.001)
             .on("tick", ticked);
@@ -242,9 +325,12 @@
             var treemap = type === "treemap";
             var tree = type === "tree";
             var disjoint = type === "disjoint";
+            var forceControlsAvailable = type === "force" || disjoint;
             arcOrderSelect.hidden = !arc;
             packOrderSelect.hidden = !pack;
             treemapTilingSelect.hidden = !treemap;
+            forceControlsToggle.hidden = !forceControlsAvailable;
+            if (!forceControlsAvailable) forceControlsPanel.classList.remove("visible");
             document.body.classList.toggle("arc-mode", arc);
             document.body.classList.toggle("tree-mode", tree);
             svg.call(zoom.transform, d3.zoomIdentity);
@@ -282,16 +368,8 @@
                 return;
             }
 
-            svg.style("height", null);
-            link.attr("d", d => "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y);
-            node.attr("r", d => 5 + Math.sqrt(d.link_count));
-            text.attr("text-anchor", null);
-            simulation
-                .force("center", disjoint ? null : d3.forceCenter(width / 2, height / 2))
-                .force("custom", disjoint ? null : customForce)
-                .force("x", disjoint ? d3.forceX(width / 2).strength(0.05) : null)
-                .force("y", disjoint ? d3.forceY(height / 2).strength(0.05) : null);
-            if (restart) simulation.alpha(1).restart();
+            if (disjoint) renderDisjoint(restart);
+            else renderForce(restart);
         }
 
         var link = g.append("g").attr("class", "links").selectAll("path")
@@ -339,280 +417,6 @@
             }).filter(Boolean);
         }
 
-        function arcSortKey(d, order) {
-            if (order === "name") return d.label.toLowerCase();
-            if (order === "tag") {
-                var tags = connectedNodes(d, "tag").sort((a, b) => d3.ascending(a.label, b.label));
-                return (d.type === "tag" ? d.label : tags.length ? tags[0].label : "~untagged").toLowerCase();
-            }
-            var topics = connectedNodes(d, "note").sort((a, b) =>
-                d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label));
-            return (d.type === "note" && topics.length ? topics[0].label : d.label).toLowerCase();
-        }
-
-        function renderArc(order, animate) {
-            var top = document.getElementById("topbar").getBoundingClientRect().bottom + 20;
-            var step = 20;
-            var arcX = Math.min(300, Math.max(140, width * 0.3));
-            var ordered = nodes.slice().sort((a, b) =>
-                d3.ascending(arcSortKey(a, order), arcSortKey(b, order)) ||
-                d3.ascending(a.label.toLowerCase(), b.label.toLowerCase()));
-            var arcHeight = Math.max(height, top + ordered.length * step + 20);
-            ordered.forEach(function (d, index) { d.x = arcX; d.y = top + index * step; });
-            svg.style("height", arcHeight + "px");
-
-            var duration = animate ? 600 : 0;
-            node.transition().duration(duration)
-                .attr("cx", d => d.x).attr("cy", d => d.y)
-                .attr("r", d => 3 + Math.min(4, Math.sqrt(d.link_count)));
-            text.transition().duration(duration)
-                .attr("x", d => d.x - 8).attr("y", d => d.y + 4)
-                .attr("text-anchor", "end");
-            link.transition().duration(duration).attr("d", function (d) {
-                var radius = Math.abs(d.target.y - d.source.y) / 2;
-                return "M" + arcX + "," + d.source.y + "A" + radius + "," + radius + " 0 0,0 " + arcX + "," + d.target.y;
-            });
-        }
-
-        function packGroupKey(d, order) {
-            if (order === "tag") {
-                var tags = connectedNodes(d, "tag").sort((a, b) => d3.ascending(a.label, b.label));
-                return tags.length ? tags[0].label : "Untagged";
-            }
-            var topics = connectedNodes(d, "note").sort((a, b) =>
-                d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label));
-            return topics.length ? topics[0].label : "Unlinked";
-        }
-
-        function renderPack(order) {
-            var top = document.getElementById("topbar").getBoundingClientRect().bottom;
-            var packWidth = width;
-            var packHeight = Math.max(320, height - top);
-            var groups = d3.nest()
-                .key(d => packGroupKey(d, order))
-                .entries(nodes.filter(d => d.type === "note"))
-                .sort((a, b) => d3.ascending(a.key.toLowerCase(), b.key.toLowerCase()));
-            var hierarchy = {
-                name: "Vault",
-                children: groups.map(group => ({
-                    name: group.key,
-                    children: group.values.map(item => ({
-                        name: item.label,
-                        value: Math.max(1, item.link_count),
-                        node: item
-                    }))
-                }))
-            };
-            var root = d3.pack().size([packWidth, packHeight]).padding(4)(
-                d3.hierarchy(hierarchy).sum(d => d.value || 0).sort((a, b) => b.value - a.value));
-            var descendants = root.descendants().filter(d => d.depth > 0);
-
-            packLayer.attr("transform", "translate(0," + top + ")").selectAll("*").remove();
-            packLayer.selectAll("circle.pack-group")
-                .data(descendants.filter(d => d.depth === 1)).enter().append("circle")
-                .attr("class", "pack-group")
-                .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r);
-
-            packLeaf = packLayer.selectAll("circle.pack-node")
-                .data(descendants.filter(d => d.depth === 2)).enter().append("circle")
-                .attr("class", "pack-node")
-                .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r)
-                .attr("fill", d => nodeColor(d.data.node))
-                .attr("opacity", d => {
-                    var query = document.getElementById("search").value.trim().toLowerCase();
-                    return !query || d.data.name.toLowerCase().includes(query) ? 1 : 0.12;
-                })
-                .on("mouseover", function (d) { nodeOver.call(this, d.data.node); })
-                .on("mousemove", nodeMove)
-                .on("mouseout", function (d) { nodeOut.call(this, d.data.node); })
-                .on("click", function (d) { nodeClick(d.data.node); });
-
-            packLayer.selectAll("text.pack-label")
-                .data(descendants.filter(d => d.depth === 1 && d.r > 32)).enter().append("text")
-                .attr("class", "pack-label")
-                .attr("x", d => d.x).attr("y", d => d.y - d.r + 15)
-                .text(d => {
-                    var limit = Math.max(3, Math.floor((d.r * 2 - 12) / 7));
-                    return d.data.name.length > limit ? d.data.name.slice(0, limit - 1) + "…" : d.data.name;
-                });
-            packLayer.selectAll("text.pack-note-label")
-                .data(descendants.filter(d => d.depth === 2 && d.r > 13)).enter().append("text")
-                .attr("class", "pack-note-label")
-                .attr("x", d => d.x).attr("y", d => d.y + 4)
-                .style("font-size", d => Math.min(12, Math.max(8, d.r / 3)) + "px")
-                .text(d => {
-                    var limit = Math.max(3, Math.floor(d.r / 4));
-                    return d.data.name.length > limit ? d.data.name.slice(0, limit - 1) + "…" : d.data.name;
-                });
-        }
-
-        function renderTreemap(tiling) {
-            var top = document.getElementById("topbar").getBoundingClientRect().bottom;
-            var chartHeight = Math.max(320, height - top);
-            var rows = [{ id: "vault", parent: "", value: 0, node: null }].concat(
-                nodes.filter(d => d.type === "note").map(d => ({
-                    id: "vault/" + d.id,
-                    parent: "vault",
-                    value: Math.max(1, d.link_count),
-                    node: d
-                }))
-            );
-            var tile = {
-                binary: d3.treemapBinary,
-                squarify: d3.treemapSquarify,
-                "slice-dice": d3.treemapSliceDice
-            }[tiling];
-            var root = d3.treemap()
-                .tile(tile)
-                .size([width, chartHeight])
-                .paddingInner(2)
-                .round(true)(
-                    d3.stratify().id(d => d.id).parentId(d => d.parent || null)(rows)
-                        .sum(d => d.value || 0)
-                        .sort((a, b) => b.value - a.value)
-                );
-            var leaves = root.leaves();
-            var query = document.getElementById("search").value.trim().toLowerCase();
-
-            treemapLayer.attr("transform", "translate(0," + top + ")").selectAll("*").remove();
-            treemapLeaf = treemapLayer.selectAll("rect.treemap-node")
-                .data(leaves).enter().append("rect")
-                .attr("class", "treemap-node")
-                .attr("x", d => d.x0).attr("y", d => d.y0)
-                .attr("width", d => Math.max(0, d.x1 - d.x0))
-                .attr("height", d => Math.max(0, d.y1 - d.y0))
-                .attr("fill", d => nodeColor(d.data.node))
-                .attr("opacity", d => !query || d.data.node.label.toLowerCase().includes(query) ? 1 : 0.12)
-                .on("mouseover", function (d) { nodeOver.call(this, d.data.node); })
-                .on("mousemove", nodeMove)
-                .on("mouseout", function (d) { nodeOut.call(this, d.data.node); })
-                .on("click", function (d) { nodeClick(d.data.node); });
-
-            treemapLayer.selectAll("text.treemap-label")
-                .data(leaves.filter(d => d.x1 - d.x0 > 38 && d.y1 - d.y0 > 18))
-                .enter().append("text")
-                .attr("class", "treemap-label")
-                .attr("x", d => d.x0 + 5).attr("y", d => d.y0 + 5)
-                .text(d => {
-                    var limit = Math.max(3, Math.floor((d.x1 - d.x0 - 10) / 7));
-                    var label = d.data.node.label;
-                    return label.length > limit ? label.slice(0, limit - 1) + "…" : label;
-                });
-        }
-
-        function buildTreeHierarchy() {
-            var noteNodes = nodes.filter(d => d.type === "note");
-            var byId = new Map(nodes.map(d => [d.id, d]));
-            var neighbors = new Map(noteNodes.map(d => [d.id, []]));
-            var tagNeighbors = new Map(noteNodes.map(d => [d.id, []]));
-
-            links.forEach(function (edge) {
-                var source = typeof edge.source === "object" ? edge.source : byId.get(edge.source);
-                var target = typeof edge.target === "object" ? edge.target : byId.get(edge.target);
-                if (!source || !target) return;
-                if (source.type === "note" && target.type === "note") {
-                    neighbors.get(source.id).push(target);
-                    neighbors.get(target.id).push(source);
-                } else if (source.type === "note" && target.type === "tag") {
-                    tagNeighbors.get(source.id).push(target);
-                } else if (target.type === "note" && source.type === "tag") {
-                    tagNeighbors.get(target.id).push(source);
-                }
-            });
-
-            var visitedNotes = new Set();
-            var visitedTags = new Set();
-            var forest = [];
-            noteNodes.slice().sort((a, b) =>
-                d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label)
-            ).forEach(function (componentRoot) {
-                if (visitedNotes.has(componentRoot.id)) return;
-                var rootItem = { name: componentRoot.label, node: componentRoot, children: [] };
-                var queue = [{ node: componentRoot, item: rootItem }];
-                visitedNotes.add(componentRoot.id);
-                forest.push(rootItem);
-
-                while (queue.length) {
-                    var current = queue.shift();
-                    (neighbors.get(current.node.id) || []).slice()
-                        .sort((a, b) => d3.ascending(a.label, b.label))
-                        .forEach(function (next) {
-                            if (visitedNotes.has(next.id)) return;
-                            visitedNotes.add(next.id);
-                            var child = { name: next.label, node: next, children: [] };
-                            current.item.children.push(child);
-                            queue.push({ node: next, item: child });
-                        });
-                    (tagNeighbors.get(current.node.id) || []).slice()
-                        .sort((a, b) => d3.ascending(a.label, b.label))
-                        .forEach(function (tag) {
-                            if (visitedTags.has(tag.id)) return;
-                            visitedTags.add(tag.id);
-                            current.item.children.push({ name: tag.label, node: tag });
-                        });
-                }
-            });
-            var root = d3.hierarchy({ name: "Vault", children: forest });
-            root.children.forEach(function (branch) {
-                if (!branch.children) return;
-                branch._children = branch.children;
-                branch.children = null;
-            });
-            return root;
-        }
-
-        function renderTree() {
-            var top = document.getElementById("topbar").getBoundingClientRect().bottom + 20;
-            var treeColumnWidth = width < 700 ? 130 : 300;
-            var treeLabelLimit = width < 700 ? 24 : 38;
-            d3.tree().nodeSize([24, treeColumnWidth])(treeRoot);
-            var descendants = treeRoot.descendants();
-            var minX = d3.min(descendants, d => d.x) || 0;
-            var maxX = d3.max(descendants, d => d.x) || 0;
-            var offsetX = top + 20 - minX;
-
-            svg.style("height", Math.max(height, maxX - minX + top + 60) + "px");
-            treeLayer.attr("transform", "translate(40," + offsetX + ")");
-
-            var treeLinks = treeLayer.selectAll("path.tree-link")
-                .data(treeRoot.links(), d => d.target.data.node ? d.target.data.node.id : "vault");
-            treeLinks.exit().transition().duration(250).attr("opacity", 0).remove();
-            treeLinks.enter().append("path").attr("class", "tree-link").merge(treeLinks)
-                .transition().duration(350)
-                .attr("d", d => "M" + d.source.y + "," + d.source.x +
-                    "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x + " " +
-                    (d.source.y + d.target.y) / 2 + "," + d.target.x + " " +
-                    d.target.y + "," + d.target.x);
-
-            treeLeaf = treeLayer.selectAll("g.tree-node")
-                .data(descendants, d => d.data.node ? d.data.node.id : "vault");
-            treeLeaf.exit().transition().duration(250).attr("opacity", 0).remove();
-            var entered = treeLeaf.enter().append("g").attr("class", "tree-node")
-                .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
-            entered.append("circle").attr("r", 5);
-            entered.append("text").attr("dy", "0.32em").attr("x", 9);
-            treeLeaf = entered.merge(treeLeaf);
-            treeLeaf.transition().duration(350)
-                .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
-            treeLeaf.select("circle")
-                .attr("fill", d => d.data.node ? nodeColor(d.data.node) : userColors.note)
-                .attr("r", d => d.children || d._children ? 6 : 4)
-                .attr("stroke-width", d => d._children ? 3 : 1.5)
-                .on("click", function (d) {
-                    if (!d.children && !d._children) return;
-                    if (d.children) { d._children = d.children; d.children = null; }
-                    else { d.children = d._children; d._children = null; }
-                    renderTree();
-                });
-            treeLeaf.select("text")
-                .text(d => d.data.name.length > treeLabelLimit ? d.data.name.slice(0, treeLabelLimit - 1) + "…" : d.data.name)
-                .on("mouseover", function (d) { if (d.data.node) nodeOver.call(this, d.data.node); })
-                .on("mousemove", nodeMove)
-                .on("mouseout", function (d) { if (d.data.node) nodeOut.call(this, d.data.node); })
-                .on("click", function (d) { if (d.data.node) nodeClick(d.data.node); });
-            applySearchHighlight();
-        }
-
         applyGraphType(graphType, false);
         graphTypeSelect.addEventListener("change", function () {
             graphType = this.value;
@@ -634,6 +438,36 @@
             localStorage.setItem("vault-treemap-tiling", treemapTiling);
             renderTreemap(treemapTiling);
         });
+
+        var forceInputs = {
+            center: document.getElementById("force-center"),
+            repel: document.getElementById("force-repel"),
+            link: document.getElementById("force-link"),
+            distance: document.getElementById("force-distance")
+        };
+
+        Object.keys(forceInputs).forEach(function (name) {
+            var input = forceInputs[name];
+            var output = input.nextElementSibling;
+            input.value = forceSettings[name];
+            output.value = forceSettings[name];
+            input.addEventListener("input", function () {
+                forceSettings[name] = Number(this.value);
+                output.value = this.value;
+                localStorage.setItem("vault-force-" + name, this.value);
+                simulation.force("charge").strength(-forceSettings.repel);
+                simulation.force("link").strength(forceSettings.link).distance(forceSettings.distance);
+                simulation.alpha(0.7).restart();
+            });
+        });
+
+        forceControlsToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            setColorsPanel(false);
+            forceControlsPanel.classList.toggle("visible");
+        });
+        forceControlsPanel.addEventListener("click", function (e) { e.stopPropagation(); });
+        document.addEventListener("click", function () { forceControlsPanel.classList.remove("visible"); });
 
         function dragstarted(d) {
             if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
@@ -689,7 +523,7 @@
             if (["circle", "rect"].includes(this.tagName.toLowerCase())) {
                 d3.select(this).attr("stroke", strokeColor).attr("stroke-width", 1.5);
             }
-            if (graphType === "arc") emphasizeArcLinks(d);
+            if (["force", "disjoint", "arc"].includes(graphType)) emphasizeConnectedNodes(d);
             var token = ++hoverToken;
 
             if (d.type === "tag") {
@@ -730,7 +564,7 @@
 
         function showPreview() { previewEl.classList.add("visible"); }
 
-        function emphasizeArcLinks(hovered) {
+        function emphasizeConnectedNodes(hovered) {
             var connected = new Set([hovered.id]);
             link.each(function (d) {
                 if (d.source.id === hovered.id) connected.add(d.target.id);
@@ -757,7 +591,7 @@
 
         function nodeOut() {
             if (["circle", "rect"].includes(this.tagName.toLowerCase())) d3.select(this).attr("stroke", null);
-            if (graphType === "arc") {
+            if (["force", "disjoint", "arc"].includes(graphType)) {
                 link.attr("stroke", null).attr("stroke-opacity", null).attr("stroke-width", null);
                 applySearchHighlight();
             }
@@ -779,41 +613,113 @@
 
         // ---- Node color pickers ----
         var colorsPanel = document.getElementById("colors-panel");
-        var colorInputs = { note: document.getElementById("color-note"), tag: document.getElementById("color-tag") };
+        var colorsToggle = document.getElementById("colors-toggle");
+        var colorsList = document.getElementById("colors-list");
+        var colorsFilter = document.getElementById("colors-filter");
 
         function applyColors() {
-            colorInputs.note.value = userColors.note;
-            colorInputs.tag.value = userColors.tag;
             node.attr("fill", nodeColor);
             packLeaf.attr("fill", d => nodeColor(d.data.node));
             treemapLeaf.attr("fill", d => nodeColor(d.data.node));
-            treeLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : userColors.note);
+            treeLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note);
         }
 
-        Object.keys(colorInputs).forEach(function (type) {
-            colorInputs[type].addEventListener("input", function () {
-                userColors[type] = this.value;
-                localStorage.setItem("vault-color-" + type, this.value);
-                node.attr("fill", nodeColor);
-                packLeaf.attr("fill", d => nodeColor(d.data.node));
-                treemapLeaf.attr("fill", d => nodeColor(d.data.node));
-                treeLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : userColors.note);
+        function saveNodeColors() {
+            localStorage.setItem("vault-node-colors", JSON.stringify(userNodeColors));
+        }
+
+        function createColorSection(items, title) {
+            var section = document.createElement("section");
+            section.className = "color-section";
+            var heading = document.createElement("h3");
+            heading.textContent = title + " (" + items.length + ")";
+            section.appendChild(heading);
+
+            items.forEach(function (item) {
+                var row = document.createElement("div");
+                row.className = "color-row";
+                row.dataset.label = item.label.toLowerCase();
+                var name = document.createElement("span");
+                name.textContent = item.label;
+                name.title = item.label;
+                var input = document.createElement("input");
+                input.type = "color";
+                input.value = userNodeColors[item.id] || item.baseColor;
+                input.dataset.baseColor = item.baseColor;
+                input.setAttribute("aria-label", "Color for " + item.label);
+                input.addEventListener("input", function () {
+                    userNodeColors[item.id] = this.value;
+                    saveNodeColors();
+                    applyColors();
+                });
+                var reset = document.createElement("button");
+                reset.type = "button";
+                reset.className = "color-reset";
+                reset.textContent = "↺";
+                reset.title = "Reset " + item.label;
+                reset.setAttribute("aria-label", "Reset color for " + item.label);
+                reset.addEventListener("click", function () {
+                    delete userNodeColors[item.id];
+                    input.value = item.baseColor;
+                    saveNodeColors();
+                    applyColors();
+                });
+                row.append(name, input, reset);
+                section.appendChild(row);
+            });
+            colorsList.appendChild(section);
+        }
+
+        var topicsByKey = new Map();
+        nodes.filter(d => d.type === "note").forEach(function (note) {
+            note.topics.forEach(function (topic) {
+                var id = topicColorKey(topic);
+                if (!topicsByKey.has(id)) {
+                    topicsByKey.set(id, {
+                        id: id,
+                        label: topic,
+                        baseColor: note.baseColor
+                    });
+                }
+            });
+        });
+        var topicItems = Array.from(topicsByKey.values())
+            .sort((a, b) => a.label.localeCompare(b.label));
+        var tagItems = nodes.filter(d => d.type === "tag")
+            .sort((a, b) => a.label.localeCompare(b.label));
+        createColorSection(topicItems, "Topics");
+        createColorSection(tagItems, "Tags");
+
+        colorsFilter.addEventListener("input", function () {
+            var query = this.value.trim().toLowerCase();
+            colorsList.querySelectorAll(".color-row").forEach(function (row) {
+                row.hidden = query && !row.dataset.label.includes(query);
             });
         });
 
         document.getElementById("colors-reset").addEventListener("click", function () {
-            userColors = { note: DEFAULT_COLORS.note, tag: DEFAULT_COLORS.tag };
-            localStorage.removeItem("vault-color-note");
-            localStorage.removeItem("vault-color-tag");
+            userNodeColors = {};
+            localStorage.removeItem("vault-node-colors");
+            colorsList.querySelectorAll("input[type=color]").forEach(function (input) {
+                input.value = input.dataset.baseColor;
+            });
             applyColors();
         });
 
-        document.getElementById("colors-toggle").addEventListener("click", function (e) {
+        function setColorsPanel(open) {
+            colorsPanel.classList.toggle("visible", open);
+            colorsPanel.inert = !open;
+            colorsToggle.setAttribute("aria-expanded", String(open));
+        }
+
+        colorsToggle.addEventListener("click", function (e) {
             e.stopPropagation();
-            colorsPanel.classList.toggle("visible");
+            forceControlsPanel.classList.remove("visible");
+            setColorsPanel(!colorsPanel.classList.contains("visible"));
         });
-        colorsPanel.addEventListener("click", function (e) { e.stopPropagation(); });
-        document.addEventListener("click", function () { colorsPanel.classList.remove("visible"); });
+        document.getElementById("colors-close").addEventListener("click", function () {
+            setColorsPanel(false);
+        });
 
         applyColors();
 

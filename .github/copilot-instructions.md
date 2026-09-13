@@ -3,6 +3,7 @@
 MyBase is a Flask web app that recreates the core of [Obsidian](https://obsidian.md/):
 browse a vault as an interactive graph, read notes, and (in progress) edit notes,
 create new notes, and link them to topics and tags.
+When testing in terminal, make sure you are in the correct virtual environment and that `VAULT_DIR` is set if you are not using the default vault location.
 
 ## Architecture
 
