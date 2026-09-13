@@ -682,6 +682,12 @@
         editor.addEventListener('paste', event => {
             const row = event.target.closest('.editor-line.active');
             if (!row) return;
+            const images = [...event.clipboardData.files].filter(file => file.type.startsWith('image/'));
+            if (images.length) {
+                event.preventDefault();
+                uploadImages(images);
+                return;
+            }
             event.preventDefault();
             const text = event.clipboardData.getData('text/plain').replace(/\r\n/g, '\n');
             const [start, end] = selectionOffsets(row);
@@ -863,6 +869,13 @@
         uploadButton.addEventListener('mousedown', event => event.preventDefault());
         uploadButton.addEventListener('click', () => imageInput.click());
         imageInput.addEventListener('change', () => uploadImages(imageInput.files));
+
+        raw.addEventListener('paste', event => {
+            const images = [...event.clipboardData.files].filter(file => file.type.startsWith('image/'));
+            if (!images.length) return;
+            event.preventDefault();
+            uploadImages(images);
+        });
 
         [editor, raw].forEach(surface => {
             surface.addEventListener('dragover', event => {
