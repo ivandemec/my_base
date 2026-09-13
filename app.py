@@ -480,6 +480,21 @@ def edit(note_id):
         content=VAULT['notes'][key]['content'])
 
 
+@app.route('/delete/<path:note_id>', methods=['POST'])
+def delete_note(note_id):
+    key = resolve_note_key(note_id)
+    if not key:
+        abort(404)
+    real_path = os.path.realpath(VAULT['notes'][key]['path'])
+    vault_root = os.path.realpath(VAULT_DIR)
+    if os.path.commonpath([real_path, vault_root]) != vault_root:
+        abort(403)
+
+    os.remove(real_path)
+    load_vault()
+    return redirect(url_for('index'))
+
+
 @app.route('/api/preview/<path:note_id>')
 def preview(note_id):
     key = resolve_note_key(note_id)

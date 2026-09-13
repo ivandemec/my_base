@@ -9,13 +9,13 @@
             --bg: #1e1e1e; --panel: #252526; --fg: #d8d8d8; --accent: #4caf50; --link: #7cb7ff;
             --strong: #fff; --border: #333; --border-soft: #3a3a3a; --muted: #888;
             --header-bg: rgba(30,30,30,.9); --code-bg: #2d2d2d; --quote-bg: #232323; --quote-fg: #b8b8b8;
-            --input-bg: #2a2a2a; --input-border: #444;
+            --input-bg: #2a2a2a; --input-border: #444; --danger: #ef6b73; --danger-bg: #3a2023;
         }
         :root[data-theme="light"] {
             --bg: #fafafa; --panel: #fff; --fg: #24292f; --accent: #2e7d32; --link: #0969da;
             --strong: #111; --border: #d8dee4; --border-soft: #d8dee4; --muted: #6a737d;
             --header-bg: rgba(255,255,255,.9); --code-bg: #f0f2f4; --quote-bg: #f4f6f8; --quote-fg: #4b5563;
-            --input-bg: #fff; --input-border: #d0d7de;
+            --input-bg: #fff; --input-border: #d0d7de; --danger: #cf222e; --danger-bg: #fff1f1;
         }
         * { box-sizing: border-box; }
         body { margin: 0; background: var(--bg); color: var(--fg);
@@ -33,8 +33,21 @@
             color: var(--fg); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
         }
         #theme-toggle:hover { border-color: var(--accent); }
-        main { max-width: 760px; margin: 0 auto; padding: 40px 24px 120px; }
-        h1.page-title { font-size: 30px; margin: 0 0 24px; color: var(--strong); border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+        main { max-width: 860px; margin: 0 auto; padding: 40px 24px 120px; }
+        .note-card { background: var(--panel); border: 1px solid var(--border-soft); border-radius: 8px;
+            padding: 30px 36px 36px; box-shadow: 0 12px 32px rgba(0,0,0,.16); }
+        .note-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+            border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px; }
+        h1.page-title { min-width: 0; font-size: 30px; line-height: 1.25; margin: 0; color: var(--strong); overflow-wrap: anywhere; }
+        .note-actions { display: flex; flex: 0 0 auto; gap: 8px; }
+        .note-actions form { margin: 0; }
+        .action-button { display: inline-flex; align-items: center; justify-content: center; min-height: 36px;
+            padding: 6px 12px; border: 1px solid var(--input-border); border-radius: 6px;
+            background: var(--input-bg); color: var(--fg); font: inherit; font-size: 13px; font-weight: 600;
+            line-height: 1; text-decoration: none; cursor: pointer; }
+        .action-button:hover { border-color: var(--accent); }
+        .action-button.delete { color: var(--danger); }
+        .action-button.delete:hover { background: var(--danger-bg); border-color: var(--danger); }
         .content h1, .content h2, .content h3 { color: var(--strong); margin-top: 1.6em; }
         .content a { color: var(--link); text-decoration: none; }
         .content a:hover { text-decoration: underline; }
@@ -59,6 +72,14 @@
         .related li { margin: 0 0 4px; }
         .related a { color: var(--link); text-decoration: none; }
         .related a:hover { text-decoration: underline; }
+        @media (max-width: 620px) {
+            main { padding: 20px 12px 80px; }
+            .note-card { padding: 22px 18px 28px; }
+            .note-card-header { flex-direction: column; gap: 16px; }
+            .note-actions { width: 100%; }
+            .action-button { flex: 1; }
+            .note-actions form { display: flex; flex: 1; }
+        }
     </style>
     <script>
         (function () {
@@ -72,42 +93,52 @@
     <header>
         <a class="back" href="/">← Graph</a>
         <span class="crumb">{{ title }}</span>
-        <a class="back" href="{{ url_for('edit', note_id=note_id) }}" style="margin-left:auto">Edit ✎</a>
-        <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme" style="margin-left:0"></button>
+        <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
     </header>
     <main>
-        <h1 class="page-title">{{ title }}</h1>
-        <div class="content">{{ body|safe }}</div>
+        <article class="note-card">
+            <div class="note-card-header">
+                <h1 class="page-title">{{ title }}</h1>
+                <div class="note-actions" role="group" aria-label="Note actions">
+                    <a class="action-button" href="{{ url_for('edit', note_id=note_id) }}">Edit</a>
+                    <form method="post" action="{{ url_for('delete_note', note_id=note_id) }}"
+                        onsubmit="return confirm('Delete this note permanently?');">
+                        <button class="action-button delete" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div class="content">{{ body|safe }}</div>
 
-        {% if tags %}
-        <div class="tags">
-            {% for t in tags %}
-            <a href="{{ url_for('tag_view', tag=t) }}">#{{ t }}</a>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% if linked %}
-        <section class="related">
-            <h2>Linked notes</h2>
-            <ul>
-                {% for n in linked %}
-                <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+            {% if tags %}
+            <div class="tags">
+                {% for t in tags %}
+                <a href="{{ url_for('tag_view', tag=t) }}">#{{ t }}</a>
                 {% endfor %}
-            </ul>
-        </section>
-        {% endif %}
+            </div>
+            {% endif %}
 
-        {% if backlinks %}
-        <section class="related">
-            <h2>Referenced by</h2>
-            <ul>
-                {% for n in backlinks %}
-                <li><a href="{{ n.url }}">{{ n.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </section>
-        {% endif %}
+            {% if linked %}
+            <section class="related">
+                <h2>Linked notes</h2>
+                <ul>
+                    {% for n in linked %}
+                    <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if backlinks %}
+            <section class="related">
+                <h2>Referenced by</h2>
+                <ul>
+                    {% for n in backlinks %}
+                    <li><a href="{{ n.url }}">{{ n.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+        </article>
     </main>
     <script>
         var themeToggle = document.getElementById("theme-toggle");
