@@ -32,15 +32,42 @@
         h1.page-title { font-size: 30px; margin: 0 0 20px; color: var(--strong); border-bottom: 1px solid var(--border); padding-bottom: 14px; }
         form { display: flex; flex-direction: column; gap: 16px; }
 
+        .properties { padding: 2px 0 10px; }
+        .properties-title { margin: 0 0 8px; color: var(--strong); font-size: 15px; font-weight: 600; }
+        .property-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: start; min-height: 38px; }
+        .property-label { display: flex; align-items: center; gap: 8px; padding: 5px 0; color: var(--muted); font-size: 14px; }
+        .property-label svg { width: 16px; height: 16px; flex: none; }
+        .token-field { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; padding: 3px 0; }
+        .property-token { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 1px 7px;
+            border-radius: 5px; background: var(--quote-bg); color: var(--embed); font-size: 13px; line-height: 1.55; }
+        .property-token span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .property-token button { border: 0; padding: 0; background: transparent; color: var(--muted); cursor: pointer;
+            font: inherit; line-height: 1; }
+        .property-token button:hover { color: var(--fg); }
+        .property-input { flex: 1 1 120px; min-width: 90px; border: 0; outline: 0; padding: 3px 4px;
+            background: transparent; color: var(--fg); font: inherit; font-size: 14px; }
+        .property-input::placeholder { color: var(--muted); }
+        .suggestions { position: absolute; top: calc(100% + 3px); left: 0; z-index: 20; display: none;
+            min-width: 220px; max-width: min(360px, 100%); max-height: 220px; overflow-y: auto;
+            padding: 4px; border: 1px solid var(--border-soft); border-radius: 6px;
+            background: var(--panel); box-shadow: 0 8px 24px rgba(0,0,0,.22); }
+        .suggestions.open { display: block; }
+        .suggestion { width: 100%; border: 0; border-radius: 4px; padding: 6px 8px; text-align: left;
+            background: transparent; color: var(--fg); cursor: pointer; font: inherit; font-size: 13px; }
+        .suggestion:hover, .suggestion.selected { background: var(--hover-bg); }
+
         .toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
             background: var(--panel); border: 1px solid var(--border-soft); border-radius: 8px; padding: 8px; }
         .toolbar button { background: transparent; color: var(--fg); border: 1px solid transparent;
             border-radius: 6px; padding: 6px 10px; font-size: 14px; cursor: pointer; min-width: 34px; }
         .toolbar button:hover { background: var(--hover-bg); }
+        .toolbar button:disabled { opacity: .45; cursor: wait; }
         .toolbar .sep { width: 1px; height: 22px; background: var(--border-soft); margin: 0 4px; }
         .toolbar .spacer { flex: 1; }
         .toolbar .toggle { border-color: var(--border-soft); font-weight: 600; font-size: 13px; }
         .toolbar .toggle.active { background: var(--accent); color: #10240f; border-color: var(--accent); }
+        .upload-status { color: var(--muted); font-size: 12px; }
+        .upload-status.error { color: #e57373; }
 
         /* WYSIWYG surface — mirrors the rendered note look */
         .editor {
@@ -48,6 +75,7 @@
             border: 1px solid var(--border-soft); border-radius: 8px; padding: 20px 24px; line-height: 1.7;
         }
         .editor:focus { outline: none; border-color: var(--accent); }
+        .editor.dragging, textarea.dragging { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
         .editor h1, .editor h2, .editor h3, .editor h4 { color: var(--strong); margin: 1.2em 0 .5em; }
         .editor h1 { font-size: 26px; } .editor h2 { font-size: 22px; } .editor h3 { font-size: 19px; }
         .editor p { margin: 0 0 1em; }
@@ -61,6 +89,25 @@
         .editor .wikilink { color: var(--link); border-bottom: 1px dashed var(--link); cursor: default; }
         .editor .embed { color: var(--embed); }
         .editor .tag { color: var(--accent); }
+        .editor-line { min-height: 1.7em; cursor: text; }
+        .editor-line > :first-child { margin-top: 0; }
+        .editor-line > :last-child { margin-bottom: 0; }
+        .editor-line.rendered h1, .editor-line.rendered h2, .editor-line.rendered h3,
+        .editor-line.rendered h4, .editor-line.rendered p,
+        .editor-line.rendered blockquote, .editor-line.rendered ul,
+        .editor-line.rendered ol, .editor-line.rendered pre { margin: 0; }
+        .editor-line.rendered ul, .editor-line.rendered ol { padding-left: 1.6em; }
+        .editor-line.active {
+            white-space: pre-wrap; overflow-wrap: anywhere; color: var(--fg);
+        }
+        .editor-line.active:focus { outline: none; }
+        .editor-line.active.source-h1 { color: var(--strong); font-size: 26px; font-weight: 700; }
+        .editor-line.active.source-h2 { color: var(--strong); font-size: 22px; font-weight: 700; }
+        .editor-line.active.source-h3 { color: var(--strong); font-size: 19px; font-weight: 700; }
+        .editor-line.active.source-code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 14px;
+        }
 
         textarea {
             display: none; width: 100%; min-height: 55vh; resize: vertical;
@@ -72,6 +119,7 @@
         body.source .editor { display: none; }
         body.source textarea { display: block; }
         body.source .toolbar .fmt { opacity: .35; pointer-events: none; }
+        body.source .properties { display: none; }
 
         .actions { display: flex; gap: 12px; }
         .actions button, .actions a.cancel {
@@ -98,6 +146,29 @@
     <main>
         <h1 class="page-title">Editing {{ title }}</h1>
         <form id="edit-form" method="post" action="{{ url_for('edit', note_id=note_id) }}">
+            <section class="properties" aria-labelledby="properties-title">
+                <h2 class="properties-title" id="properties-title">Properties</h2>
+                <div class="property-row">
+                    <label class="property-label" for="topics-input">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18l6-12M6 9h12M5 15h12"/></svg>
+                        Topics
+                    </label>
+                    <div class="token-field" data-property="topics">
+                        <input class="property-input" id="topics-input" type="text" placeholder="Add topic" autocomplete="off" role="combobox" aria-expanded="false">
+                        <div class="suggestions" role="listbox"></div>
+                    </div>
+                </div>
+                <div class="property-row">
+                    <label class="property-label" for="tags-input">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 13l-7 7-9-9V4h7l9 9z"/><circle cx="8.5" cy="8.5" r="1"/></svg>
+                        Tags
+                    </label>
+                    <div class="token-field" data-property="tags">
+                        <input class="property-input" id="tags-input" type="text" placeholder="Add tag" autocomplete="off" role="combobox" aria-expanded="false">
+                        <div class="suggestions" role="listbox"></div>
+                    </div>
+                </div>
+            </section>
             <div class="toolbar">
                 <button type="button" class="fmt" data-cmd="h2" title="Heading">H</button>
                 <button type="button" class="fmt" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
@@ -108,12 +179,16 @@
                 <button type="button" class="fmt" data-cmd="quote" title="Quote">❝</button>
                 <button type="button" class="fmt" data-cmd="code" title="Inline code">&lt;/&gt;</button>
                 <button type="button" class="fmt" data-cmd="link" title="Link">🔗</button>
+                <button type="button" id="upload-image" title="Add image" aria-label="Add image">🖼 Image</button>
+                <input id="image-input" type="file" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
                 <span class="spacer"></span>
+                <span id="upload-status" class="upload-status" role="status" aria-live="polite"></span>
                 <button type="button" class="toggle" id="toggle-source" title="Toggle raw markdown">&lt;/&gt; Source</button>
             </div>
 
-            <div id="editor" class="editor" contenteditable="true" spellcheck="true"></div>
+            <div id="editor" class="editor" spellcheck="true"></div>
             <textarea id="raw" name="content" spellcheck="false">{{ content }}</textarea>
+            <textarea id="property-data" hidden>{{ property_data|tojson }}</textarea>
 
             <div class="actions">
                 <button type="submit" class="save">Save</button>
@@ -128,6 +203,13 @@
         const editor = document.getElementById('editor');
         const raw = document.getElementById('raw');
         const toggle = document.getElementById('toggle-source');
+        const uploadButton = document.getElementById('upload-image');
+        const imageInput = document.getElementById('image-input');
+        const uploadStatus = document.getElementById('upload-status');
+        const propertyData = JSON.parse(document.getElementById('property-data').value);
+        const propertyOptions = propertyData.options;
+        const properties = propertyData.values;
+        let preservedFrontmatter = [];
 
         // ---- helpers ---------------------------------------------------
         function escHtml(s) {
@@ -136,6 +218,151 @@
         function escAttr(s) {
             return escHtml(s).replace(/"/g, '&quot;');
         }
+
+        function propertyValues(frontmatterLines, name) {
+            const values = [];
+            for (let index = 0; index < frontmatterLines.length; index++) {
+                const match = frontmatterLines[index].match(new RegExp('^' + name + '\\s*:\\s*(.*)$', 'i'));
+                if (!match) continue;
+                const parts = [match[1]];
+                while (index + 1 < frontmatterLines.length && /^\s+/.test(frontmatterLines[index + 1])) {
+                    parts.push(frontmatterLines[++index].replace(/^\s*-\s*/, ''));
+                }
+                const source = parts.join(',');
+                if (name === 'topics') {
+                    const links = [...source.matchAll(/\[\[([^\]|#]+)/g)].map(item => item[1].trim());
+                    if (links.length) return links;
+                }
+                return source.replace(/^\s*\[|\]\s*$/g, '').split(',')
+                    .map(value => value.trim().replace(/^['"]|['"]$/g, '').replace(/^#/, ''))
+                    .filter(Boolean);
+            }
+            return values;
+        }
+
+        function parseDocument(markdown) {
+            const normalized = markdown.replace(/\r\n/g, '\n');
+            const match = normalized.match(/^---\s*\n([\s\S]*?)\n---(?:\n|$)/);
+            const frontmatterLines = match ? match[1].split('\n') : [];
+            if (match) {
+                properties.tags = propertyValues(frontmatterLines, 'tags');
+                properties.topics = propertyValues(frontmatterLines, 'topics');
+            } else {
+                properties.tags = [];
+                properties.topics = [];
+            }
+            preservedFrontmatter = [];
+            for (let index = 0; index < frontmatterLines.length; index++) {
+                if (/^(tags|topics)\s*:/i.test(frontmatterLines[index])) {
+                    while (index + 1 < frontmatterLines.length && /^\s+/.test(frontmatterLines[index + 1])) index++;
+                } else {
+                    preservedFrontmatter.push(frontmatterLines[index]);
+                }
+            }
+            lines = (match ? normalized.slice(match[0].length) : normalized).split('\n');
+            if (!lines.length) lines = [''];
+            renderPropertyFields();
+        }
+
+        function buildMarkdown() {
+            syncActiveLine();
+            const frontmatterLines = preservedFrontmatter.filter(line => line.trim());
+            if (properties.topics.length) {
+                frontmatterLines.push('topics:');
+                properties.topics.forEach(topic => frontmatterLines.push('  - "[[' + topic.replace(/"/g, '\\"') + ']]"'));
+            }
+            if (properties.tags.length) {
+                frontmatterLines.push('tags:');
+                properties.tags.forEach(tag => frontmatterLines.push('  - ' + tag));
+            }
+            const body = lines.join('\n');
+            return frontmatterLines.length ? '---\n' + frontmatterLines.join('\n') + '\n---\n' + body : body;
+        }
+
+        function addProperty(name, value) {
+            value = value.trim();
+            if (name === 'tags') value = value.replace(/^#/, '').replace(/\s+/g, '-');
+            if (!value || properties[name].some(item => item.toLowerCase() === value.toLowerCase())) return;
+            properties[name].push(value);
+            renderPropertyFields();
+        }
+
+        function matchingOptions(name, query) {
+            const selected = new Set(properties[name].map(value => value.toLowerCase()));
+            return propertyOptions[name].filter(value =>
+                !selected.has(value.toLowerCase()) && value.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
+        }
+
+        function renderSuggestions(field) {
+            const name = field.dataset.property;
+            const input = field.querySelector('.property-input');
+            const menu = field.querySelector('.suggestions');
+            const matches = matchingOptions(name, input.value.trim());
+            menu.replaceChildren(...matches.map((value, index) => {
+                const option = document.createElement('button');
+                option.type = 'button';
+                option.className = 'suggestion' + (index === 0 ? ' selected' : '');
+                option.textContent = value;
+                option.addEventListener('mousedown', event => {
+                    event.preventDefault();
+                    addProperty(name, value);
+                    input.value = '';
+                    input.focus();
+                });
+                return option;
+            }));
+            menu.classList.toggle('open', matches.length > 0 && document.activeElement === input);
+            input.setAttribute('aria-expanded', menu.classList.contains('open'));
+        }
+
+        function renderPropertyFields() {
+            document.querySelectorAll('.token-field').forEach(field => {
+                const name = field.dataset.property;
+                field.querySelectorAll('.property-token').forEach(token => token.remove());
+                const input = field.querySelector('.property-input');
+                properties[name].forEach(value => {
+                    const token = document.createElement('span');
+                    token.className = 'property-token';
+                    const text = document.createElement('span');
+                    text.textContent = value;
+                    const remove = document.createElement('button');
+                    remove.type = 'button';
+                    remove.title = 'Remove ' + value;
+                    remove.setAttribute('aria-label', 'Remove ' + value);
+                    remove.textContent = '×';
+                    remove.addEventListener('click', () => {
+                        properties[name] = properties[name].filter(item => item !== value);
+                        renderPropertyFields();
+                        input.focus();
+                    });
+                    token.append(text, remove);
+                    field.insertBefore(token, input);
+                });
+                renderSuggestions(field);
+            });
+        }
+
+        document.querySelectorAll('.token-field').forEach(field => {
+            const name = field.dataset.property;
+            const input = field.querySelector('.property-input');
+            input.addEventListener('focus', () => renderSuggestions(field));
+            input.addEventListener('input', () => renderSuggestions(field));
+            input.addEventListener('blur', () => setTimeout(() => renderSuggestions(field), 0));
+            input.addEventListener('keydown', event => {
+                const first = field.querySelector('.suggestion');
+                if (event.key === 'Enter' || (name === 'tags' && event.key === ',')) {
+                    event.preventDefault();
+                    addProperty(name, first ? first.textContent : input.value);
+                    input.value = '';
+                } else if (event.key === 'Backspace' && !input.value && properties[name].length) {
+                    properties[name].pop();
+                    renderPropertyFields();
+                } else if (event.key === 'Escape') {
+                    field.querySelector('.suggestions').classList.remove('open');
+                    input.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
 
         // ---- markdown -> HTML (for the WYSIWYG surface) ----------------
         function isBlockStart(line) {
@@ -154,7 +381,13 @@
                     out += '<code>' + escHtml(m[1]) + '</code>'; i += m[0].length; continue;
                 }
                 if (rest.startsWith('![[') && (m = rest.match(/^!\[\[([^\]]+)\]\]/))) {
-                    out += '<span class="embed" contenteditable="false" data-md="' + escAttr(m[0]) + '">📎 ' + escHtml(m[1]) + '</span>';
+                    const target = m[1].split('|')[0].trim();
+                    if (/\.(png|jpe?g|gif|webp)$/i.test(target)) {
+                        const src = '/media/' + target.split('/').map(encodeURIComponent).join('/');
+                        out += '<img data-md="' + escAttr(m[0]) + '" src="' + escAttr(src) + '" alt="' + escAttr(target) + '">';
+                    } else {
+                        out += '<span class="embed" contenteditable="false" data-md="' + escAttr(m[0]) + '">📎 ' + escHtml(m[1]) + '</span>';
+                    }
                     i += m[0].length; continue;
                 }
                 if (rest.startsWith('[[') && (m = rest.match(/^\[\[([^\]]+)\]\]/))) {
@@ -232,107 +465,308 @@
             return html || '<p><br></p>';
         }
 
-        // ---- HTML -> markdown (for saving) -----------------------------
-        function inlineToMd(node) {
-            let md = '';
-            node.childNodes.forEach(ch => {
-                if (ch.nodeType === 3) { md += ch.textContent; return; }
-                if (ch.nodeType !== 1) return;
-                const dm = ch.getAttribute && ch.getAttribute('data-md');
-                if (dm) { md += dm; return; }
-                const tag = ch.tagName.toLowerCase();
-                if (tag === 'br') { md += '\n'; return; }
-                if (tag === 'strong' || tag === 'b') { md += '**' + inlineToMd(ch) + '**'; return; }
-                if (tag === 'em' || tag === 'i') { md += '*' + inlineToMd(ch) + '*'; return; }
-                if (tag === 'del' || tag === 's' || tag === 'strike') { md += '~~' + inlineToMd(ch) + '~~'; return; }
-                if (tag === 'code') { md += '`' + ch.textContent + '`'; return; }
-                if (tag === 'a') { md += '[' + inlineToMd(ch) + '](' + (ch.getAttribute('href') || '') + ')'; return; }
-                if (tag === 'img') { md += '![' + (ch.getAttribute('alt') || '') + '](' + (ch.getAttribute('src') || '') + ')'; return; }
-                if (tag === 'div' || tag === 'p') { md += (md && !md.endsWith('\n') ? '\n' : '') + inlineToMd(ch); return; }
-                md += inlineToMd(ch);
-            });
-            return md;
+        // ---- live preview editing -------------------------------------
+        let lines = [];
+        let activeIndex = null;
+
+        function sourceText(row) {
+            return row.textContent.replace(/\u00a0/g, '');
         }
 
-        function blockToMd(n) {
-            if (n.nodeType === 3) { const t = n.textContent.trim(); return t || null; }
-            if (n.nodeType !== 1) return null;
-            const tag = n.tagName.toLowerCase();
-            if (/^h[1-6]$/.test(tag)) return '#'.repeat(+tag[1]) + ' ' + inlineToMd(n);
-            if (tag === 'hr') return '---';
-            if (tag === 'pre') return n.getAttribute('data-md') || ('```\n' + n.textContent + '\n```');
-            if (tag === 'blockquote') return inlineToMd(n).split('\n').map(l => '> ' + l).join('\n');
-            if (tag === 'ul') return [...n.children].map(li => '- ' + inlineToMd(li)).join('\n');
-            if (tag === 'ol') return [...n.children].map((li, idx) => (idx + 1) + '. ' + inlineToMd(li)).join('\n');
-            return inlineToMd(n);
+        function selectionOffsets(row) {
+            const selection = window.getSelection();
+            if (!selection.rangeCount || !row.contains(selection.anchorNode)) return [sourceText(row).length, sourceText(row).length];
+            const range = selection.getRangeAt(0);
+            const before = range.cloneRange();
+            before.selectNodeContents(row);
+            before.setEnd(range.startContainer, range.startOffset);
+            const start = before.toString().length;
+            before.setEnd(range.endContainer, range.endOffset);
+            return [start, before.toString().length];
         }
 
-        function domToMd(root) {
-            const blocks = [];
-            root.childNodes.forEach(n => {
-                const b = blockToMd(n);
-                if (b !== null && b.trim() !== '') blocks.push(b);
-            });
-            return blocks.join('\n\n').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+        function setCaret(row, start, end = start) {
+            const text = row.firstChild || row.appendChild(document.createTextNode(''));
+            const range = document.createRange();
+            range.setStart(text, Math.min(start, text.length));
+            range.setEnd(text, Math.min(end, text.length));
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
         }
+
+        function renderedLine(line) {
+            if (!line) return '<br>';
+            if (/^(```|~~~)/.test(line)) return '<code>' + escHtml(line) + '</code>';
+            return mdToHtml(line);
+        }
+
+        function syncActiveLine() {
+            if (activeIndex === null) return;
+            const row = editor.querySelector('.editor-line.active');
+            if (row) lines[activeIndex] = sourceText(row);
+        }
+
+        function renderLines(focusIndex = null, caretStart = null, caretEnd = caretStart) {
+            editor.replaceChildren();
+            lines.forEach((line, index) => {
+                const row = document.createElement('div');
+                row.className = 'editor-line ' + (index === focusIndex ? 'active' : 'rendered');
+                row.dataset.index = index;
+                if (index === focusIndex) {
+                    const heading = line.match(/^(#{1,3})\s/);
+                    if (heading) row.classList.add('source-h' + heading[1].length);
+                    if (/^(```|~~~)/.test(line)) row.classList.add('source-code');
+                    row.contentEditable = 'true';
+                    row.textContent = line;
+                } else {
+                    row.innerHTML = renderedLine(line);
+                }
+                editor.appendChild(row);
+            });
+            activeIndex = focusIndex;
+            if (focusIndex !== null) {
+                const row = editor.children[focusIndex];
+                const start = caretStart === null ? lines[focusIndex].length : caretStart;
+                const end = caretEnd === null ? start : caretEnd;
+                row.focus();
+                setCaret(row, start, end);
+            }
+        }
+
+        function activateLine(index, caret = null) {
+            syncActiveLine();
+            renderLines(index, caret);
+        }
+
+        editor.addEventListener('mousedown', event => {
+            const row = event.target.closest('.editor-line');
+            if (!row || row.classList.contains('active')) return;
+            event.preventDefault();
+            activateLine(Number(row.dataset.index));
+        });
+
+        editor.addEventListener('input', event => {
+            const row = event.target.closest('.editor-line.active');
+            if (row) lines[activeIndex] = sourceText(row);
+        });
+
+        editor.addEventListener('paste', event => {
+            const row = event.target.closest('.editor-line.active');
+            if (!row) return;
+            event.preventDefault();
+            const text = event.clipboardData.getData('text/plain').replace(/\r\n/g, '\n');
+            const [start, end] = selectionOffsets(row);
+            const pastedLines = text.split('\n');
+            const first = lines[activeIndex].slice(0, start) + pastedLines.shift();
+            const last = pastedLines.pop();
+            if (last === undefined) {
+                lines[activeIndex] = first + lines[activeIndex].slice(end);
+                renderLines(activeIndex, start + text.length);
+                return;
+            }
+            const replacement = [first, ...pastedLines, last + lines[activeIndex].slice(end)];
+            lines.splice(activeIndex, 1, ...replacement);
+            renderLines(activeIndex + replacement.length - 1, last.length);
+        });
+
+        function continuationFor(line) {
+            let match = line.match(/^(\s*[-*+]\s+)(\[[ xX]\]\s+)?(.*)$/);
+            if (match) {
+                return {
+                    prefix: match[1] + (match[2] ? '[ ] ' : ''),
+                    empty: match[3].length === 0,
+                };
+            }
+            match = line.match(/^(\s*)(\d+)([.)])(\s+)(.*)$/);
+            if (match) {
+                return {
+                    prefix: match[1] + (Number(match[2]) + 1) + match[3] + match[4],
+                    empty: match[5].length === 0,
+                };
+            }
+            match = line.match(/^(\s*(?:>\s*)+)(.*)$/);
+            if (match) return { prefix: match[1], empty: match[2].length === 0 };
+            return null;
+        }
+
+        editor.addEventListener('keydown', event => {
+            const row = event.target.closest('.editor-line.active');
+            if (!row) return;
+            const [start, end] = selectionOffsets(row);
+            lines[activeIndex] = sourceText(row);
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'b') {
+                event.preventDefault();
+                replaceSelection('**', '**', 'bold text');
+            } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'i') {
+                event.preventDefault();
+                replaceSelection('*', '*', 'italic text');
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                const before = lines[activeIndex].slice(0, start);
+                const after = lines[activeIndex].slice(end);
+                const continuation = continuationFor(lines[activeIndex]);
+                if (continuation && continuation.empty) {
+                    lines[activeIndex] = '';
+                    renderLines(activeIndex, 0);
+                } else {
+                    const prefix = continuation ? continuation.prefix : '';
+                    lines.splice(activeIndex, 1, before, prefix + after);
+                    renderLines(activeIndex + 1, prefix.length);
+                }
+            } else if (event.key === 'Backspace' && start === 0 && end === 0 && activeIndex > 0) {
+                event.preventDefault();
+                const previousLength = lines[activeIndex - 1].length;
+                lines.splice(activeIndex - 1, 2, lines[activeIndex - 1] + lines[activeIndex]);
+                renderLines(activeIndex - 1, previousLength);
+            } else if (event.key === 'Delete' && start === lines[activeIndex].length && activeIndex < lines.length - 1) {
+                event.preventDefault();
+                lines.splice(activeIndex, 2, lines[activeIndex] + lines[activeIndex + 1]);
+                renderLines(activeIndex, start);
+            } else if (event.key === 'ArrowUp' && activeIndex > 0) {
+                event.preventDefault();
+                renderLines(activeIndex - 1, Math.min(start, lines[activeIndex - 1].length));
+            } else if (event.key === 'ArrowDown' && activeIndex < lines.length - 1) {
+                event.preventDefault();
+                renderLines(activeIndex + 1, Math.min(start, lines[activeIndex + 1].length));
+            }
+        });
 
         // ---- toolbar ---------------------------------------------------
-        function wrapInlineCode() {
-            const sel = window.getSelection();
-            if (!sel.rangeCount || sel.isCollapsed) return;
-            const range = sel.getRangeAt(0);
-            const code = document.createElement('code');
-            code.textContent = range.toString();
-            range.deleteContents();
-            range.insertNode(code);
-            sel.removeAllRanges();
+        function replaceSelection(prefix, suffix = prefix, placeholder = '') {
+            if (activeIndex === null) activateLine(0);
+            const row = editor.querySelector('.editor-line.active');
+            const [start, end] = selectionOffsets(row);
+            const selected = lines[activeIndex].slice(start, end) || placeholder;
+            lines[activeIndex] = lines[activeIndex].slice(0, start) + prefix + selected + suffix + lines[activeIndex].slice(end);
+            renderLines(activeIndex, start + prefix.length, start + prefix.length + selected.length);
+        }
+
+        function togglePrefix(prefix) {
+            if (activeIndex === null) activateLine(0);
+            const line = lines[activeIndex];
+            lines[activeIndex] = line.startsWith(prefix) ? line.slice(prefix.length) : prefix + line;
+            renderLines(activeIndex, lines[activeIndex].length);
         }
 
         const commands = {
-            h2: () => document.execCommand('formatBlock', false, 'H2'),
-            bold: () => document.execCommand('bold'),
-            italic: () => document.execCommand('italic'),
-            strike: () => document.execCommand('strikeThrough'),
-            ul: () => document.execCommand('insertUnorderedList'),
-            quote: () => document.execCommand('formatBlock', false, 'BLOCKQUOTE'),
-            code: wrapInlineCode,
-            link: () => {
-                const url = prompt('Link URL:');
-                if (url) document.execCommand('createLink', false, url);
-            },
+            h2: () => togglePrefix('## '),
+            bold: () => replaceSelection('**', '**', 'bold text'),
+            italic: () => replaceSelection('*', '*', 'italic text'),
+            strike: () => replaceSelection('~~', '~~', 'text'),
+            ul: () => togglePrefix('- '),
+            quote: () => togglePrefix('> '),
+            code: () => replaceSelection('`', '`', 'code'),
+            link: () => replaceSelection('[', '](url)', 'link text'),
         };
 
         document.querySelectorAll('.toolbar .fmt').forEach(btn => {
             btn.addEventListener('mousedown', e => e.preventDefault()); // keep selection
             btn.addEventListener('click', () => {
-                editor.focus();
                 const fn = commands[btn.dataset.cmd];
                 if (fn) fn();
             });
         });
 
+        // ---- image uploads --------------------------------------------
+        function currentInsertionPoint() {
+            if (document.body.classList.contains('source')) {
+                return { source: true, start: raw.selectionStart, end: raw.selectionEnd };
+            }
+            if (activeIndex === null) return { source: false, index: lines.length - 1, start: lines.at(-1).length, end: lines.at(-1).length };
+            const row = editor.querySelector('.editor-line.active');
+            syncActiveLine();
+            const [start, end] = selectionOffsets(row);
+            return { source: false, index: activeIndex, start, end };
+        }
+
+        function insertUpload(embed, point) {
+            if (point.source) {
+                raw.setRangeText(embed, point.start, point.end, 'end');
+                point.start = point.end = raw.selectionStart;
+                raw.focus();
+                return;
+            }
+            const line = lines[point.index];
+            lines[point.index] = line.slice(0, point.start) + embed + line.slice(point.end);
+            point.start += embed.length;
+            point.end = point.start;
+            renderLines(point.index, point.start);
+        }
+
+        async function uploadImages(files, point = currentInsertionPoint()) {
+            const images = [...files].filter(file => file.type.startsWith('image/'));
+            if (!images.length) {
+                uploadStatus.textContent = 'Drop an image file.';
+                uploadStatus.classList.add('error');
+                return;
+            }
+            uploadButton.disabled = true;
+            uploadStatus.classList.remove('error');
+            try {
+                for (const [index, image] of images.entries()) {
+                    uploadStatus.textContent = 'Uploading ' + (index + 1) + ' of ' + images.length + '…';
+                    const data = new FormData();
+                    data.append('image', image);
+                    const response = await fetch('{{ url_for("upload_image") }}', { method: 'POST', body: data });
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Image upload failed.');
+                    insertUpload(result.embed, point);
+                }
+                uploadStatus.textContent = images.length === 1 ? 'Image added' : images.length + ' images added';
+            } catch (error) {
+                uploadStatus.textContent = error.message;
+                uploadStatus.classList.add('error');
+            } finally {
+                uploadButton.disabled = false;
+                imageInput.value = '';
+            }
+        }
+
+        uploadButton.addEventListener('mousedown', event => event.preventDefault());
+        uploadButton.addEventListener('click', () => imageInput.click());
+        imageInput.addEventListener('change', () => uploadImages(imageInput.files));
+
+        [editor, raw].forEach(surface => {
+            surface.addEventListener('dragover', event => {
+                if (![...event.dataTransfer.items].some(item => item.kind === 'file')) return;
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'copy';
+                surface.classList.add('dragging');
+            });
+            surface.addEventListener('dragleave', () => surface.classList.remove('dragging'));
+            surface.addEventListener('drop', event => {
+                event.preventDefault();
+                surface.classList.remove('dragging');
+                uploadImages(event.dataTransfer.files);
+            });
+        });
+
         // ---- source toggle ---------------------------------------------
-        function toWysiwyg() {
-            editor.innerHTML = mdToHtml(raw.value);
+        function toLivePreview() {
+            parseDocument(raw.value);
             document.body.classList.remove('source');
             toggle.classList.remove('active');
+            renderLines();
         }
         function toSource() {
-            raw.value = domToMd(editor);
+            raw.value = buildMarkdown();
             document.body.classList.add('source');
             toggle.classList.add('active');
         }
         toggle.addEventListener('click', () => {
-            document.body.classList.contains('source') ? toWysiwyg() : toSource();
+            document.body.classList.contains('source') ? toLivePreview() : toSource();
         });
 
         // ---- save ------------------------------------------------------
         form.addEventListener('submit', () => {
-            if (!document.body.classList.contains('source')) raw.value = domToMd(editor);
+            if (!document.body.classList.contains('source')) {
+                raw.value = buildMarkdown();
+            }
         });
 
         // ---- init ------------------------------------------------------
-        toWysiwyg();
+        toLivePreview();
     })();
     </script>
 </body>

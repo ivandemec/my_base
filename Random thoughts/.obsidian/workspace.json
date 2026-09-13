@@ -155,10 +155,24 @@
             "id": "01f12c48facbd8f8",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Occam's Razor.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Occam's Razor"
             }
           }
         ],
@@ -332,6 +346,12 @@
   },
   "active": "01f12c48facbd8f8",
   "lastOpenFiles": [
+    "images/1.jpg",
+    "images/drop-test.png",
+    "images/Pasted_image_20260514092519.png",
+    "images",
+    "Taking voice notes.md",
+    "2026-05-12.md",
     "Fiercely Kind.md",
     "BE RESPONSIBLE FOR YOUR THOUGHTS.md",
     "The Earth is a vast, all-encompassing organism.md",
@@ -355,10 +375,7 @@
     "Dosada.md",
     "period between death and rebirth.md",
     "we are not everything and that we will die.md",
-    "the realm of elemental life, of nocturnal life.md",
     "Untitled.canvas",
-    "Stranac - Charles Baudelaire.md",
-    "Emil Cioran - Nothing Matters.md",
     "Pasted image 20260822084156.png",
     "vault_graph.html",
     "Clippings",
@@ -370,8 +387,6 @@
     "Pasted image 20260514092650.png",
     "Pasted image 20260514092605.png",
     "Daily thougths.base",
-    "Pasted image 20260513145718.png",
-    "Pasted image 20260513145706.png",
     "_templates"
   ]
 }
