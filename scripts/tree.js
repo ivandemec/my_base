@@ -93,7 +93,7 @@ function renderTree() {
     treeLeaf.transition().duration(350)
         .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
     treeLeaf.select("circle")
-        .attr("fill", d => d.data.node ? nodeColor(d.data.node) : userColors.note)
+        .attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note)
         .attr("r", d => d.children || d._children ? 6 : 4)
         .attr("stroke-width", d => d._children ? 3 : 1.5)
         .on("click", function (d) {

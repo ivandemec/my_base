@@ -1,3 +1,5 @@
+import colorsys
+import hashlib
 import json
 import os
 import re
@@ -57,6 +59,38 @@ def extract_tags(content):
     return result
 
 
+def extract_topics(content):
+    """Return topic wikilinks from the Topics frontmatter property."""
+    frontmatter = re.match(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
+    if not frontmatter:
+        return []
+
+    lines = frontmatter.group(1).split('\n')
+    topic_values = []
+    for property_index, line in enumerate(lines):
+        match = re.match(r'^topics\s*:\s*(.*)$', line, re.IGNORECASE)
+        if not match:
+            continue
+        topic_values.append(match.group(1))
+        for continuation in lines[property_index + 1:]:
+            if not re.match(r'^\s+', continuation):
+                break
+            topic_values.append(continuation)
+        break
+
+    topics = []
+    for value in topic_values:
+        links = re.findall(r'\[\[([^\]|#]+)', value)
+        if links:
+            topics.extend(link.strip() for link in links)
+            continue
+        cleaned = re.sub(r'^\s*-\s*', '', value).strip(' []\'"')
+        if cleaned:
+            topics.extend(part.strip(' \'"') for part in cleaned.split(','))
+
+    return list(dict.fromkeys(topic for topic in topics if topic))
+
+
 def parse_vault(vault_dir):
     notes = {}
     links = defaultdict(list)
@@ -95,8 +129,12 @@ def generate_graph_data(notes, links, note_tags, color_groups, show_tags=True):
     def capitalize_first_letter(s):
         return s[0].upper() + s[1:] if s else s
 
-    nodes = [{"id": note, "label": capitalize_first_letter(os.path.splitext(
-        note)[0]), "content": notes[note]["content"]} for note in notes.keys()]
+    nodes = [{
+        "id": note,
+        "label": capitalize_first_letter(os.path.splitext(note)[0]),
+        "content": notes[note]["content"],
+        "topics": extract_topics(notes[note]["content"]),
+    } for note in notes.keys()]
     edges = []
 
     node_link_count = defaultdict(int)
@@ -130,7 +168,8 @@ def generate_graph_data(notes, links, note_tags, color_groups, show_tags=True):
                 tag_id = '#' + tag
                 if tag_id not in tag_nodes:
                     tag_nodes[tag_id] = {
-                        "id": tag_id, "label": tag_id, "link_count": 0, "color": "#4caf50"}
+                        "id": tag_id, "label": tag_id, "link_count": 0,
+                        "color": get_tag_color(tag_id, color_groups)}
                 edges.append({"source": note, "target": tag_id})
                 tag_nodes[tag_id]['link_count'] += 1
                 node_link_count[note] += 1
@@ -149,6 +188,21 @@ def get_node_color(node, color_groups):
         if group['query'] and re.search(group['query'], content, re.IGNORECASE):
             return group['color']
     return "#7f7f7f"
+
+
+def get_tag_color(tag_id, color_groups):
+    expected_query = f"tag:{tag_id}".casefold()
+    for group in color_groups:
+        if group.get('query', '').strip().casefold() == expected_query:
+            return group['color']
+
+    digest = hashlib.sha256(tag_id.casefold().encode('utf-8')).digest()
+    hue = int.from_bytes(digest[:2], 'big') / 65535
+    saturation = 0.55 + digest[2] / 1275
+    value = 0.75 + digest[3] / 1700
+    red, green, blue = colorsys.hsv_to_rgb(hue, saturation, value)
+    channels = (round(red * 255), round(green * 255), round(blue * 255))
+    return f"#{channels[0]:02x}{channels[1]:02x}{channels[2]:02x}"
 
 
 def rgb_to_hex(rgb):
