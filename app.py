@@ -328,6 +328,10 @@ def resolve_vault_asset(asset_id, source_path=None):
 def render_markdown(content, source_path=None):
     """Render Obsidian markdown to HTML, resolving wiki links to internal routes."""
 
+    # Python-Markdown accepts headings without a separating space, unlike
+    # Obsidian. Protect leading tag tokens so only "# Heading" becomes an H1.
+    content = re.sub(r'(?m)^([ \t]{0,3})#(?=\S)', r'\1\\#', content)
+
     def wikilink(match):
         raw = match.group(1)
         target, _, alias = raw.partition('|')
@@ -573,16 +577,26 @@ def edit(note_id):
     tag_options = sorted(
         {tag for tags in VAULT['note_tags'].values() for tag in tags},
         key=str.casefold)
-    topic_options = sorted(
+    note_options = sorted(
         (capitalize_first_letter(os.path.splitext(note_key)[0])
          for note_key in VAULT['notes'] if note_key != key),
+        key=str.casefold)
+    topic_options = sorted(
+        {topic
+         for note in VAULT['notes'].values()
+         for topic in extract_topics(note['content'])},
         key=str.casefold)
 
     return render_template(
         'edit.html', title=title, note_id=key,
         content=content,
         property_data={
-            'options': {'tags': tag_options, 'topics': topic_options},
+            'options': {'tags': tag_options, 'topics': note_options},
+            'wikiOptions': {
+                'notes': note_options,
+                'topics': topic_options,
+                'tags': tag_options,
+            },
             'values': {
                 'tags': property_tags,
                 'topics': extract_topics(content),

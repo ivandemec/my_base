@@ -71,6 +71,7 @@
 
         /* WYSIWYG surface — mirrors the rendered note look */
         .editor {
+            position: relative;
             min-height: 55vh; background: var(--panel); color: var(--fg);
             border: 1px solid var(--border-soft); border-radius: 8px; padding: 20px 24px; line-height: 1.7;
         }
@@ -108,6 +109,16 @@
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
             font-size: 14px;
         }
+        .wiki-suggestions { position: fixed; z-index: 30; display: none; width: min(360px, calc(100vw - 24px));
+            max-height: 260px; overflow-y: auto; padding: 5px; border: 1px solid var(--border-soft);
+            border-radius: 6px; background: var(--panel); box-shadow: 0 10px 28px rgba(0,0,0,.28); }
+        .wiki-suggestions.open { display: block; }
+        .wiki-suggestion { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center;
+            width: 100%; border: 0; border-radius: 4px; padding: 7px 9px; text-align: left;
+            background: transparent; color: var(--fg); cursor: pointer; font: inherit; }
+        .wiki-suggestion:hover, .wiki-suggestion.selected { background: var(--hover-bg); }
+        .wiki-suggestion-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .wiki-suggestion-type { color: var(--muted); font-size: 11px; text-transform: uppercase; }
 
         textarea {
             display: none; width: 100%; min-height: 55vh; resize: vertical;
@@ -187,6 +198,7 @@
             </div>
 
             <div id="editor" class="editor" spellcheck="true"></div>
+            <div id="wiki-suggestions" class="wiki-suggestions" role="listbox"></div>
             <textarea id="raw" name="content" spellcheck="false">{{ content }}</textarea>
             <textarea id="property-data" hidden>{{ property_data|tojson }}</textarea>
 
@@ -206,10 +218,13 @@
         const uploadButton = document.getElementById('upload-image');
         const imageInput = document.getElementById('image-input');
         const uploadStatus = document.getElementById('upload-status');
+        const wikiMenu = document.getElementById('wiki-suggestions');
         const propertyData = JSON.parse(document.getElementById('property-data').value);
         const propertyOptions = propertyData.options;
+        const wikiOptions = propertyData.wikiOptions;
         const properties = propertyData.values;
         let preservedFrontmatter = [];
+        let wikiState = null;
 
         // ---- helpers ---------------------------------------------------
         function escHtml(s) {
@@ -507,7 +522,111 @@
             if (row) lines[activeIndex] = sourceText(row);
         }
 
+        function closeWikiSuggestions() {
+            wikiState = null;
+            wikiMenu.classList.remove('open');
+            wikiMenu.replaceChildren();
+        }
+
+        function wikiContext(row) {
+            const [start, end] = selectionOffsets(row);
+            if (start !== end) return null;
+            const line = sourceText(row);
+            const completed = line.slice(0, start).match(/\[\[([^\[\]]*)\]\]$/);
+            if (completed) {
+                return {
+                    start: start - completed[0].length,
+                    end: start,
+                    query: completed[1],
+                };
+            }
+            const opening = line.lastIndexOf('[[', start);
+            if (opening < 0 || line.slice(opening + 2, start).includes(']]')) return null;
+            const query = line.slice(opening + 2, start);
+            if (query.includes('[') || query.includes(']')) return null;
+            return {
+                start: opening,
+                end: line.slice(start).startsWith(']]') ? start + 2 : start,
+                query,
+            };
+        }
+
+        function matchingWikiOptions(query) {
+            const lowered = query.toLowerCase();
+            const results = [];
+            const labels = { notes: 'Note', topics: 'Topic', tags: 'Tag' };
+            for (const type of ['notes', 'topics', 'tags']) {
+                for (const value of wikiOptions[type]) {
+                    if (!value.toLowerCase().includes(lowered)) continue;
+                    results.push({ type, label: labels[type], value });
+                }
+            }
+            return results.sort((left, right) => {
+                const leftStarts = left.value.toLowerCase().startsWith(lowered) ? 0 : 1;
+                const rightStarts = right.value.toLowerCase().startsWith(lowered) ? 0 : 1;
+                return leftStarts - rightStarts || left.value.localeCompare(right.value);
+            }).slice(0, 12);
+        }
+
+        function selectWikiSuggestion(index) {
+            if (!wikiState || !wikiState.results[index]) return;
+            const result = wikiState.results[index];
+            const insertion = result.type === 'tags' ? '#' + result.value : '[[' + result.value + ']]';
+            const line = lines[activeIndex];
+            lines[activeIndex] = line.slice(0, wikiState.start) + insertion + line.slice(wikiState.end);
+            const caret = wikiState.start + insertion.length;
+            closeWikiSuggestions();
+            renderLines(activeIndex, caret);
+        }
+
+        function renderWikiSuggestions(row) {
+            const context = wikiContext(row);
+            if (!context) {
+                closeWikiSuggestions();
+                return;
+            }
+            const results = matchingWikiOptions(context.query);
+            if (!results.length) {
+                closeWikiSuggestions();
+                return;
+            }
+            wikiState = { ...context, results, selected: 0 };
+            wikiMenu.replaceChildren(...results.map((result, index) => {
+                const option = document.createElement('button');
+                option.type = 'button';
+                option.className = 'wiki-suggestion' + (index === 0 ? ' selected' : '');
+                option.setAttribute('role', 'option');
+                const name = document.createElement('span');
+                name.className = 'wiki-suggestion-name';
+                name.textContent = result.type === 'tags' ? '#' + result.value : result.value;
+                const type = document.createElement('span');
+                type.className = 'wiki-suggestion-type';
+                type.textContent = result.label;
+                option.append(name, type);
+                option.addEventListener('mousedown', event => {
+                    event.preventDefault();
+                    selectWikiSuggestion(index);
+                });
+                return option;
+            }));
+            const selection = window.getSelection();
+            const caretRect = selection.rangeCount ? selection.getRangeAt(0).getBoundingClientRect() : row.getBoundingClientRect();
+            const rowRect = row.getBoundingClientRect();
+            wikiMenu.style.left = Math.max(12, Math.min(caretRect.left || rowRect.left, window.innerWidth - 372)) + 'px';
+            wikiMenu.style.top = (caretRect.bottom || rowRect.bottom) + 5 + 'px';
+            wikiMenu.classList.add('open');
+        }
+
+        function moveWikiSelection(direction) {
+            if (!wikiState) return;
+            wikiState.selected = (wikiState.selected + direction + wikiState.results.length) % wikiState.results.length;
+            wikiMenu.querySelectorAll('.wiki-suggestion').forEach((option, index) =>
+                option.classList.toggle('selected', index === wikiState.selected));
+            wikiMenu.children[wikiState.selected].scrollIntoView({ block: 'nearest' });
+        }
+
         function renderLines(focusIndex = null, caretStart = null, caretEnd = caretStart) {
+            closeWikiSuggestions();
             editor.replaceChildren();
             lines.forEach((line, index) => {
                 const row = document.createElement('div');
@@ -548,7 +667,16 @@
 
         editor.addEventListener('input', event => {
             const row = event.target.closest('.editor-line.active');
-            if (row) lines[activeIndex] = sourceText(row);
+            if (row) {
+                lines[activeIndex] = sourceText(row);
+                renderWikiSuggestions(row);
+            }
+        });
+
+        editor.addEventListener('keyup', event => {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+            const row = event.target.closest('.editor-line.active');
+            if (row) renderWikiSuggestions(row);
         });
 
         editor.addEventListener('paste', event => {
@@ -595,7 +723,16 @@
             if (!row) return;
             const [start, end] = selectionOffsets(row);
             lines[activeIndex] = sourceText(row);
-            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'b') {
+            if (wikiState && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+                event.preventDefault();
+                moveWikiSelection(event.key === 'ArrowDown' ? 1 : -1);
+            } else if (wikiState && (event.key === 'Enter' || event.key === 'Tab')) {
+                event.preventDefault();
+                selectWikiSuggestion(wikiState.selected);
+            } else if (wikiState && event.key === 'Escape') {
+                event.preventDefault();
+                closeWikiSuggestions();
+            } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'b') {
                 event.preventDefault();
                 replaceSelection('**', '**', 'bold text');
             } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'i') {
