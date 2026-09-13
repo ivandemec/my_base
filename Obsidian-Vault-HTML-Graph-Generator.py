@@ -134,6 +134,7 @@ def generate_graph_data(notes, links, note_tags, color_groups, show_tags=True):
         "label": capitalize_first_letter(os.path.splitext(note)[0]),
         "content": notes[note]["content"],
         "topics": extract_topics(notes[note]["content"]),
+        "tags": note_tags.get(note, []),
     } for note in notes.keys()]
     edges = []
 

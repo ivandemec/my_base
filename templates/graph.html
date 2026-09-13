@@ -249,9 +249,17 @@
 
         function nodeColor(d) {
             if (d.type === "note") {
+                var ownTopicColor = userNodeColors[
+                    topicColorKey(d.id.replace(/\.md$/i, ""))
+                ];
+                if (ownTopicColor) return ownTopicColor;
                 for (var index = 0; index < d.topics.length; index++) {
                     var topicColor = userNodeColors[topicColorKey(d.topics[index])];
                     if (topicColor) return topicColor;
+                }
+                for (var tagIndex = 0; tagIndex < d.tags.length; tagIndex++) {
+                    var tagColor = userNodeColors["#" + d.tags[tagIndex]];
+                    if (tagColor) return tagColor;
                 }
                 return d.baseColor;
             }
