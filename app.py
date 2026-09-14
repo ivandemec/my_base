@@ -15,7 +15,9 @@ from collections import defaultdict
 from urllib.parse import quote
 
 import markdown
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import (Flask, abort, jsonify, redirect, render_template, request,
+                   send_file, url_for)
+from werkzeug.utils import secure_filename
 
 # Vault directory: the folder that contains the notes. It can be overridden at
 # startup or changed from the graph view while the app is running.
@@ -24,6 +26,15 @@ DEFAULT_VAULT_DIR = os.path.join(APP_ROOT, 'Random thoughts')
 VAULT_DIR = os.path.realpath(os.environ.get('VAULT_DIR', DEFAULT_VAULT_DIR))
 
 app = Flask(__name__, static_folder='scripts', static_url_path='/scripts')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+IMAGE_SIGNATURES = {
+    '.gif': (b'GIF87a', b'GIF89a'),
+    '.jpg': (b'\xff\xd8\xff',),
+    '.jpeg': (b'\xff\xd8\xff',),
+    '.png': (b'\x89PNG\r\n\x1a\n',),
+    '.webp': (b'RIFF',),
+}
 
 
 def extract_tags(content):
@@ -298,8 +309,28 @@ def resolve_note_key(note_id):
     return None
 
 
-def render_markdown(content):
+def resolve_vault_asset(asset_id, source_path=None):
+    """Resolve a note-relative or vault-relative asset within the vault."""
+    vault_root = os.path.realpath(VAULT_DIR)
+    candidates = []
+    if source_path:
+        candidates.append(os.path.join(os.path.dirname(source_path), asset_id))
+    candidates.append(os.path.join(vault_root, asset_id))
+
+    for candidate in candidates:
+        real_path = os.path.realpath(candidate)
+        if (os.path.commonpath([real_path, vault_root]) == vault_root
+                and os.path.isfile(real_path)):
+            return os.path.relpath(real_path, vault_root)
+    return None
+
+
+def render_markdown(content, source_path=None):
     """Render Obsidian markdown to HTML, resolving wiki links to internal routes."""
+
+    # Python-Markdown accepts headings without a separating space, unlike
+    # Obsidian. Protect leading tag tokens so only "# Heading" becomes an H1.
+    content = re.sub(r'(?m)^([ \t]{0,3})#(?=\S)', r'\1\\#', content)
 
     def wikilink(match):
         raw = match.group(1)
@@ -311,8 +342,19 @@ def render_markdown(content):
             return f'[{text}](/note/{quote(key)})'
         return text
 
-    # ![[embed]] and [[wikilink]] -> markdown links to internal notes.
-    content = re.sub(r'!\[\[(.*?)\]\]', wikilink, content)
+    def embed(match):
+        raw = match.group(1)
+        target, _, alias = raw.partition('|')
+        target = target.strip()
+        asset_path = resolve_vault_asset(target, source_path)
+        if asset_path and target.lower().endswith(
+                ('.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg')):
+            alt = (alias.strip()
+                   if alias and not alias.strip().isdigit() else target)
+            return f'![{alt}](/media/{quote(asset_path)})'
+        return wikilink(match)
+
+    content = re.sub(r'!\[\[(.*?)\]\]', embed, content)
     content = re.sub(r'\[\[(.*?)\]\]', wikilink, content)
 
     # Rewrite plain markdown links pointing at local .md files to internal routes.
@@ -436,13 +478,67 @@ def note(note_id):
     if not key:
         abort(404)
     content = strip_frontmatter(VAULT['notes'][key]['content'])
-    html = render_markdown(content)
+    html = render_markdown(content, VAULT['notes'][key]['path'])
     title = capitalize_first_letter(os.path.splitext(key)[0])
     linked, backlinks = related_notes(key)
     tags = VAULT['note_tags'].get(key, [])
     return render_template(
         'note.html', title=title, body=html, note_id=key,
         linked=linked, backlinks=backlinks, tags=tags)
+
+
+@app.route('/media/<path:asset_path>')
+def media(asset_path):
+    resolved_path = resolve_vault_asset(asset_path)
+    if not resolved_path:
+        abort(404)
+    return send_file(os.path.join(VAULT_DIR, resolved_path))
+
+
+@app.route('/api/images', methods=['POST'])
+def upload_image():
+    image = request.files.get('image')
+    if not image or not image.filename:
+        return jsonify(error='Choose an image to upload.'), 400
+
+    filename = secure_filename(image.filename)
+    stem, extension = os.path.splitext(filename)
+    extension = extension.lower()
+    signatures = IMAGE_SIGNATURES.get(extension)
+    if not stem or not signatures:
+        return jsonify(error='Use a PNG, JPEG, GIF, or WebP image.'), 400
+
+    header = image.stream.read(12)
+    image.stream.seek(0)
+    valid_signature = any(header.startswith(signature)
+                          for signature in signatures)
+    if extension == '.webp':
+        valid_signature = (header.startswith(b'RIFF')
+                           and header[8:12] == b'WEBP')
+    if not valid_signature:
+        return jsonify(error='The selected file is not a valid image.'), 400
+
+    images_dir = os.path.realpath(os.path.join(VAULT_DIR, 'images'))
+    vault_root = os.path.realpath(VAULT_DIR)
+    if os.path.commonpath([images_dir, vault_root]) != vault_root:
+        abort(403)
+    os.makedirs(images_dir, exist_ok=True)
+
+    destination = os.path.join(images_dir, stem + extension)
+    suffix = 2
+    while os.path.exists(destination):
+        destination = os.path.join(
+            images_dir, f'{stem}-{suffix}{extension}')
+        suffix += 1
+
+    image.save(destination)
+    relative_path = os.path.relpath(destination, vault_root)
+    relative_path = relative_path.replace(os.sep, '/')
+    return jsonify(
+        embed=f'![[{relative_path}]]',
+        path=relative_path,
+        url=url_for('media', asset_path=relative_path),
+    ), 201
 
 
 @app.route('/tag/<path:tag>')
@@ -475,9 +571,37 @@ def edit(note_id):
         load_vault()
         return redirect(url_for('note', note_id=key))
 
+    content = VAULT['notes'][key]['content']
+    frontmatter = re.match(r'^---\s*\n.*?\n---', content, re.DOTALL)
+    property_tags = extract_tags(frontmatter.group(0)) if frontmatter else []
+    tag_options = sorted(
+        {tag for tags in VAULT['note_tags'].values() for tag in tags},
+        key=str.casefold)
+    note_options = sorted(
+        (capitalize_first_letter(os.path.splitext(note_key)[0])
+         for note_key in VAULT['notes'] if note_key != key),
+        key=str.casefold)
+    topic_options = sorted(
+        {topic
+         for note in VAULT['notes'].values()
+         for topic in extract_topics(note['content'])},
+        key=str.casefold)
+
     return render_template(
         'edit.html', title=title, note_id=key,
-        content=VAULT['notes'][key]['content'])
+        content=content,
+        property_data={
+            'options': {'tags': tag_options, 'topics': note_options},
+            'wikiOptions': {
+                'notes': note_options,
+                'topics': topic_options,
+                'tags': tag_options,
+            },
+            'values': {
+                'tags': property_tags,
+                'topics': extract_topics(content),
+            },
+        })
 
 
 @app.route('/delete/<path:note_id>', methods=['POST'])
@@ -508,7 +632,7 @@ def preview(note_id):
     title = capitalize_first_letter(os.path.splitext(key)[0])
     return {
         'title': title,
-        'html': render_markdown(snippet),
+        'html': render_markdown(snippet, VAULT['notes'][key]['path']),
         'url': url_for('note', note_id=key),
     }
 
