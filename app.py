@@ -384,6 +384,43 @@ def strip_frontmatter(content):
     return content
 
 
+def editor_property_data(exclude_key=None):
+    tag_options = sorted(
+        {tag for tags in VAULT['note_tags'].values() for tag in tags},
+        key=str.casefold)
+    note_options = sorted(
+        (capitalize_first_letter(os.path.splitext(note_key)[0])
+         for note_key in VAULT['notes'] if note_key != exclude_key),
+        key=str.casefold)
+    topic_options = sorted(
+        {topic
+         for note in VAULT['notes'].values()
+         for topic in extract_topics(note['content'])},
+        key=str.casefold)
+    return {
+        'options': {'tags': tag_options, 'topics': note_options},
+        'wikiOptions': {
+            'notes': note_options,
+            'topics': topic_options,
+            'tags': tag_options,
+        },
+    }
+
+
+def note_filename(title):
+    """Return a vault-root Markdown filename derived from a user title."""
+    title = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '-', title.strip())
+    title = re.sub(r'\.md$', '', title, flags=re.IGNORECASE).rstrip(' .')
+    reserved_names = {'con', 'prn', 'aux', 'nul'}
+    reserved_names.update(f'{prefix}{number}'
+                          for prefix in ('com', 'lpt')
+                          for number in range(1, 10))
+    if (not title or title in ('.', '..')
+            or title.casefold() in reserved_names):
+        return None
+    return title + '.md'
+
+
 def choose_vault_directory(initial_dir):
     """Open the operating system's directory picker for the local app."""
     system = platform.system()
@@ -550,6 +587,40 @@ def tag_view(tag):
     return render_template('tag.html', tag='#' + tag_key, notes=matches)
 
 
+@app.route('/create', methods=['GET', 'POST'])
+def create_note():
+    title = request.form.get('title', '') if request.method == 'POST' else ''
+    content = (request.form.get('content', '')
+               if request.method == 'POST' else '')
+    error = None
+
+    if request.method == 'POST':
+        filename = note_filename(title)
+        if not filename:
+            error = 'Enter a valid note title.'
+        elif filename.lower() in VAULT['notes']:
+            error = 'A note with that title already exists.'
+        else:
+            vault_root = os.path.realpath(VAULT_DIR)
+            file_path = os.path.realpath(os.path.join(vault_root, filename))
+            if os.path.commonpath([file_path, vault_root]) != vault_root:
+                abort(403)
+            if os.path.exists(file_path):
+                error = 'A note with that title already exists.'
+            else:
+                with open(file_path, 'x', encoding='utf-8') as note_file:
+                    note_file.write(content.replace('\r\n', '\n'))
+                load_vault()
+                return redirect(url_for('note', note_id=filename.lower()))
+
+    property_data = editor_property_data()
+    property_data['values'] = {'tags': [], 'topics': []}
+    response = render_template(
+        'edit.html', title=title, note_id=None, content=content,
+        error=error, is_create=True, property_data=property_data)
+    return response, 400 if error else 200
+
+
 @app.route('/edit/<path:note_id>', methods=['GET', 'POST'])
 def edit(note_id):
     key = resolve_note_key(note_id)
@@ -574,34 +645,16 @@ def edit(note_id):
     content = VAULT['notes'][key]['content']
     frontmatter = re.match(r'^---\s*\n.*?\n---', content, re.DOTALL)
     property_tags = extract_tags(frontmatter.group(0)) if frontmatter else []
-    tag_options = sorted(
-        {tag for tags in VAULT['note_tags'].values() for tag in tags},
-        key=str.casefold)
-    note_options = sorted(
-        (capitalize_first_letter(os.path.splitext(note_key)[0])
-         for note_key in VAULT['notes'] if note_key != key),
-        key=str.casefold)
-    topic_options = sorted(
-        {topic
-         for note in VAULT['notes'].values()
-         for topic in extract_topics(note['content'])},
-        key=str.casefold)
+    property_data = editor_property_data(exclude_key=key)
+    property_data['values'] = {
+        'tags': property_tags,
+        'topics': extract_topics(content),
+    }
 
     return render_template(
         'edit.html', title=title, note_id=key,
-        content=content,
-        property_data={
-            'options': {'tags': tag_options, 'topics': note_options},
-            'wikiOptions': {
-                'notes': note_options,
-                'topics': topic_options,
-                'tags': tag_options,
-            },
-            'values': {
-                'tags': property_tags,
-                'topics': extract_topics(content),
-            },
-        })
+        content=content, error=None, is_create=False,
+        property_data=property_data)
 
 
 @app.route('/delete/<path:note_id>', methods=['POST'])

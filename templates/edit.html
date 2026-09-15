@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Editing {{ title }} — Vault Wiki</title>
+    <title>{{ 'New note' if is_create else 'Editing ' + title }} — Vault Wiki</title>
     <style>
         :root {
             --bg: #1e1e1e; --panel: #252526; --fg: #d8d8d8; --accent: #4caf50; --link: #7cb7ff;
@@ -31,6 +31,14 @@
         main { max-width: 760px; margin: 0 auto; padding: 32px 24px 120px; }
         h1.page-title { font-size: 30px; margin: 0 0 20px; color: var(--strong); border-bottom: 1px solid var(--border); padding-bottom: 14px; }
         form { display: flex; flex-direction: column; gap: 16px; }
+        .title-field { display: flex; flex-direction: column; gap: 6px; }
+        .title-field label { color: var(--muted); font-size: 13px; font-weight: 600; }
+        .title-field input {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border-soft); border-radius: 8px;
+            background: var(--panel); color: var(--strong); font: inherit; font-size: 18px; outline: none;
+        }
+        .title-field input:focus { border-color: var(--accent); }
+        .form-error { margin: 0; padding: 9px 12px; border: 1px solid #e57373; border-radius: 6px; color: #e57373; }
 
         .properties { padding: 2px 0 10px; }
         .properties-title { margin: 0 0 8px; color: var(--strong); font-size: 15px; font-weight: 600; }
@@ -152,11 +160,18 @@
 <body>
     <header>
         <a class="back" href="/">← Graph</a>
-        <span class="crumb">Editing {{ title }}</span>
+        <span class="crumb">{{ 'New note' if is_create else 'Editing ' + title }}</span>
     </header>
     <main>
-        <h1 class="page-title">Editing {{ title }}</h1>
-        <form id="edit-form" method="post" action="{{ url_for('edit', note_id=note_id) }}">
+        <h1 class="page-title">{{ 'New note' if is_create else 'Editing ' + title }}</h1>
+        <form id="edit-form" method="post" action="{{ url_for('create_note') if is_create else url_for('edit', note_id=note_id) }}">
+            {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+            {% if is_create %}
+            <div class="title-field">
+                <label for="note-title">Title</label>
+                <input id="note-title" name="title" type="text" value="{{ title }}" maxlength="180" required autofocus>
+            </div>
+            {% endif %}
             <section class="properties" aria-labelledby="properties-title">
                 <h2 class="properties-title" id="properties-title">Properties</h2>
                 <div class="property-row">
@@ -203,8 +218,8 @@
             <textarea id="property-data" hidden>{{ property_data|tojson }}</textarea>
 
             <div class="actions">
-                <button type="submit" class="save">Save</button>
-                <a class="cancel" href="{{ url_for('note', note_id=note_id) }}">Cancel</a>
+                <button type="submit" class="save">{{ 'Create' if is_create else 'Save' }}</button>
+                <a class="cancel" href="{{ url_for('index') if is_create else url_for('note', note_id=note_id) }}">Cancel</a>
             </div>
         </form>
     </main>

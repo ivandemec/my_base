@@ -49,11 +49,12 @@
             color: var(--muted); font-size: 12px; max-width: min(28vw, 320px);
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-        #vault-submit {
+        #vault-submit, #new-note {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+            font-size: 13px; text-decoration: none;
         }
-        #vault-submit:hover { border-color: #4caf50; }
+        #vault-submit:hover, #new-note:hover { border-color: #4caf50; }
         #search {
             margin-left: auto; background: var(--input-bg); border: 1px solid var(--input-border);
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
@@ -148,7 +149,7 @@
 
         @media (max-width: 700px) {
             #topbar { height: auto; min-height: 86px; flex-wrap: wrap; gap: 6px; padding: 6px 10px; }
-            #topbar h1, #vault-form { order: 1; }
+            #topbar h1, #vault-form, #new-note { order: 1; }
             #vault-form { flex: 1; min-width: auto; }
             #vault-path { display: none; }
             #graph-type, #arc-order, #pack-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
@@ -173,6 +174,7 @@
             <button id="vault-submit" type="submit">Open vault</button>
             <span id="vault-path" title="{{ vault_dir }}">{{ vault_dir }}</span>
         </form>
+        <a id="new-note" href="{{ url_for('create_note') }}">New note</a>
         <select id="graph-type" aria-label="Graph type" title="Graph type">
             <option value="force">Force-directed</option>
             <option value="disjoint">Disjoint force-directed</option>
