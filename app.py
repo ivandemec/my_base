@@ -733,6 +733,45 @@ def preview(note_id):
     }
 
 
+@app.route('/api/search')
+def search_notes():
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify(results=[])
+
+    pattern = re.compile(re.escape(query), re.IGNORECASE)
+    results = []
+    for key, note_data in VAULT['notes'].items():
+        title = capitalize_first_letter(os.path.splitext(key)[0])
+        content = strip_frontmatter(note_data['content'])
+        matches = list(pattern.finditer(content))
+        if not matches and not pattern.search(title):
+            continue
+
+        snippets = []
+        for match in matches[:3]:
+            start = max(0, match.start() - 70)
+            end = min(len(content), match.end() + 110)
+            snippet = re.sub(r'\s+', ' ', content[start:end]).strip()
+            snippets.append({
+                'text': (('…' if start else '') + snippet
+                         + ('…' if end < len(content) else '')),
+            })
+
+        results.append({
+            'id': key,
+            'title': title,
+            'url': url_for('note', note_id=key),
+            'snippets': snippets,
+            'match_count': len(matches),
+        })
+
+    results.sort(
+        key=lambda result: (-result['match_count'],
+                            result['title'].casefold()))
+    return jsonify(results=results[:100])
+
+
 @app.route('/reload')
 def reload_vault():
     load_vault()

@@ -319,8 +319,9 @@
 
         function matchingOptions(name, query) {
             const selected = new Set(properties[name].map(value => value.toLowerCase()));
-            return propertyOptions[name].filter(value =>
-                !selected.has(value.toLowerCase()) && value.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
+            const matches = propertyOptions[name].filter(value =>
+                !selected.has(value.toLowerCase()) && value.toLowerCase().includes(query.toLowerCase()));
+            return name === 'tags' ? matches : matches.slice(0, 8);
         }
 
         function renderSuggestions(field) {
