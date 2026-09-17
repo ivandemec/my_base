@@ -300,6 +300,41 @@ def related_notes(key):
     return fmt(linked), fmt(backlinks)
 
 
+def local_graph_data(key):
+    """Return the note and its directly connected graph nodes and edges."""
+    if key.startswith('#'):
+        tag = key[1:].casefold()
+        note_ids = {
+            note_id for note_id, tags in VAULT['note_tags'].items()
+            if any(note_tag.casefold() == tag for note_tag in tags)
+        }
+        nodes = [node.copy() for node in VAULT['nodes']
+                 if node['id'] in note_ids]
+        tag_node = next(
+            (node.copy() for node in VAULT['nodes'] if node['id'] == key),
+            {
+                'id': key,
+                'label': key,
+                'link_count': len(note_ids),
+                'color': get_tag_color(key, VAULT['color_groups']),
+                'type': 'tag',
+            },
+        )
+        nodes.append(tag_node)
+        edges = [{'source': note_id, 'target': key}
+                 for note_id in sorted(note_ids)]
+        return nodes, edges
+
+    edges = [edge.copy() for edge in VAULT['edges']
+             if edge['source'] == key or edge['target'] == key]
+    node_ids = {key}
+    for edge in edges:
+        node_ids.update((edge['source'], edge['target']))
+    nodes = [node.copy() for node in VAULT['nodes']
+             if node['id'] in node_ids]
+    return nodes, edges
+
+
 def resolve_note_key(note_id):
     """Resolve a URL note id to the notes dict key, tolerating a missing extension."""
     note_id = note_id.lower()
@@ -519,9 +554,12 @@ def note(note_id):
     title = capitalize_first_letter(os.path.splitext(key)[0])
     linked, backlinks = related_notes(key)
     tags = VAULT['note_tags'].get(key, [])
+    local_nodes, local_links = local_graph_data(key)
     return render_template(
         'note.html', title=title, body=html, note_id=key,
-        linked=linked, backlinks=backlinks, tags=tags)
+        linked=linked, backlinks=backlinks, tags=tags,
+        local_nodes=json.dumps(local_nodes),
+        local_links=json.dumps(local_links))
 
 
 @app.route('/media/<path:asset_path>')
@@ -584,7 +622,12 @@ def tag_view(tag):
     matches = notes_for_tag(tag_key)
     if not matches:
         abort(404)
-    return render_template('tag.html', tag='#' + tag_key, notes=matches)
+    tag_id = '#' + tag_key
+    local_nodes, local_links = local_graph_data(tag_id)
+    return render_template(
+        'tag.html', tag=tag_id, notes=matches,
+        local_nodes=json.dumps(local_nodes),
+        local_links=json.dumps(local_links))
 
 
 @app.route('/create', methods=['GET', 'POST'])

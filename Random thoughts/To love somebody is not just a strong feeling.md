@@ -1,5 +1,6 @@
 ---
-Topics: "[[A serious perspective on Life]]"
+topics:
+  - "[[A serious perspective on Life]]"
 tags:
   - Erich-Fromm
 ---
@@ -16,3 +17,5 @@ A feeling comes and it may go. How can I judge that it will stay forever, when m
 from 'The Art of Loving'
 
 > [https://wp.me/PcI0YT-as](https://wp.me/PcI0YT-as)
+
+[[To bear the manifestation of others is a big thing]]
