@@ -60,6 +60,34 @@
             color: var(--fg); padding: 6px 10px; border-radius: 6px; width: 220px; outline: none;
         }
         #search:focus { border-color: #4caf50; }
+        #search-panel {
+            position: fixed; top: 46px; left: 0; bottom: 0; z-index: 18;
+            width: min(390px, 92vw); display: flex; flex-direction: column;
+            background: var(--panel); color: var(--fg); border-right: 1px solid var(--border);
+            box-shadow: var(--shadow); transform: translateX(-100%); visibility: hidden;
+            transition: transform .18s ease;
+        }
+        #search-panel.visible { transform: translateX(0); visibility: visible; }
+        .search-results-header {
+            display: flex; align-items: center; min-height: 42px; padding: 8px 14px;
+            color: var(--muted); border-bottom: 1px solid var(--border); font-size: 12px;
+        }
+        #search-results { flex: 1; overflow-y: auto; }
+        .search-result {
+            display: block; padding: 11px 14px 13px; color: var(--fg);
+            border-bottom: 1px solid var(--border); text-decoration: none;
+        }
+        .search-result:hover { background: var(--input-bg); }
+        .search-result-title { color: var(--strong); font-size: 13px; font-weight: 600; }
+        .search-result-count { margin-left: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+        .search-result-snippet {
+            margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45;
+            overflow-wrap: anywhere;
+        }
+        .search-result mark {
+            padding: 0 1px; background: #ffd866; color: #242424; border-radius: 2px;
+        }
+        .search-empty { padding: 22px 14px; color: var(--muted); font-size: 13px; }
         #graph-type, #arc-order, #pack-order, #treemap-tiling {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 28px 6px 10px; border-radius: 6px; outline: none; cursor: pointer;
@@ -157,6 +185,7 @@
             #arc-order, #pack-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
             #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
             #colors-panel { top: 86px; }
+            #search-panel { top: 86px; }
         }
     </style>
     <script>
@@ -197,11 +226,16 @@
             <option value="squarify">Squarify</option>
             <option value="slice-dice">Slice-dice</option>
         </select>
-        <input id="search" type="text" placeholder="Search notes…" autocomplete="off">
+        <input id="search" type="search" placeholder="Search notes…" autocomplete="off"
+               aria-label="Search note titles and text" aria-controls="search-panel" aria-expanded="false">
         <button id="force-controls-toggle" type="button" title="Adjust graph forces" aria-label="Adjust graph forces">⚙</button>
         <button id="colors-toggle" type="button" title="Change node colors" aria-label="Change node colors">🎨</button>
         <button id="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme"></button>
     </div>
+    <aside id="search-panel" aria-label="Search results" inert>
+        <div class="search-results-header" id="search-summary"></div>
+        <div id="search-results"></div>
+    </aside>
     <div id="force-controls-panel">
         <div class="force-control"><label for="force-center">Center force</label><input id="force-center" type="range" min="0" max="0.2" step="0.01"><output for="force-center"></output></div>
         <div class="force-control"><label for="force-repel">Repel force</label><input id="force-repel" type="range" min="0" max="1000" step="10"><output for="force-repel"></output></div>
@@ -601,17 +635,109 @@
             previewEl.classList.remove("visible");
         }
 
-        // ---- Search: highlight & focus matching nodes ----
+        // ---- Search: highlight graph nodes and show full-text results ----
         var search = document.getElementById("search");
+        var searchPanel = document.getElementById("search-panel");
+        var searchSummary = document.getElementById("search-summary");
+        var searchResults = document.getElementById("search-results");
+        var searchTimer;
+        var searchToken = 0;
+
         function applySearchHighlight() {
-            var q = document.getElementById("search").value.trim().toLowerCase();
+            var q = search.value.trim().toLowerCase();
             node.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.12);
             text.attr("opacity", d => !q || d.label.toLowerCase().includes(q) ? 1 : 0.08);
             packLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
             treemapLeaf.attr("opacity", d => !q || d.data.node.label.toLowerCase().includes(q) ? 1 : 0.12);
             treeLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
         }
-        search.addEventListener("input", applySearchHighlight);
+
+        function setSearchPanel(open) {
+            searchPanel.classList.toggle("visible", open);
+            searchPanel.inert = !open;
+            search.setAttribute("aria-expanded", String(open));
+        }
+
+        function highlightedText(text, query) {
+            var fragment = document.createDocumentFragment();
+            var lowerText = text.toLocaleLowerCase();
+            var lowerQuery = query.toLocaleLowerCase();
+            var cursor = 0;
+            var index;
+            while ((index = lowerText.indexOf(lowerQuery, cursor)) !== -1) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, index)));
+                var mark = document.createElement("mark");
+                mark.textContent = text.slice(index, index + query.length);
+                fragment.appendChild(mark);
+                cursor = index + query.length;
+            }
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            return fragment;
+        }
+
+        function renderSearchResults(results, query) {
+            searchResults.replaceChildren();
+            searchSummary.textContent = results.length + (results.length === 1 ? " note" : " notes");
+            if (!results.length) {
+                var empty = document.createElement("div");
+                empty.className = "search-empty";
+                empty.textContent = "No matching notes";
+                searchResults.appendChild(empty);
+                return;
+            }
+
+            results.forEach(function (result) {
+                var item = document.createElement("a");
+                item.className = "search-result";
+                item.href = result.url;
+                var title = document.createElement("div");
+                title.className = "search-result-title";
+                title.appendChild(highlightedText(result.title, query));
+                if (result.match_count) {
+                    var count = document.createElement("span");
+                    count.className = "search-result-count";
+                    count.textContent = result.match_count + (result.match_count === 1 ? " match" : " matches");
+                    title.appendChild(count);
+                }
+                item.appendChild(title);
+                result.snippets.forEach(function (snippet) {
+                    var context = document.createElement("p");
+                    context.className = "search-result-snippet";
+                    context.appendChild(highlightedText(snippet.text, query));
+                    item.appendChild(context);
+                });
+                searchResults.appendChild(item);
+            });
+        }
+
+        function searchNoteText() {
+            clearTimeout(searchTimer);
+            applySearchHighlight();
+            var query = search.value.trim();
+            var token = ++searchToken;
+            if (!query) {
+                setSearchPanel(false);
+                searchResults.replaceChildren();
+                return;
+            }
+
+            setSearchPanel(true);
+            searchSummary.textContent = "Searching…";
+            searchTimer = setTimeout(function () {
+                fetch("/api/search?q=" + encodeURIComponent(query))
+                    .then(response => response.ok ? response.json() : Promise.reject())
+                    .then(data => {
+                        if (token === searchToken) renderSearchResults(data.results, query);
+                    })
+                    .catch(() => {
+                        if (token !== searchToken) return;
+                        searchSummary.textContent = "Search unavailable";
+                        searchResults.replaceChildren();
+                    });
+            }, 180);
+        }
+
+        search.addEventListener("input", searchNoteText);
 
         // ---- Node color pickers ----
         var colorsPanel = document.getElementById("colors-panel");

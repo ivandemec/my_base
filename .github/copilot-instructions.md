@@ -26,6 +26,7 @@ When testing in terminal, make sure you are in the correct virtual environment a
 - **New notes**: a create route that writes a new `.md` file into `VAULT_DIR`.
 - **Linking**: let new/edited notes reference topics (other notes via `[[wikilinks]]`) and tags (inline `#tag` or frontmatter), which must show up as edges after reload.
 - **Editing UX**: aim for a live/WYSIWYG editing experience like Obsidian's edit mode, but keep the stack server-rendered Jinja + light vanilla JS — do not introduce a JS framework (React/Vue/etc.). Save the underlying raw markdown to disk.
+- **Platform**: develop and test only for Desktop environments.
 
 ## Security
 
