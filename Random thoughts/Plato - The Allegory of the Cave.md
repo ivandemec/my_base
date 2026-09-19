@@ -1,7 +1,5 @@
 ---
-tags:
-  - mindtricks
-  - Plato
+tags: [mindtricks, Plato]
 Topics: "[[A humorous perspective on life]]"
 Source: https://www.gutenberg.org/files/1497/1497-h/1497-h.htm
 ---
