@@ -1,7 +1,7 @@
 # Project Guidelines
 
 MyBase is a Flask web app that recreates the core of [Obsidian](https://obsidian.md/):
-browse a vault as an interactive graph, read notes, and (in progress) edit notes,
+browse a vault as an interactive graph, read notes, and edit notes,
 create new notes, and link them to topics and tags.
 When testing in terminal, make sure you are in the correct virtual environment and that `VAULT_DIR` is set if you are not using the default vault location.
 
@@ -20,10 +20,13 @@ When testing in terminal, make sure you are in the correct virtual environment a
 - Tags are node ids prefixed with `#` and colored `#4caf50`; notes default to `#7f7f7f`. Preserve this so graph colors keep meaning.
 - Keep the parsing regexes for links/tags identical between `app.py` and the graph generator so both produce the same graph.
 
+## Implemented
+
+- **Editable notes**: the shared editor writes markdown back to the note's file (the `.md` files are the single source of truth — no database), then reloads `VAULT`.
+- **New notes**: the create route uses the shared editor, writes a new `.md` file into `VAULT_DIR`, then reloads `VAULT`.
+
 ## Roadmap (implement toward this)
 
-- **Editable notes**: an edit view + route that writes markdown back to the note's file (the `.md` files are the single source of truth — no database), then reloads `VAULT`.
-- **New notes**: a create route that writes a new `.md` file into `VAULT_DIR`.
 - **Linking**: let new/edited notes reference topics (other notes via `[[wikilinks]]`) and tags (inline `#tag` or frontmatter), which must show up as edges after reload.
 - **Editing UX**: aim for a live/WYSIWYG editing experience like Obsidian's edit mode, but keep the stack server-rendered Jinja + light vanilla JS — do not introduce a JS framework (React/Vue/etc.). Save the underlying raw markdown to disk.
 - **Platform**: develop and test only for Desktop environments.

@@ -365,7 +365,8 @@ def render_markdown(content, source_path=None):
 
     # Python-Markdown accepts headings without a separating space, unlike
     # Obsidian. Protect leading tag tokens so only "# Heading" becomes an H1.
-    content = re.sub(r'(?m)^([ \t]{0,3})#(?=\S)', r'\1\\#', content)
+    content = re.sub(
+        r'(?m)^([ \t]{0,3})(#{1,6})(?=[^#\s])', r'\1\\\2', content)
 
     def wikilink(match):
         raw = match.group(1)
