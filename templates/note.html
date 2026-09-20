@@ -33,7 +33,7 @@
             color: var(--fg); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
         }
         #theme-toggle:hover { border-color: var(--accent); }
-        main { max-width: 860px; margin: 0 auto; padding: 40px 24px 120px; }
+        main { width: 75%; margin: 0 auto; padding: 40px 24px 120px; }
         .note-card { background: var(--panel); border: 1px solid var(--border-soft); border-radius: 8px;
             padding: 30px 36px 36px; box-shadow: 0 12px 32px rgba(0,0,0,.16); }
         .note-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
@@ -48,6 +48,7 @@
         .action-button:hover { border-color: var(--accent); }
         .action-button.delete { color: var(--danger); }
         .action-button.delete:hover { background: var(--danger-bg); border-color: var(--danger); }
+        .content { max-width: 100%; overflow-x: auto; }
         .content h1, .content h2, .content h3 { color: var(--strong); margin-top: 1.6em; }
         .content a { color: var(--link); text-decoration: none; }
         .content a:hover { text-decoration: underline; }
@@ -99,7 +100,7 @@
         #preview p { margin: 6px 0; }
         #preview .hint { margin-top: 10px; font-size: 11px; color: var(--muted); }
         @media (max-width: 620px) {
-            main { padding: 20px 12px 80px; }
+            main { width: 100%; padding: 20px 12px 80px; }
             .note-card { padding: 22px 18px 28px; }
             .note-card-header { flex-direction: column; gap: 16px; }
             .note-actions { width: 100%; }
