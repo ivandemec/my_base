@@ -453,11 +453,14 @@
             }).filter(Boolean);
         }
 
-        applyGraphType(graphType, false);
         graphTypeSelect.addEventListener("change", function () {
             graphType = this.value;
-            localStorage.setItem("vault-graph-type", graphType);
             applyGraphType(graphType, true);
+            try {
+                localStorage.setItem("vault-graph-type", graphType);
+            } catch (error) {
+                // Switching views must still work when browser storage is unavailable.
+            }
         });
         arcOrderSelect.addEventListener("change", function () {
             arcOrder = this.value;
@@ -864,6 +867,7 @@
             syncThemeButton();
         });
         syncThemeButton();
+        applyGraphType(graphType, false);
     </script>
 </body>
 </html>
