@@ -356,7 +356,7 @@ def resolve_vault_asset(asset_id, source_path=None):
         real_path = os.path.realpath(candidate)
         if (os.path.commonpath([real_path, vault_root]) == vault_root
                 and os.path.isfile(real_path)):
-            return os.path.relpath(real_path, vault_root)
+            return os.path.relpath(real_path, vault_root).replace(os.sep, '/')
     return None
 
 
@@ -392,6 +392,20 @@ def render_markdown(content, source_path=None):
 
     content = re.sub(r'!\[\[(.*?)\]\]', embed, content)
     content = re.sub(r'\[\[(.*?)\]\]', wikilink, content)
+
+    # Serve standard Markdown images from the active vault rather than
+    # resolving them relative to the current /note/ URL in the browser.
+    def mdimage(match):
+        alt, target = match.group(1), match.group(2)
+        if (re.match(r'^[a-z]+:', target, re.IGNORECASE)
+                or target.startswith(('#', '/'))):
+            return match.group(0)
+        asset_path = resolve_vault_asset(target, source_path)
+        if asset_path:
+            return f'![{alt}](/media/{quote(asset_path)})'
+        return match.group(0)
+
+    content = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', mdimage, content)
 
     # Rewrite plain markdown links pointing at local .md files to internal routes.
     def mdlink(match):
