@@ -1,8 +1,8 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#Spinoza"
-  - "#Bertrand-Russell"
+  - Spinoza
+  - Bertrand-Russell
 ---
 RUSSELL ON SPINOZA
 

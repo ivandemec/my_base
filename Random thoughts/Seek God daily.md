@@ -1,6 +1,8 @@
 ---
-topics:
+Topics:
   - "[[A serious perspective on life]]"
+tags:
+  - St-Nektarios-of-Aegina
 ---
 "Seek God
 daily. But seek

@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#Epicurus"
+  - Epicurus
 ---
 We grant that his power is infinite: whatever he wills to happen does happen...
 

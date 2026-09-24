@@ -1,5 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
+tags:
+  - Georges-Bataille
 ---
 We have in fact only two certainties in this world – that we are not everything and that we will die.
 

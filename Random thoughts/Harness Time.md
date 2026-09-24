@@ -1,7 +1,7 @@
 ---
 tags:
-  - "#poetry"
-  - "#mindtricks"
+  - poetry
+  - mindtricks
 ---
 In May, anything
 seemed possible.

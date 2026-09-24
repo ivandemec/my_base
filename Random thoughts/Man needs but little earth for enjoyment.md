@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#Goethe"
+  - Goethe
 ---
 I am a wanderer, a pilgrim, through the world. But what else are you!
 

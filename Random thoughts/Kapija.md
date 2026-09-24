@@ -1,5 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
+tags:
+  - poljeoponašanja
 ---
 Zamisli veliki kružni pijačni trg s mnoštvom tezgi i tačno u središtu jednu jedinu kapiju, tako usku da kroz nju može da prođe samo po jedan čovek i to isključivo ako u rukama ne nosi ništa. Svaka tezga na trgu nudi nešto što izgleda kao da je najvažnija stvar na svetu: pripadnost, priznanje, smisao, potvrdu, utehu, ljubav… Čovek zakoračuje na trg i zastaje kod tezge koja najviše obećava i dokle god mu ta tezga zaista pruža ono što je obećala, on se od nje ne udaljava i ne ispušta iz ruku ono što je dobio. Iza celog žagora trga, iz pravca kapije u središtu pijace, dopire tih zov, tako tih da ga skoro niko ne čuje, jer sve tezge zajedno proizvode zaglušujuću buku.
 

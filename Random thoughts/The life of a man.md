@@ -1,5 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
+tags:
+  - David-Hume
 ---
 The life of a man is of no greater importance to the universe than that of an oyster.
 

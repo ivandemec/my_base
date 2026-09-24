@@ -1,5 +1,8 @@
 ---
 Topics: "[[A humorous perspective on life]]"
+tags:
+  - Napoleon
+  - Arthur-Conan-Doyle
 ---
 "A genius is the man who can do the average thing when
 everyone else around him is losing his mind."

@@ -2,7 +2,7 @@
 Topics: "[[A humorous perspective on life]]"
 tags:
   - poetry
-  - "#Beckett"
+  - Beckett
 ---
 PODSEĆANJE Radim u nemoći i neznanju. Mislim da dosad nemoć nije bila korišćena. Što se mene tiče, trudim se da istražim čitavu tu oblast bića koju je umetnik oduvek zanemarivao kao nešto neupotrebljivo ili, po definiciji, nespojivo s umetnošću.
 

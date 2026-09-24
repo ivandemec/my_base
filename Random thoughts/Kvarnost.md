@@ -1,5 +1,5 @@
 ---
-topics:
+Topics:
   - "[[A serious perspective on Life]]"
 tags:
   - BelaHamvas

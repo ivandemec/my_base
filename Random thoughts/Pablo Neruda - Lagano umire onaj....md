@@ -1,7 +1,7 @@
 ---
 tags:
   - poetry
-  - "#Neruda"
+  - Neruda
 Topics: "[[A serious perspective on Life]]"
 ---
 Lagano umire onaj koji ne putuje,

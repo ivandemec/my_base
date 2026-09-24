@@ -1,7 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
 tags:
-  - "#Spinoza"
+  - Spinoza
 ---
 The following is totally based on my intuition...
 

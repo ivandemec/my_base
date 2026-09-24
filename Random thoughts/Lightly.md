@@ -1,7 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
 tags:
-  - "#Huxley"
+  - Huxley
 ---
 "It's dark because you're trying too hard.
 

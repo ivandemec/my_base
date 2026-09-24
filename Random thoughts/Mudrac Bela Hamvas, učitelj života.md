@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#BelaHamvas"
+  - BelaHamvas
 Topics: "[[A serious perspective on Life]]"
 ---
 

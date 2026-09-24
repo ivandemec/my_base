@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#William-Burroughs"
+  - William-Burroughs
 Topics: "[[A humorous perspective on life]]"
 ---
 Cheat your landlord if you can and must,

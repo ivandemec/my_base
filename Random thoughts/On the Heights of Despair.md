@@ -1,7 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
 tags:
-  - "#Emil-Cioran"
+  - Emil-Cioran
 ---
 Although life for me is torture, I cannot renounce it, because I do not believe in the absolute values in whose name I would sacrifice myself. If I were to be totally sincere, I would say that I do not know why I live and why I do not stop living.
 

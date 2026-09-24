@@ -1,5 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
+tags:
+  - poljeoponašanja
 ---
 Igra nije tek dečja faza koju čovek prevazilazi, nego stanje u kojem je čovek u velikoj meri celovit. U stanju igranja nagon i razum privremeno prestaju da se sudaraju. Kada odrasla osoba prestane da se igra, ona se ne odriče samo razonode nego i dodira sa sopstvenim stvaralačkim nadahnućem i sposobnošću da se poveže sa drugim čovekom kao ravnopravnim bićem a ne sredstvom za ostvarivanje nečega.
 

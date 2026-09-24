@@ -1,7 +1,7 @@
 ---
 tags:
   - poetry
-  - "#Rilke"
+  - Rilke
 ---
 Have patience with
 everything that remains

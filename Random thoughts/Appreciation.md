@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#Voltaire"
+  - Voltaire
 Topics: "[[A serious perspective on Life]]"
 ---
 Appreciation is a

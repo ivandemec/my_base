@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#religion"
+  - religion
 Topics: "[[A humorous perspective on life]]"
 updated: Date & time
 ---

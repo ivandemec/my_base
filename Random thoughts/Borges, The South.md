@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#cat"
+  - cat
 Topics: "[[A humorous perspective on life]]"
 updated: Date & time
 ---

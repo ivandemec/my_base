@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#Steiner"
+  - Steiner
 ---
 Meditation - A living force that makes the soul strong and powerful
 

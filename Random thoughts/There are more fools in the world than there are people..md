@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#Heine"
+  - Heine
 ---
 There are more fools in the world than there are people.
 

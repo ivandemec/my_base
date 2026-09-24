@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#poetry"
+  - poetry
   - Kierkegaard
   - sphere-of-ideas
 Topics: "[[A serious perspective on Life]]"

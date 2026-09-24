@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#Erich-Fromm"
+  - Erich-Fromm
 ---
   
 

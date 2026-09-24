@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#Steiner"
+  - Steiner
 ---
 Future evolution must be prepared for. What man already produces from himself, as preparation for the future human being, is the word, speech.
 

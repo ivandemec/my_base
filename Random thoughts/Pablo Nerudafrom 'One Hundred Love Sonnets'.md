@@ -1,7 +1,7 @@
 ---
 tags:
   - poetry
-  - "#Neruda"
+  - Neruda
 ---
 I love you without knowing how, or when, or from where.
 

@@ -1,5 +1,5 @@
 ---
-topics:
+Topics:
   - "[[A humorous perspective on life]]"
 tags:
   - Wittgenstein

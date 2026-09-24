@@ -2,7 +2,7 @@
 tags:
   - Steiner
   - Ahriman
-  - "#Lucifer"
+  - Lucifer
 ---
 Human beings are closer to nature in their breathing process than in their nervous processes. This is why the Greeks felt this encounter with wisdom particularly vividly in their relationship with the Sphinx.
 

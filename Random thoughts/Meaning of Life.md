@@ -1,5 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
+tags:
+  - Joseph-Campbell
 ---
 "Life has no
 meaning. Each of

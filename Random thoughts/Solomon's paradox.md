@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#paradox"
+  - paradox
 ---
 Solomon's paradox is the observation
 that people can give reasonable advice to

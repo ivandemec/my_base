@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#Steiner"
+  - Steiner
 ---
 It is the Seraphim, Cherubim, Thrones who transmute what goes out from us in one earthly life into our experiences of the next lives on earth.
 

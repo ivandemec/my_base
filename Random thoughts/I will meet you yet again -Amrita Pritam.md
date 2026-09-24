@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#poetry"
+  - poetry
 Topics: "[[A serious perspective on Life]]"
 ---
 I will meet you yet again

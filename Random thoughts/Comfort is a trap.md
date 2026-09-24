@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#comfort"
+  - comfort
 ---
 Comfort is a trap.
 The pursuit of constant ease

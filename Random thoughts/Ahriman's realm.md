@@ -1,8 +1,8 @@
 ---
 tags:
-  - "#Steiner"
-  - "#Ahriman"
-  - "#Goethe"
+  - Steiner
+  - Ahriman
+  - Goethe
 ---
 Ahriman is the lord of death, as it's conditioned by man's nature. There's no life in a stone, so it belongs to him.
 

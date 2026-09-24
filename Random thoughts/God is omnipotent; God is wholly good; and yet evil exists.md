@@ -1,8 +1,8 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#J-L-Mackie"
-  - "#sphere-of-ideas"
+  - J-L-Mackie
+  - sphere-of-ideas
 ---
 
 God is omnipotent; God is wholly good; and yet evil exists. There seems to be some contradiction between these three propositions, so that if any two of them were true the third would be false. But at the same time all three are essential parts of most theological positions: the theologian it seems, at once must adhere and cannot consistently adhere to all three.

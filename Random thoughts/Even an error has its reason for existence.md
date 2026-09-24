@@ -1,7 +1,7 @@
 ---
 Topics: "[[A humorous perspective on life]]"
 tags:
-  - "#René-Guénon"
+  - René-Guénon
 ---
 Everything that has any kind of existence, even error, has necessarily its reason for existence, and disorder itself must in the end find its place among the elements of universal order.
 

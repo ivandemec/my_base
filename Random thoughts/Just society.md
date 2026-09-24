@@ -1,5 +1,7 @@
 ---
 Topics: "[[A serious perspective on Life]]"
+tags:
+  - Ivan-Illich
 ---
 A just society would be one in which liberty for one person is constrained only by the demands created by equal liberty for another.
 

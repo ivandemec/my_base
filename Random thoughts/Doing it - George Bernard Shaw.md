@@ -1,6 +1,6 @@
 ---
 tags:
-  - "#mindtricks"
+  - mindtricks
 ---
 "People who say it cannot be
 done, should not interrupt those
