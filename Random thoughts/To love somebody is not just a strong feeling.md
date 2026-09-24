@@ -1,6 +1,5 @@
 ---
-Topics:
-  - "[[A serious perspective on Life]]"
+Topics: "[[A serious perspective on Life]]"
 tags:
   - Erich-Fromm
 ---

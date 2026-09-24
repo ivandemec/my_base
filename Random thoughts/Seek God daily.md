@@ -1,6 +1,5 @@
 ---
-Topics:
-  - "[[A serious perspective on life]]"
+Topics: "[[A serious perspective on Life]]"
 tags:
   - St-Nektarios-of-Aegina
 ---

@@ -1,6 +1,5 @@
 ---
-Topics:
-  - "[[A humorous perspective on life]]"
+Topics: "[[A humorous perspective on life]]"
 tags:
   - Jack-London
 ---
