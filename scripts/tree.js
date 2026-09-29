@@ -1,56 +1,47 @@
-function buildTreeHierarchy() {
+function buildTreeHierarchy(order) {
     var noteNodes = nodes.filter(d => d.type === "note");
     var byId = new Map(nodes.map(d => [d.id, d]));
-    var neighbors = new Map(noteNodes.map(d => [d.id, []]));
-    var tagNeighbors = new Map(noteNodes.map(d => [d.id, []]));
+    var groups = new Map();
 
-    links.forEach(function (edge) {
-        var source = typeof edge.source === "object" ? edge.source : byId.get(edge.source);
-        var target = typeof edge.target === "object" ? edge.target : byId.get(edge.target);
-        if (!source || !target) return;
-        if (source.type === "note" && target.type === "note") {
-            neighbors.get(source.id).push(target);
-            neighbors.get(target.id).push(source);
-        } else if (source.type === "note" && target.type === "tag") {
-            tagNeighbors.get(source.id).push(target);
-        } else if (target.type === "note" && source.type === "tag") {
-            tagNeighbors.get(target.id).push(source);
+    function topicGroup(note) {
+        var name = note.topics.length ? note.topics[0] : "Uncategorized";
+        var id = name.toLowerCase().replace(/\.md$/i, "") + ".md";
+        return { name: name, node: byId.get(id), key: "topic:" + name.toLowerCase() };
+    }
+
+    function tagGroup(note) {
+        var name = note.tags.length ? "#" + note.tags[0] : "Untagged";
+        return { name: name, node: byId.get(name), key: "tag:" + name.toLowerCase() };
+    }
+
+    noteNodes.forEach(function (note) {
+        var topic = topicGroup(note);
+        var tag = tagGroup(note);
+        var primary = order === "tag" ? tag : topic;
+
+        if (!groups.has(primary.key)) {
+            groups.set(primary.key, {
+                name: primary.node ? primary.node.label : primary.name,
+                node: primary.node,
+                key: primary.key,
+                children: []
+            });
         }
+        var group = groups.get(primary.key);
+        group.children.push({
+            name: note.label,
+            node: note,
+            key: primary.key + "/note:" + note.id
+        });
     });
 
-    var visitedNotes = new Set();
-    var visitedTags = new Set();
-    var forest = [];
-    noteNodes.slice().sort((a, b) =>
-        d3.descending(a.link_count, b.link_count) || d3.ascending(a.label, b.label)
-    ).forEach(function (componentRoot) {
-        if (visitedNotes.has(componentRoot.id)) return;
-        var rootItem = { name: componentRoot.label, node: componentRoot, children: [] };
-        var queue = [{ node: componentRoot, item: rootItem }];
-        visitedNotes.add(componentRoot.id);
-        forest.push(rootItem);
-
-        while (queue.length) {
-            var current = queue.shift();
-            (neighbors.get(current.node.id) || []).slice()
-                .sort((a, b) => d3.ascending(a.label, b.label))
-                .forEach(function (next) {
-                    if (visitedNotes.has(next.id)) return;
-                    visitedNotes.add(next.id);
-                    var child = { name: next.label, node: next, children: [] };
-                    current.item.children.push(child);
-                    queue.push({ node: next, item: child });
-                });
-            (tagNeighbors.get(current.node.id) || []).slice()
-                .sort((a, b) => d3.ascending(a.label, b.label))
-                .forEach(function (tag) {
-                    if (visitedTags.has(tag.id)) return;
-                    visitedTags.add(tag.id);
-                    current.item.children.push({ name: tag.label, node: tag });
-                });
-        }
-    });
-    var root = d3.hierarchy({ name: "Vault", children: forest });
+    var forest = Array.from(groups.values())
+        .sort((a, b) => d3.ascending(a.name.toLowerCase(), b.name.toLowerCase()))
+        .map(function (group) {
+            group.children.sort((a, b) => d3.ascending(a.name.toLowerCase(), b.name.toLowerCase()));
+            return group;
+        });
+    var root = d3.hierarchy({ name: "Vault", key: "vault", children: forest });
     root.children.forEach(function (branch) {
         if (!branch.children) return;
         branch._children = branch.children;
@@ -73,7 +64,7 @@ function renderTree() {
     treeLayer.attr("transform", "translate(40," + offsetX + ")");
 
     var treeLinks = treeLayer.selectAll("path.tree-link")
-        .data(treeRoot.links(), d => d.target.data.node ? d.target.data.node.id : "vault");
+        .data(treeRoot.links(), d => d.target.data.key);
     treeLinks.exit().transition().duration(250).attr("opacity", 0).remove();
     treeLinks.enter().append("path").attr("class", "tree-link").merge(treeLinks)
         .transition().duration(350)
@@ -83,7 +74,7 @@ function renderTree() {
             d.target.y + "," + d.target.x);
 
     treeLeaf = treeLayer.selectAll("g.tree-node")
-        .data(descendants, d => d.data.node ? d.data.node.id : "vault");
+        .data(descendants, d => d.data.key);
     treeLeaf.exit().transition().duration(250).attr("opacity", 0).remove();
     var entered = treeLeaf.enter().append("g").attr("class", "tree-node")
         .attr("transform", d => "translate(" + d.y + "," + d.x + ")");

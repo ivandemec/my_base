@@ -88,12 +88,12 @@
             padding: 0 1px; background: #ffd866; color: #242424; border-radius: 2px;
         }
         .search-empty { padding: 22px 14px; color: var(--muted); font-size: 13px; }
-        #graph-type, #arc-order, #pack-order, #treemap-tiling {
+        #graph-type, #arc-order, #pack-order, #tree-order, #treemap-tiling {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 28px 6px 10px; border-radius: 6px; outline: none; cursor: pointer;
         }
-        #graph-type:focus, #arc-order:focus, #pack-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
-        #arc-order[hidden], #pack-order[hidden], #treemap-tiling[hidden] { display: none; }
+        #graph-type:focus, #arc-order:focus, #pack-order:focus, #tree-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
+        #arc-order[hidden], #pack-order[hidden], #tree-order[hidden], #treemap-tiling[hidden] { display: none; }
         #theme-toggle, #colors-toggle, #force-controls-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
@@ -180,9 +180,9 @@
             #topbar h1, #vault-form, #new-note { order: 1; }
             #vault-form { flex: 1; min-width: auto; }
             #vault-path { display: none; }
-            #graph-type, #arc-order, #pack-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
+            #graph-type, #arc-order, #pack-order, #tree-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
             #graph-type { flex: 0 0 155px; min-width: 0; }
-            #arc-order, #pack-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
+            #arc-order, #pack-order, #tree-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
             #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
             #colors-panel { top: 86px; }
             #search-panel { top: 86px; }
@@ -220,6 +220,10 @@
         <select id="pack-order" aria-label="Circle packing group" title="Circle packing group" hidden>
             <option value="topic">By Topic</option>
             <option value="tag">By Tag</option>
+        </select>
+        <select id="tree-order" aria-label="Tree root type" title="Tree root type" hidden>
+            <option value="topic">Topics</option>
+            <option value="tag">Tags</option>
         </select>
         <select id="treemap-tiling" aria-label="Treemap tiling method" title="Treemap tiling method" hidden>
             <option value="binary">Binary</option>
@@ -337,15 +341,19 @@
         var arcOrderSelect = document.getElementById("arc-order");
         var packOrder = localStorage.getItem("vault-pack-order") || "topic";
         var packOrderSelect = document.getElementById("pack-order");
+        var treeOrder = localStorage.getItem("vault-tree-order") || "topic";
+        var treeOrderSelect = document.getElementById("tree-order");
         var treemapTiling = localStorage.getItem("vault-treemap-tiling") || "binary";
         var treemapTilingSelect = document.getElementById("treemap-tiling");
         if (!["force", "disjoint", "arc", "pack", "treemap", "tree"].includes(graphType)) graphType = "force";
         if (!["topic", "tag", "name"].includes(arcOrder)) arcOrder = "topic";
         if (!["topic", "tag"].includes(packOrder)) packOrder = "topic";
+        if (!["topic", "tag"].includes(treeOrder)) treeOrder = "topic";
         if (!["binary", "squarify", "slice-dice"].includes(treemapTiling)) treemapTiling = "binary";
         graphTypeSelect.value = graphType;
         arcOrderSelect.value = arcOrder;
         packOrderSelect.value = packOrder;
+        treeOrderSelect.value = treeOrder;
         treemapTilingSelect.value = treemapTiling;
 
         var simulation = d3.forceSimulation(nodes)
@@ -364,6 +372,7 @@
             var forceControlsAvailable = type === "force" || disjoint;
             arcOrderSelect.hidden = !arc;
             packOrderSelect.hidden = !pack;
+            treeOrderSelect.hidden = !tree;
             treemapTilingSelect.hidden = !treemap;
             forceControlsToggle.hidden = !forceControlsAvailable;
             if (!forceControlsAvailable) forceControlsPanel.classList.remove("visible");
@@ -436,7 +445,7 @@
         var treemapLeaf = treemapLayer.selectAll("rect.treemap-node");
         var treeLayer = g.append("g").attr("class", "tree").style("display", "none");
         var treeLeaf = treeLayer.selectAll("g.tree-node");
-        var treeRoot = buildTreeHierarchy();
+        var treeRoot = buildTreeHierarchy(treeOrder);
 
         function ticked() {
             if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
@@ -471,6 +480,12 @@
             packOrder = this.value;
             localStorage.setItem("vault-pack-order", packOrder);
             renderPack(packOrder);
+        });
+        treeOrderSelect.addEventListener("change", function () {
+            treeOrder = this.value;
+            localStorage.setItem("vault-tree-order", treeOrder);
+            treeRoot = buildTreeHierarchy(treeOrder);
+            renderTree();
         });
         treemapTilingSelect.addEventListener("change", function () {
             treemapTiling = this.value;
