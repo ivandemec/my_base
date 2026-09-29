@@ -1,0 +1,8 @@
+{
+	"nodes":[
+		{"id":"5bee9bef5c490213","x":-125,"y":-30,"width":250,"height":60,"type":"text","text":""},
+		{"id":"44c292395b8842fb","x":-460,"y":-460,"width":250,"height":60,"type":"text","text":""},
+		{"id":"ad25a56e206dcbb1","x":60,"y":-460,"width":400,"height":400,"type":"file","file":"Comfort is a trap.md"}
+	],
+	"edges":[]
+}

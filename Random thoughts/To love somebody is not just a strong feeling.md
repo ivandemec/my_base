@@ -2,6 +2,7 @@
 Topics: "[[A serious perspective on Life]]"
 tags:
   - Erich-Fromm
+  - LOVE
 ---
 To love somebody is not just a strong feeling – it is a decision, it is a judgment, it is a promise. If love were only a feeling, there would be no basis for the promise to love each other forever.
 

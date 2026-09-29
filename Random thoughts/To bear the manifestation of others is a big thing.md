@@ -1,5 +1,6 @@
 ---
 tags:
+  - Gurdjieff
 Topics: "[[A serious perspective on Life]]"
 ---
     Gurdjieff International Review

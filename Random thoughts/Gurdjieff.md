@@ -1,5 +1,6 @@
 ---
 tags:
+  - "#Gurdjieff"
 Topics: "[[A serious perspective on Life]]"
 ---
 "Before a man can be a conscious altruist he must first be a conscious egoist" - Mr. Gurdjieff

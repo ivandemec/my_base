@@ -35,19 +35,9 @@
             "id": "de1bf22de3d5370e",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
-            }
-          },
-          {
-            "id": "e11c90aa49fba789",
-            "type": "leaf",
-            "state": {
               "type": "markdown",
               "state": {
-                "file": "Speed of language.md",
+                "file": "To love somebody is not just a strong feeling.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -62,16 +52,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Speed of language"
+              "title": "To love somebody is not just a strong feeling"
             }
           },
           {
-            "id": "be11272bff8985cd",
+            "id": "c3458869f1635492",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Language.md",
+                "file": "Samo uz pomoć patnje prestajemo biti marioneta.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -86,11 +76,251 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Language"
+              "title": "Samo uz pomoć patnje prestajemo biti marioneta"
+            }
+          },
+          {
+            "id": "d089c228cad88374",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The good spirits intervene to the extent that we open up to them.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "The good spirits intervene to the extent that we open up to them"
+            }
+          },
+          {
+            "id": "abec19702b24ab77",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "I think that's just how the world will come to an end - to general applause.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "I think that's just how the world will come to an end - to general applause"
+            }
+          },
+          {
+            "id": "736a7bc8ca3750bd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Moral feelings - Concentration -  Meditation.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Moral feelings - Concentration -  Meditation"
+            }
+          },
+          {
+            "id": "afbd7030e0dbf226",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Mind spiral.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Mind spiral"
+            }
+          },
+          {
+            "id": "e161a983457c6ab1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Eros is a by-product of society.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Eros is a by-product of society"
+            }
+          },
+          {
+            "id": "15c07af899deb9d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Everything that a man thinks and feels has its effects in the outer world.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Everything that a man thinks and feels has its effects in the outer world"
+            }
+          },
+          {
+            "id": "72f1a296176acb71",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Every moment is a golden one.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Every moment is a golden one"
+            }
+          },
+          {
+            "id": "a1ef59807482db27",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "This is what you shall do.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "This is what you shall do"
+            }
+          },
+          {
+            "id": "79a77fe7e84eb5a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Прољећа Ивана Галеба.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Прољећа Ивана Галеба"
+            }
+          },
+          {
+            "id": "df03ca00aba05642",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "POROĐAJ.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "POROĐAJ"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 8
       }
     ],
     "direction": "vertical"
@@ -124,7 +354,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#Goethe",
+                "query": "arguments",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -258,46 +488,46 @@
       "bases:Create new base": false
     }
   },
-  "active": "be11272bff8985cd",
+  "active": "15c07af899deb9d7",
   "lastOpenFiles": [
-    "Speed of language.md",
-    "Language.md",
-    "Humble knowledge.md",
-    "One must imagine Sisyphus happy.md",
-    "No matter how the sun shone, the sea held forth no more promises.md",
-    "Središte našeg bića.md",
-    "I am horribly limited.md",
-    "The function of prayer.md",
-    "Pomilovanje.md",
-    "It would take all my strength to quiet my heart..md",
-    "cease being.md",
-    "Materialism.md",
-    "The inferno of the living.md",
+    "Eros is a by-product of society.md",
+    "Everything that a man thinks and feels has its effects in the outer world.md",
+    "Mind spiral.md",
+    "Pasted image 20260929155455.png",
+    "Moral feelings - Concentration -  Meditation.md",
+    "I think that's just how the world will come to an end - to general applause.md",
+    "The good spirits intervene to the extent that we open up to them.md",
+    "Pasted image 20260929154830.png",
+    "Samo uz pomoć patnje prestajemo biti marioneta.md",
+    "To love somebody is not just a strong feeling.md",
+    "Прољећа Ивана Галеба.md",
+    "This is what you shall do.md",
+    "Every moment is a golden one.md",
+    "POROĐAJ.md",
+    "Kako mi je dano na zemlji.md",
+    "I don’t want harmony.md",
+    "želja za odmorom.md",
+    "Life is a senseless evil.md",
+    "Life is a comedy.md",
     "Fiercely Kind.md",
-    "Na zemlji si, tome nema leka.md",
-    "Nationalism is a brilliant, fatal psychological poison.md",
-    "Ja moram ostati u sebi.md",
-    "Good life.md",
-    "Bez greha se u nama nikada ne bi probudila luda žudnja za čistotom.md",
-    "Affection is only one ingredient of love.md",
-    "Pasted image 20260928090823.png",
-    "Why are there beings at all instead of nothing.md",
-    "Ignorance, Envy and Jealousy - James Ward, 1837..md",
-    "Who are you, then? Tell me?.md",
-    "Pasted image 20260928085135.png",
-    "No bloody or unbloody change of society can eradicate the evil in man.md",
-    "converting our high technology from WEAPONRY to LIVINGRY.md",
-    "Најопаснија завист није она која жели да има оно што ти имаш, већ она која жели да ти то више немаш..md",
-    "Pasted image 20260928084935.png",
+    "the light will enter by itself.md",
+    "Pasted image 20260929152704.png",
+    "Pasted image 20260929152240.png",
+    "It is not worthwhile to try to keep history from repeating itself.md",
+    "The Divine must speak for itself.md",
+    "Gurdjieff.md",
+    "Svako, svesno ili nesvesno želi slobodu.md",
+    "To bear the manifestation of others is a big thing.md",
+    "The World in Which Nothing Is Solved.md",
+    "Memory, Elihu Vedder, 1870.md",
+    "Pasted image 20260929151537.png",
+    "Comfort Canvas.canvas",
+    "images/Pasted image 20260514092519.png",
+    "images/Pasted image 20260928090823.png",
+    "images/Pasted image 20260928085135.png",
+    "images/Pasted image 20260928084935.png",
     "images/image-2.png",
-    "images/image.png",
-    "images/paste-source.png",
-    "images/paste-test.png",
-    "images/1.jpg",
-    "images/drop-test.png",
-    "images/Pasted_image_20260514092519.png",
     "images",
-    "Untitled.canvas",
     "vault_graph.html",
     "Clippings",
     "Daily thougths.base",
