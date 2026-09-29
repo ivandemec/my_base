@@ -8,36 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "0a3a40604be3026d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Fate.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Fate"
-            }
-          },
-          {
             "id": "d654d07c8728ffe9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Ралф Валдо Емерсон, „Самопоуздање“.md",
+                "file": "Nadaj se nečem boljem.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,16 +28,26 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Ралф Валдо Емерсон, „Самопоуздање“"
+              "title": "Nadaj se nečem boljem"
             }
           },
           {
-            "id": "f6e03122ffaf8299",
+            "id": "de1bf22de3d5370e",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "e11c90aa49fba789",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LAFČINA.md",
+                "file": "Speed of language.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -76,16 +62,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "LAFČINA"
+              "title": "Speed of language"
             }
           },
           {
-            "id": "4e17aab51f4c2a62",
+            "id": "be11272bff8985cd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Wisdom and Practical Life.md",
+                "file": "Language.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -100,83 +86,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Wisdom and Practical Life"
-            }
-          },
-          {
-            "id": "9ab42476086b4766",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Brighter than the sun.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Brighter than the sun"
-            }
-          },
-          {
-            "id": "d7c576be88b5f88b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "The Earth is a vast, all-encompassing organism.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "The Earth is a vast, all-encompassing organism"
-            }
-          },
-          {
-            "id": "01f12c48facbd8f8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Occam's Razor.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Occam's Razor"
+              "title": "Language"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -210,7 +124,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "fier",
+                "query": "tag:#Goethe",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -344,8 +258,37 @@
       "bases:Create new base": false
     }
   },
-  "active": "01f12c48facbd8f8",
+  "active": "be11272bff8985cd",
   "lastOpenFiles": [
+    "Speed of language.md",
+    "Language.md",
+    "Humble knowledge.md",
+    "One must imagine Sisyphus happy.md",
+    "No matter how the sun shone, the sea held forth no more promises.md",
+    "Središte našeg bića.md",
+    "I am horribly limited.md",
+    "The function of prayer.md",
+    "Pomilovanje.md",
+    "It would take all my strength to quiet my heart..md",
+    "cease being.md",
+    "Materialism.md",
+    "The inferno of the living.md",
+    "Fiercely Kind.md",
+    "Na zemlji si, tome nema leka.md",
+    "Nationalism is a brilliant, fatal psychological poison.md",
+    "Ja moram ostati u sebi.md",
+    "Good life.md",
+    "Bez greha se u nama nikada ne bi probudila luda žudnja za čistotom.md",
+    "Affection is only one ingredient of love.md",
+    "Pasted image 20260928090823.png",
+    "Why are there beings at all instead of nothing.md",
+    "Ignorance, Envy and Jealousy - James Ward, 1837..md",
+    "Who are you, then? Tell me?.md",
+    "Pasted image 20260928085135.png",
+    "No bloody or unbloody change of society can eradicate the evil in man.md",
+    "converting our high technology from WEAPONRY to LIVINGRY.md",
+    "Најопаснија завист није она која жели да има оно што ти имаш, већ она која жели да ти то више немаш..md",
+    "Pasted image 20260928084935.png",
     "images/image-2.png",
     "images/image.png",
     "images/paste-source.png",
@@ -354,38 +297,9 @@
     "images/drop-test.png",
     "images/Pasted_image_20260514092519.png",
     "images",
-    "Taking voice notes.md",
-    "2026-05-12.md",
-    "Fiercely Kind.md",
-    "BE RESPONSIBLE FOR YOUR THOUGHTS.md",
-    "The Earth is a vast, all-encompassing organism.md",
-    "Brighter than the sun.md",
-    "Wisdom and Practical Life.md",
-    "LAFČINA.md",
-    "Who is a True Christian?.md",
-    "The World as the Result of Equilibrium Effects.md",
-    "Beware of anything that you hear yourself saying often..md",
-    "Sokrat - O demokratiji.md",
-    "The only absolute knowledge attainable by man is that life is meaningless.md",
-    "Све што је рђаво у срцу човековом требало би да ишчезне у додиру с природом.md",
-    "Ahriman's realm.md",
-    "Samospoznaja.md",
-    "pogled na svet očima razrogačenim od čuđenja.md",
-    "God is the only being who, to govern, need not even exist.md",
-    "Old paths.md",
-    "Prayer to the Angel.md",
-    "KADA ĆOVEK NE ZNA ŠTA ĆE BITI.md",
-    "To love somebody is not just a strong feeling.md",
-    "Dosada.md",
-    "period between death and rebirth.md",
-    "we are not everything and that we will die.md",
     "Untitled.canvas",
-    "Pasted image 20260822084156.png",
     "vault_graph.html",
     "Clippings",
-    "Pasted image 20260523085546.png",
-    "Pasted image 20260523085520.png",
-    "Pasted image 20260523085123.png",
     "Daily thougths.base",
     "_templates"
   ]

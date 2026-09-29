@@ -1,0 +1,27 @@
+---
+tags:
+  - BelaHamvas
+---
+![Goldenes-Zeitalter-1530-2](https://i0.wp.com/fenomeni.me/wp-content/uploads/2016/09/Goldenes-Zeitalter-1530-2-300x208.jpg?resize=300%2C208)
+
+Ostaće zagonetka istorije novog doba kada je, ko je i zašto je odstupio od osnovnog stanja čovečanstva, i kada je započeo besciljno da luta istorijom. Možda, čak je verovatno, da je to neko ko je, bilo zbog ograničenosti, bilo zbog drugog defekta, osnovno stanje smatrao religioznim mitom (svešteničkom laži). Možda je bio uveren da prvi temelj vasione, Edenski vrt treba tražiti negde u minulom drevnom dobu, na primer u stotinu hiljaditoj pre Hrista, na određenom mestu, na primer pored Eufrata, i pošto je to izgledalo neverovatno, odbacio je misao.
+
+Čovek od tada, poričući svoje osnovno stanje, to jest poričući bazu svoga bivstva luta svojom započetom i nedovršenom istorijom. Od kako je odstupio s temelja, čovek ne može da nađe put kojim bi se vratio svom domu. Evropa je pustolov i eksperimentator. Pustolovina i eksperiment se nazivaju istorijom. Novovekovni Evropljanin je lavirintska egzistencija.
+
+Baština počiva na trojnom luku: znam za osnovno stanje, za korupciju koja je usledila na početku početka, i za renormalizaciju, to jest za vaspostavljenje legalnog i pravilnog reda u postojanju čoveka, zajednice, prirode.
+
+Time što je čovek na početku novog veka izgubio svoje osnovno stanje, bio je prinuđen da od onoga što je preostalo, polazeći od korumpiranog čoveka i prirode, stvori novo merilo. Novo merilo je nazvano racionalizam; nasuprot ontološkom poretku orfike ovo je samo istorijski i iskustveni privid reda utemeljen u vremenu, reda koji ne samo da ne zna za status absolutus (za to nije sposoban, jer za to svako i uvek mora znati, i zna), nego izbegava orfički poredak. Ali bilo da je izbegavanje ili nešto drugo, osnovno stanje je izostavljeno iz računa, i želi da ostvari sopstveni imaginarni (racionalni) poredak. Poredak racionalizma je fiktivan. I na koncu, iskrsava pitanje nije li mišljenje koje se naziva racionalizmom jedno od onih demonskih očitovanja koja se javljaju u vidu određenog poretka, ili su to zapravo demonske sile koje razaraju poredak i prizivaju tamu, odnosno one su provala drevne noći pre početka. Događaji koje je izazvao racionalizam i najnovija istorijska situacija (XX vek) čine ovo pitanje opravdanim. Pogotovu pak, ako i ne planski, ono zaprepašćuje dosledan pohod da se bez ostatka obračuna s orfikom.
+
+Lavirintska egzistencija je lutanje čoveka koji je izgubio bazu po anarhiji istorije, u bivstvu koje je postalo nelegalno, gde postoji samo prirodni život, i čovek živi u ovoj opseni bez čvrstog temelja lišen svoga normalnog bivstva.
+
+Nezadovoljavajući je protest protiv racionalizma: Ruso, čija je svaka misao, ako je i nespretna, za vaspostavljanje idile, naravno nije idiličan, samo je sentimentalan. Idealizam romantike. Suludi trud moderne umetnosti da dospe iz istorije u arhaično doba i do primitivaca, do takozvanog naroda, i dece, gde se još ipak nazire idila, samo je emigracija u najrazličitije fantazme kao otpor prema diktatorima i tehnici i utopijama i teorijama pritiska na dugme.
+
+Za određivanje našeg bića lavirintska egzistencija je u određenom pogledu zastarela definicija. Još je odgovarala dobu Hegela, Kjerkegora, Amiela, Hebela, Šumana, Bramsa. Danas smo mnogo više šizofreni, integralni ili dezintegralni, naš identitet je čvrst ili nesiguran, odnosno danas smo svi bez izuzetka kliničke egzistencije. Nemamo sudbinu, usud, nemamo napore, ljubavi, samo imamo svoju psihologiju. Ništa nije tako daleko od geometrije kao psihologija; od idile ništa nije tako daleko kao klinika.
+
+Treba postaviti pitanje: zašto je psihologija izbrisala pojam osnovnog stanja (normalnosti), i zašto je morala da ga izbriše? Više njih je pokušalo da odgovori na pitanje, i podozrevaju da psihologija želi da likvidira vanredno neugodnu i kompromitujuću (smatra se reziduumom) početnu korupciju, i njenu svest, ono nešto što religija i moral nazivaju grehom. Klinika je umesto greha uvela pojam bolest. Ona ipak ne kompromituje toliko. Za greh čovek odgovara svojom ličnošću, bolest se može prišiti nekom nigde nepostojećem fantazmagorijskom mehanizmu. Naravno, greh nije nestao. Nisu nestale osnovne činjenice bivstva. Danas smo dospeli u situaciju kada psihoza počinje da bude upravo tako kompromitujuća kao greh. Svima je poznato da se ortodoksni frojdizam preobrazio u jevrejsku fašističku sektu, i rezultat delovanja ove sekte – analiza – znači isto što i nečistota.
+
+Osećanje krivice se ne može likvidirati. U svakoj takozvanoj nauci postoji neizbrisivo mesto, i vrši istu funkciju kao u religiji: održava budnom neuništivu svest o početnoj korupciji. Ako postoji greh, postoji osećanje krivice, postoji strepnja, postoji strah, skrivanje, laž, izdaja, kleveta, sumnja, optužba, podlost. Baš zbog toga je mnogo umesnije ako zadržimo pojam greha. Onda još možemo da govorimo o sainteté du crim, čak i o crimes glorieux (Lotreamon), možemo citirati Lutera (tapfer sündigen) i Bengelta, prema kome nam je neophodan greh, jer bez njega se u nama nikada ne bi probudila luda žudnja za čistotom.
+
+Trenutno se nalazimo u kliničkoj egzistenciji. Trebalo bi da se pomirimo s time da su Platon i Plotin, Avgustin i Anselmus, Kuzanus i Servantes, Šekspir i Betoven, zajedno s ostalima, bili šizofrenici, nasuprot drugima koji su ili epileptičari ili paranoici.
+
+Bela Hamvaš
