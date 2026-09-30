@@ -66,7 +66,7 @@ function emphasizeRadialSubtree(d) {
     var lit = l => branch.has(l.target);
     // Inline styles, because the .radial-link rule outranks presentation attributes.
     radialLinks
-        .style("stroke", l => lit(l) ? "var(--strong)" : null)
+        .style("stroke", l => lit(l) ? "var(--link-emphasis)" : null)
         .style("stroke-opacity", l => lit(l) ? 1 : 0.08)
         .style("stroke-width", l => lit(l) ? 2 : null);
     radialLeaf.attr("opacity", n => branch.has(n) ? 1 : 0.12);

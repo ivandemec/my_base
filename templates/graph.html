@@ -10,6 +10,7 @@
             --topbar-bg: rgba(30,30,30,.85); --topbar-border: #333;
             --input-bg: #2a2a2a; --input-border: #444;
             --strong: #fff; --muted: #888; --link-stroke: #999; --node-stroke: #fff;
+            --link-emphasis: #e0e0e0;
             --shadow: 0 8px 30px rgba(0,0,0,.5);
         }
         :root[data-theme="light"] {
@@ -17,6 +18,7 @@
             --topbar-bg: rgba(255,255,255,.85); --topbar-border: #d8dee4;
             --input-bg: #fff; --input-border: #d0d7de;
             --strong: #111; --muted: #6a737d; --link-stroke: #b0b0b0; --node-stroke: #333;
+            --link-emphasis: #555;
             --shadow: 0 8px 30px rgba(0,0,0,.15);
         }
         * { box-sizing: border-box; }
@@ -37,6 +39,8 @@
         .radial-link { fill: none; stroke: var(--link-stroke); stroke-opacity: 0.55; stroke-width: 1.5; }
         .radial-node circle { cursor: pointer; stroke: var(--node-stroke); stroke-width: 1.2; }
         .radial-node text { pointer-events: auto; cursor: pointer; }
+        .sunburst-arc { cursor: pointer; stroke: var(--bg); stroke-width: 0.5; }
+        .sunburst-label { font-size: 11px; }
         text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: var(--fg); }
         svg { width: 100vw; height: 100vh; }
 
@@ -91,12 +95,12 @@
             padding: 0 1px; background: #ffd866; color: #242424; border-radius: 2px;
         }
         .search-empty { padding: 22px 14px; color: var(--muted); font-size: 13px; }
-        #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling {
+        #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #sunburst-order, #treemap-tiling {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 28px 6px 10px; border-radius: 6px; outline: none; cursor: pointer;
         }
-        #graph-type:focus, #arc-order:focus, #pack-order:focus, #tree-order:focus, #radial-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
-        #arc-order[hidden], #pack-order[hidden], #tree-order[hidden], #radial-order[hidden], #treemap-tiling[hidden] { display: none; }
+        #graph-type:focus, #arc-order:focus, #pack-order:focus, #tree-order:focus, #radial-order:focus, #sunburst-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
+        #arc-order[hidden], #pack-order[hidden], #tree-order[hidden], #radial-order[hidden], #sunburst-order[hidden], #treemap-tiling[hidden] { display: none; }
         #theme-toggle, #colors-toggle, #force-controls-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
@@ -172,6 +176,8 @@
             opacity: 0; transition: opacity .12s ease; display: none; font-size: 13px; line-height: 1.5;
         }
         #preview.visible { opacity: 1; display: block; }
+        #preview.centered { transform: translate(-50%, -50%); max-width: 240px; }
+        #preview.centered .body { max-height: 16vh; }
         #preview h3 { margin: 0 0 8px; font-size: 15px; color: var(--strong); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
         #preview .body { max-height: 44vh; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
         #preview img { max-width: 100%; }
@@ -183,9 +189,9 @@
             #topbar h1, #vault-form, #new-note { order: 1; }
             #vault-form { flex: 1; min-width: auto; }
             #vault-path { display: none; }
-            #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
+            #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #sunburst-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
             #graph-type { flex: 0 0 155px; min-width: 0; }
-            #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
+            #arc-order, #pack-order, #tree-order, #radial-order, #sunburst-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
             #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
             #colors-panel { top: 86px; }
             #search-panel { top: 86px; }
@@ -215,6 +221,7 @@
             <option value="treemap">Treemap, CSV</option>
             <option value="tree">Collapsible tree</option>
             <option value="radial">Radial dendrogram</option>
+            <option value="sunburst">Sunburst</option>
         </select>
         <select id="arc-order" aria-label="Arc diagram order" title="Arc diagram order" hidden>
             <option value="topic">By Topic</option>
@@ -230,6 +237,10 @@
             <option value="tag">Tags</option>
         </select>
         <select id="radial-order" aria-label="Radial root type" title="Radial root type" hidden>
+            <option value="topic">Topics</option>
+            <option value="tag">Tags</option>
+        </select>
+        <select id="sunburst-order" aria-label="Sunburst root type" title="Sunburst root type" hidden>
             <option value="topic">Topics</option>
             <option value="tag">Tags</option>
         </select>
@@ -278,6 +289,7 @@
     <script src="{{ url_for('static', filename='treemap.js') }}"></script>
     <script src="{{ url_for('static', filename='tree.js') }}"></script>
     <script src="{{ url_for('static', filename='radial.js') }}"></script>
+    <script src="{{ url_for('static', filename='sunburst.js') }}"></script>
     <script>
         var nodes = {{ nodes|safe }};
         var links = {{ links|safe }};
@@ -354,19 +366,24 @@
         var treeOrderSelect = document.getElementById("tree-order");
         var radialOrder = localStorage.getItem("vault-radial-order") || "topic";
         var radialOrderSelect = document.getElementById("radial-order");
+        var sunburstOrder = localStorage.getItem("vault-sunburst-order") || "topic";
+        var sunburstOrderSelect = document.getElementById("sunburst-order");
         var treemapTiling = localStorage.getItem("vault-treemap-tiling") || "binary";
         var treemapTilingSelect = document.getElementById("treemap-tiling");
-        if (!["force", "disjoint", "arc", "pack", "treemap", "tree", "radial"].includes(graphType)) graphType = "force";
+        var LAYOUT_TYPES = ["arc", "pack", "treemap", "tree", "radial", "sunburst"];
+        if (!["force", "disjoint"].concat(LAYOUT_TYPES).includes(graphType)) graphType = "force";
         if (!["topic", "tag", "name"].includes(arcOrder)) arcOrder = "topic";
         if (!["topic", "tag"].includes(packOrder)) packOrder = "topic";
         if (!["topic", "tag"].includes(treeOrder)) treeOrder = "topic";
         if (!["topic", "tag"].includes(radialOrder)) radialOrder = "topic";
+        if (!["topic", "tag"].includes(sunburstOrder)) sunburstOrder = "topic";
         if (!["binary", "squarify", "slice-dice"].includes(treemapTiling)) treemapTiling = "binary";
         graphTypeSelect.value = graphType;
         arcOrderSelect.value = arcOrder;
         packOrderSelect.value = packOrder;
         treeOrderSelect.value = treeOrder;
         radialOrderSelect.value = radialOrder;
+        sunburstOrderSelect.value = sunburstOrder;
         treemapTilingSelect.value = treemapTiling;
 
         var simulation = d3.forceSimulation(nodes)
@@ -382,25 +399,36 @@
             var treemap = type === "treemap";
             var tree = type === "tree";
             var radial = type === "radial";
+            var sunburst = type === "sunburst";
             var disjoint = type === "disjoint";
             var forceControlsAvailable = type === "force" || disjoint;
             arcOrderSelect.hidden = !arc;
             packOrderSelect.hidden = !pack;
             treeOrderSelect.hidden = !tree;
             radialOrderSelect.hidden = !radial;
+            sunburstOrderSelect.hidden = !sunburst;
             treemapTilingSelect.hidden = !treemap;
             forceControlsToggle.hidden = !forceControlsAvailable;
             if (!forceControlsAvailable) forceControlsPanel.classList.remove("visible");
             document.body.classList.toggle("arc-mode", arc);
             document.body.classList.toggle("tree-mode", tree);
             svg.call(zoom.transform, d3.zoomIdentity);
-            link.style("display", pack || treemap || tree || radial ? "none" : null);
-            node.style("display", pack || treemap || tree || radial ? "none" : null);
-            text.style("display", pack || treemap || tree || radial ? "none" : null);
+            var hideForce = pack || treemap || tree || radial || sunburst;
+            link.style("display", hideForce ? "none" : null);
+            node.style("display", hideForce ? "none" : null);
+            text.style("display", hideForce ? "none" : null);
             packLayer.style("display", pack ? null : "none");
             treemapLayer.style("display", treemap ? null : "none");
             treeLayer.style("display", tree ? null : "none");
             radialLayer.style("display", radial ? null : "none");
+            sunburstLayer.style("display", sunburst ? null : "none");
+
+            if (sunburst) {
+                simulation.stop();
+                svg.style("height", null);
+                renderSunburst();
+                return;
+            }
 
             if (radial) {
                 simulation.stop();
@@ -472,9 +500,12 @@
         var radialLayer = g.append("g").attr("class", "radial").style("display", "none");
         var radialLeaf = radialLayer.selectAll("g.radial-node");
         var radialRoot = buildRadialHierarchy(radialOrder);
+        var sunburstLayer = g.append("g").attr("class", "sunburst").style("display", "none");
+        var sunburstArc = sunburstLayer.selectAll("path.sunburst-arc");
+        var sunburstRoot = buildSunburstHierarchy(sunburstOrder);
 
         function ticked() {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
+            if (LAYOUT_TYPES.includes(graphType)) return;
             link.attr("d", d => "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y);
             node.attr("cx", d => d.x).attr("cy", d => d.y);
             text.attr("x", d => d.x + 8).attr("y", d => d.y + 3);
@@ -519,6 +550,12 @@
             radialRoot = buildRadialHierarchy(radialOrder);
             renderRadial();
         });
+        sunburstOrderSelect.addEventListener("change", function () {
+            sunburstOrder = this.value;
+            localStorage.setItem("vault-sunburst-order", sunburstOrder);
+            sunburstRoot = buildSunburstHierarchy(sunburstOrder);
+            renderSunburst();
+        });
         treemapTilingSelect.addEventListener("change", function () {
             treemapTiling = this.value;
             localStorage.setItem("vault-treemap-tiling", treemapTiling);
@@ -556,16 +593,16 @@
         document.addEventListener("click", function () { forceControlsPanel.classList.remove("visible"); });
 
         function dragstarted(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
+            if (LAYOUT_TYPES.includes(graphType)) return;
             if (!d3.event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x; d.fy = d.y;
         }
         function dragged(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
+            if (LAYOUT_TYPES.includes(graphType)) return;
             d.fx = d3.event.x; d.fy = d3.event.y;
         }
         function dragended(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
+            if (LAYOUT_TYPES.includes(graphType)) return;
             if (!d3.event.active) simulation.alphaTarget(0);
             d.fx = null; d.fy = null;
         }
@@ -701,6 +738,7 @@
             treemapLeaf.attr("opacity", d => !q || d.data.node.label.toLowerCase().includes(q) ? 1 : 0.12);
             treeLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
             radialLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
+            sunburstArc.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
         }
 
         function setSearchPanel(open) {
@@ -802,6 +840,7 @@
             treemapLeaf.attr("fill", d => nodeColor(d.data.node));
             treeLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note);
             radialLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note);
+            sunburstArc.attr("fill", sunburstFill);
         }
 
         function saveNodeColors() {
