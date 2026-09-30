@@ -34,6 +34,9 @@
         .tree-link { fill: none; stroke: var(--link-stroke); stroke-opacity: 0.55; stroke-width: 1.5; }
         .tree-node circle { cursor: pointer; stroke: var(--node-stroke); stroke-width: 1.5; }
         .tree-node text { pointer-events: auto; cursor: pointer; }
+        .radial-link { fill: none; stroke: var(--link-stroke); stroke-opacity: 0.55; stroke-width: 1.5; }
+        .radial-node circle { cursor: pointer; stroke: var(--node-stroke); stroke-width: 1.2; }
+        .radial-node text { pointer-events: auto; cursor: pointer; }
         text { font-family: Arial, sans-serif; font-size: 12px; pointer-events: none; fill: var(--fg); }
         svg { width: 100vw; height: 100vh; }
 
@@ -88,12 +91,12 @@
             padding: 0 1px; background: #ffd866; color: #242424; border-radius: 2px;
         }
         .search-empty { padding: 22px 14px; color: var(--muted); font-size: 13px; }
-        #graph-type, #arc-order, #pack-order, #tree-order, #treemap-tiling {
+        #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 28px 6px 10px; border-radius: 6px; outline: none; cursor: pointer;
         }
-        #graph-type:focus, #arc-order:focus, #pack-order:focus, #tree-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
-        #arc-order[hidden], #pack-order[hidden], #tree-order[hidden], #treemap-tiling[hidden] { display: none; }
+        #graph-type:focus, #arc-order:focus, #pack-order:focus, #tree-order:focus, #radial-order:focus, #treemap-tiling:focus { border-color: #4caf50; }
+        #arc-order[hidden], #pack-order[hidden], #tree-order[hidden], #radial-order[hidden], #treemap-tiling[hidden] { display: none; }
         #theme-toggle, #colors-toggle, #force-controls-toggle {
             background: var(--input-bg); border: 1px solid var(--input-border); color: var(--fg);
             padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
@@ -180,9 +183,9 @@
             #topbar h1, #vault-form, #new-note { order: 1; }
             #vault-form { flex: 1; min-width: auto; }
             #vault-path { display: none; }
-            #graph-type, #arc-order, #pack-order, #tree-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
+            #graph-type, #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling, #search, #force-controls-toggle, #colors-toggle, #theme-toggle { order: 2; }
             #graph-type { flex: 0 0 155px; min-width: 0; }
-            #arc-order, #pack-order, #tree-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
+            #arc-order, #pack-order, #tree-order, #radial-order, #treemap-tiling { flex: 0 0 105px; min-width: 0; }
             #search { flex: 1; min-width: 70px; width: auto; margin-left: 0; }
             #colors-panel { top: 86px; }
             #search-panel { top: 86px; }
@@ -211,6 +214,7 @@
             <option value="pack">Circle packing</option>
             <option value="treemap">Treemap, CSV</option>
             <option value="tree">Collapsible tree</option>
+            <option value="radial">Radial dendrogram</option>
         </select>
         <select id="arc-order" aria-label="Arc diagram order" title="Arc diagram order" hidden>
             <option value="topic">By Topic</option>
@@ -222,6 +226,10 @@
             <option value="tag">By Tag</option>
         </select>
         <select id="tree-order" aria-label="Tree root type" title="Tree root type" hidden>
+            <option value="topic">Topics</option>
+            <option value="tag">Tags</option>
+        </select>
+        <select id="radial-order" aria-label="Radial root type" title="Radial root type" hidden>
             <option value="topic">Topics</option>
             <option value="tag">Tags</option>
         </select>
@@ -269,6 +277,7 @@
     <script src="{{ url_for('static', filename='pack.js') }}"></script>
     <script src="{{ url_for('static', filename='treemap.js') }}"></script>
     <script src="{{ url_for('static', filename='tree.js') }}"></script>
+    <script src="{{ url_for('static', filename='radial.js') }}"></script>
     <script>
         var nodes = {{ nodes|safe }};
         var links = {{ links|safe }};
@@ -343,17 +352,21 @@
         var packOrderSelect = document.getElementById("pack-order");
         var treeOrder = localStorage.getItem("vault-tree-order") || "topic";
         var treeOrderSelect = document.getElementById("tree-order");
+        var radialOrder = localStorage.getItem("vault-radial-order") || "topic";
+        var radialOrderSelect = document.getElementById("radial-order");
         var treemapTiling = localStorage.getItem("vault-treemap-tiling") || "binary";
         var treemapTilingSelect = document.getElementById("treemap-tiling");
-        if (!["force", "disjoint", "arc", "pack", "treemap", "tree"].includes(graphType)) graphType = "force";
+        if (!["force", "disjoint", "arc", "pack", "treemap", "tree", "radial"].includes(graphType)) graphType = "force";
         if (!["topic", "tag", "name"].includes(arcOrder)) arcOrder = "topic";
         if (!["topic", "tag"].includes(packOrder)) packOrder = "topic";
         if (!["topic", "tag"].includes(treeOrder)) treeOrder = "topic";
+        if (!["topic", "tag"].includes(radialOrder)) radialOrder = "topic";
         if (!["binary", "squarify", "slice-dice"].includes(treemapTiling)) treemapTiling = "binary";
         graphTypeSelect.value = graphType;
         arcOrderSelect.value = arcOrder;
         packOrderSelect.value = packOrder;
         treeOrderSelect.value = treeOrder;
+        radialOrderSelect.value = radialOrder;
         treemapTilingSelect.value = treemapTiling;
 
         var simulation = d3.forceSimulation(nodes)
@@ -368,23 +381,33 @@
             var pack = type === "pack";
             var treemap = type === "treemap";
             var tree = type === "tree";
+            var radial = type === "radial";
             var disjoint = type === "disjoint";
             var forceControlsAvailable = type === "force" || disjoint;
             arcOrderSelect.hidden = !arc;
             packOrderSelect.hidden = !pack;
             treeOrderSelect.hidden = !tree;
+            radialOrderSelect.hidden = !radial;
             treemapTilingSelect.hidden = !treemap;
             forceControlsToggle.hidden = !forceControlsAvailable;
             if (!forceControlsAvailable) forceControlsPanel.classList.remove("visible");
             document.body.classList.toggle("arc-mode", arc);
             document.body.classList.toggle("tree-mode", tree);
             svg.call(zoom.transform, d3.zoomIdentity);
-            link.style("display", pack || treemap || tree ? "none" : null);
-            node.style("display", pack || treemap || tree ? "none" : null);
-            text.style("display", pack || treemap || tree ? "none" : null);
+            link.style("display", pack || treemap || tree || radial ? "none" : null);
+            node.style("display", pack || treemap || tree || radial ? "none" : null);
+            text.style("display", pack || treemap || tree || radial ? "none" : null);
             packLayer.style("display", pack ? null : "none");
             treemapLayer.style("display", treemap ? null : "none");
             treeLayer.style("display", tree ? null : "none");
+            radialLayer.style("display", radial ? null : "none");
+
+            if (radial) {
+                simulation.stop();
+                svg.style("height", null);
+                renderRadial();
+                return;
+            }
 
             if (tree) {
                 simulation.stop();
@@ -446,9 +469,12 @@
         var treeLayer = g.append("g").attr("class", "tree").style("display", "none");
         var treeLeaf = treeLayer.selectAll("g.tree-node");
         var treeRoot = buildTreeHierarchy(treeOrder);
+        var radialLayer = g.append("g").attr("class", "radial").style("display", "none");
+        var radialLeaf = radialLayer.selectAll("g.radial-node");
+        var radialRoot = buildRadialHierarchy(radialOrder);
 
         function ticked() {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
             link.attr("d", d => "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y);
             node.attr("cx", d => d.x).attr("cy", d => d.y);
             text.attr("x", d => d.x + 8).attr("y", d => d.y + 3);
@@ -487,6 +513,12 @@
             treeRoot = buildTreeHierarchy(treeOrder);
             renderTree();
         });
+        radialOrderSelect.addEventListener("change", function () {
+            radialOrder = this.value;
+            localStorage.setItem("vault-radial-order", radialOrder);
+            radialRoot = buildRadialHierarchy(radialOrder);
+            renderRadial();
+        });
         treemapTilingSelect.addEventListener("change", function () {
             treemapTiling = this.value;
             localStorage.setItem("vault-treemap-tiling", treemapTiling);
@@ -524,16 +556,16 @@
         document.addEventListener("click", function () { forceControlsPanel.classList.remove("visible"); });
 
         function dragstarted(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
             if (!d3.event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x; d.fy = d.y;
         }
         function dragged(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
             d.fx = d3.event.x; d.fy = d3.event.y;
         }
         function dragended(d) {
-            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree") return;
+            if (graphType === "arc" || graphType === "pack" || graphType === "treemap" || graphType === "tree" || graphType === "radial") return;
             if (!d3.event.active) simulation.alphaTarget(0);
             d.fx = null; d.fy = null;
         }
@@ -668,6 +700,7 @@
             packLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
             treemapLeaf.attr("opacity", d => !q || d.data.node.label.toLowerCase().includes(q) ? 1 : 0.12);
             treeLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
+            radialLeaf.attr("opacity", d => !q || d.data.name.toLowerCase().includes(q) ? 1 : 0.12);
         }
 
         function setSearchPanel(open) {
@@ -768,6 +801,7 @@
             packLeaf.attr("fill", d => nodeColor(d.data.node));
             treemapLeaf.attr("fill", d => nodeColor(d.data.node));
             treeLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note);
+            radialLeaf.select("circle").attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note);
         }
 
         function saveNodeColors() {
