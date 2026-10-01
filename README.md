@@ -1,16 +1,10 @@
 # MyBase — Obsidian Vault Graph & Wiki
 
-Two Python tools for visualizing and browsing an [Obsidian](https://obsidian.md/)
-vault as a linked knowledge graph.
-
-- **Graph Generator** — a desktop tool that exports a self-contained interactive
-  HTML graph of your vault.
-- **Wiki Web App** — a Flask server that renders the same graph as a live landing
-  page and lets you read notes with their Markdown rendered.
-
-Both tools parse the vault the same way: they walk every `.md` file, extract
-`[[wikilinks]]`, Markdown links and embeds to build edges, collect tags (from
-YAML frontmatter and inline `#tags`), and read node colors from your Obsidian
+MyBase is a Flask web app for visualizing and browsing an
+[Obsidian](https://obsidian.md/) vault as a linked knowledge graph. It walks
+every `.md` file, extracts
+`[[wikilinks]]`, Markdown links and embeds to build edges, collects tags (from
+YAML frontmatter and inline `#tags`), and reads node colors from your Obsidian
 `.obsidian/graph.json` color groups.
 
 ## Requirements
@@ -22,32 +16,10 @@ YAML frontmatter and inline `#tags`), and read node colors from your Obsidian
 pip install -r requirements.txt
 ```
 
-`markdown` and `pymdown-extensions` are used for rendering; `flask` is only
-needed for the web app. The graph generator's GUI uses `tkinter`, which ships
-with most Python installations.
+`flask`, `markdown`, and `pymdown-extensions` power the web app and Markdown
+rendering.
 
-## Graph Generator
-
-`Obsidian-Vault-HTML-Graph-Generator.py`
-
-A small Tkinter desktop app that turns a vault into a standalone
-`vault_graph.html` file. The output embeds a [D3.js](https://d3js.org/)
-force-directed graph with zoom, drag, node sizing by link count, and
-color-coded nodes — no server required to view it.
-
-### Usage
-
-```bash
-python Obsidian-Vault-HTML-Graph-Generator.py
-```
-
-1. Click **Select Vault Directory** and choose your Obsidian vault.
-2. Click **Select Output Directory** and choose where to save the file.
-3. Click **Create HTML** to generate `vault_graph.html`.
-
-Open the generated `vault_graph.html` in any browser to explore the graph.
-
-## Wiki Web App
+## Features
 
 `app.py`
 
@@ -59,7 +31,7 @@ A Flask app that serves your vault as a browsable wiki:
   including fenced code, tables, footnotes and internal `[[wikilinks]]` rewritten
   to working links.
 
-### Usage
+## Usage
 
 ```bash
 python app.py
@@ -77,7 +49,7 @@ variable:
 VAULT_DIR=/path/to/your/vault python app.py
 ```
 
-### Routes
+## Routes
 
 | Route | Description |
 | --- | --- |

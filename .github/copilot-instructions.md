@@ -12,13 +12,12 @@ When testing in terminal, make sure you are in the correct virtual environment a
 - Parsing pipeline (all in `app.py`): `parse_vault` walks `.md` files → `extract_tags` (YAML frontmatter `tags:` + inline `#tags`) → `generate_graph_data` builds nodes/edges → `get_obsidian_colors` reads `.obsidian/graph.json` color groups.
 - Parsed state is cached in the module-global `VAULT` dict, built by `load_vault()` at startup and rebuilt by the `/reload` route. After any change that writes to disk, refresh `VAULT` so the graph and links stay in sync.
 - Rendering: `render_markdown` rewrites `[[wikilinks]]`, `![[embeds]]` and local `.md` markdown links to `/note/<id>` routes before handing off to `python-markdown`. `strip_frontmatter` hides YAML before rendering.
-- Views live in [templates/](../templates): `graph.html` (D3 force graph landing page) and `note.html` (rendered note). The D3 graph code originated from [Obsidian-Vault-HTML-Graph-Generator.py](../Obsidian-Vault-HTML-Graph-Generator.py); keep the two graph renderers visually consistent.
+- Views live in [templates/](../templates): `graph.html` (D3 graph landing page) and `note.html` (rendered note).
 
 ## Conventions
 
 - Notes are keyed by **lowercased filename** (e.g. `belief.md`) throughout `VAULT`, links, and routes. Always resolve incoming ids through `resolve_note_key`, which tolerates a missing `.md` extension — never index `VAULT['notes']` with a raw user value.
 - Tags are node ids prefixed with `#` and colored `#4caf50`; notes default to `#7f7f7f`. Preserve this so graph colors keep meaning.
-- Keep the parsing regexes for links/tags identical between `app.py` and the graph generator so both produce the same graph.
 
 ## Implemented
 
