@@ -89,18 +89,42 @@ function radialOut(d) {
     if (d.data.node) nodeOut.call(this, d.data.node);
 }
 
+function radialDescendantCount(d) {
+    var children = d.children || d._children;
+    if (!children) return 1;
+    return d3.sum(children, radialDescendantCount);
+}
+
+function radialClick(d) {
+    if (d.children || d._children) {
+        if (d.children) {
+            d._children = d.children;
+            d.children = null;
+        } else {
+            d.children = d._children;
+            d._children = null;
+        }
+        renderRadial();
+        return;
+    }
+    if (d.data.node) nodeClick(d.data.node);
+}
+
 function renderRadial() {
     var top = document.getElementById("topbar").getBoundingClientRect().bottom;
     var available = Math.max(320, height - top);
     var labelLimit = width < 700 ? 18 : 30;
     var labelAllowance = labelLimit * 7;
-    var leafCount = Math.max(1, radialRoot.leaves().length);
+    var leafCount = Math.max(1, radialDescendantCount(radialRoot));
     // Grow the circle until every leaf label has room, then scale the whole dial to fit.
     var radius = Math.max(120, (leafCount * 12) / (2 * Math.PI));
 
     d3.cluster()
         .size([2 * Math.PI, radius])
         .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth)(radialRoot);
+    radialRoot.each(function (d) {
+        d.y = d.depth * radius / Math.max(1, radialRoot.height);
+    });
 
     var fitScale = Math.min(1, Math.min(width, available) / (2 * (radius + labelAllowance)));
     svg.call(zoom.transform, d3.zoomIdentity
@@ -121,12 +145,13 @@ function renderRadial() {
         .attr("transform", d => "rotate(" + (d.x * 180 / Math.PI - 90) + ") translate(" + d.y + ",0)");
 
     radialLeaf.append("circle")
-        .attr("r", d => d.children ? 4.5 : 3)
+        .attr("r", d => d.children || d._children ? 4.5 : 3)
         .attr("fill", d => d.data.node ? nodeColor(d.data.node) : DEFAULT_COLORS.note)
+        .attr("stroke-width", d => d._children ? 2.5 : 1.2)
         .on("mouseover", radialOver)
         .on("mousemove", nodeMove)
         .on("mouseout", radialOut)
-        .on("click", function (d) { if (d.data.node) nodeClick(d.data.node); });
+        .on("click", radialClick);
 
     radialLeaf.append("text")
         .attr("dy", "0.31em")
@@ -136,17 +161,17 @@ function renderRadial() {
         .style("font-weight", d => d.depth === 1 ? "600" : null)
         .text(function (d) {
             // Inner labels must fit the gap before the next ring; leaves can run to the margin.
-            var limit = d.children ? Math.min(labelLimit, 20) : labelLimit;
+            var limit = d.children || d._children ? Math.min(labelLimit, 20) : labelLimit;
             var name = d.data.name.length > limit
                 ? d.data.name.slice(0, limit - 1) + "…"
                 : d.data.name;
             // The same tag can repeat under several parents, so show each group's share.
-            return d.children ? name + " (" + d.leaves().length + ")" : name;
+            return d.children || d._children ? name + " (" + radialDescendantCount(d) + ")" : name;
         })
         .on("mouseover", radialOver)
         .on("mousemove", nodeMove)
         .on("mouseout", radialOut)
-        .on("click", function (d) { if (d.data.node) nodeClick(d.data.node); });
+        .on("click", radialClick);
 
     applySearchHighlight();
 }

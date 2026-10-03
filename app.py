@@ -349,8 +349,11 @@ def resolve_vault_asset(asset_id, source_path=None):
     vault_root = os.path.realpath(VAULT_DIR)
     candidates = []
     if source_path:
-        candidates.append(os.path.join(os.path.dirname(source_path), asset_id))
+        source_dir = os.path.dirname(source_path)
+        candidates.append(os.path.join(source_dir, asset_id))
+        candidates.append(os.path.join(source_dir, 'images', asset_id))
     candidates.append(os.path.join(vault_root, asset_id))
+    candidates.append(os.path.join(vault_root, 'images', asset_id))
 
     for candidate in candidates:
         real_path = os.path.realpath(candidate)
