@@ -11,10 +11,41 @@
             "id": "af672bd2bf92c480",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Mandragora officinarum by Benjamin Vierling.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Mandragora officinarum by Benjamin Vierling"
+            }
+          },
+          {
+            "id": "cdbf8853c408f7d3",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Comfort Canvas.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": -215,
+                  "zoom": 0
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Comfort Canvas"
             }
           }
         ]
@@ -36,7 +67,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byModifiedTime",
                 "autoReveal": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -51,7 +82,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#poetry  ",
+                "query": "mandr",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -185,8 +216,26 @@
       "bases:Create new base": false
     }
   },
-  "active": "fb226c58d36fc558",
+  "active": "af672bd2bf92c480",
   "lastOpenFiles": [
+    "Comfort Canvas.canvas",
+    "The World in Which Nothing Is Solved.md",
+    "I don’t want harmony.md",
+    "The Divine must speak for itself.md",
+    "Ludvig Hol – Beleške ili O pomirenju bez žurbe.md",
+    "želja za odmorom.md",
+    "Dostoyevsky - The Gentle Spirit.md",
+    "Lightning Struck a Flock of Witches.md",
+    "DICKADEMIC.md",
+    "Право је место рођења.md",
+    "Ukusi.md",
+    "Omnipotent Government.md",
+    "To live not for oneself, but for others.md",
+    "Fairies in a bird’s nest, 1860.md",
+    "Pasted image 20261004101720.png",
+    "Mandragora officinarum by Benjamin Vierling.md",
+    "Pasted image 20261004101648.png",
+    "Aedh Wishes for the Cloths of Heaven.md",
     "Everything that a man thinks and feels has its effects in the outer world.md",
     "Eros is a by-product of society.md",
     "Mind spiral.md",
@@ -199,31 +248,12 @@
     "To love somebody is not just a strong feeling.md",
     "Прољећа Ивана Галеба.md",
     "This is what you shall do.md",
-    "Every moment is a golden one.md",
-    "POROĐAJ.md",
-    "Kako mi je dano na zemlji.md",
-    "I don’t want harmony.md",
-    "želja za odmorom.md",
-    "Life is a senseless evil.md",
-    "Life is a comedy.md",
-    "Fiercely Kind.md",
-    "the light will enter by itself.md",
     "Pasted image 20260929152704.png",
     "Pasted image 20260929152240.png",
-    "It is not worthwhile to try to keep history from repeating itself.md",
-    "The Divine must speak for itself.md",
-    "Gurdjieff.md",
-    "Svako, svesno ili nesvesno želi slobodu.md",
-    "To bear the manifestation of others is a big thing.md",
-    "The World in Which Nothing Is Solved.md",
-    "Memory, Elihu Vedder, 1870.md",
     "Pasted image 20260929151537.png",
-    "Comfort Canvas.canvas",
     "images/Pasted image 20260514092519.png",
     "images/Pasted image 20260928090823.png",
     "images/Pasted image 20260928085135.png",
-    "images/Pasted image 20260928084935.png",
-    "images/image-2.png",
     "images",
     "vault_graph.html",
     "Clippings",
