@@ -7,11 +7,11 @@ Topics: "[[A humorous perspective on life]]"
 Source: https://thesphereofideas.wordpress.com/arthur-schopenhauer-a-few-parables/
 ---
 
-> A mother gave her children Aesop's fables to read, in the hope of educating and improving their minds; but they very soon brought the book back, and the eldest, wise beyond his years, delivered himself as follows: This is no book for us; it's much too childish and stupid. You can't make us believe that foxes and wolves and ravens are able to talk; we've got beyond stories of that kind!
+> A mother gave her children Aesop's fables to read, in the hope of educating and improving their minds; but they very soon brought the book back, and the eldest, wise beyond his years, delivered himself as follows: This is no book for us; it's much too childish and stupid. You can't make us believe that foxes and wolves and ravens are able to talk; we've got beyond stories of that kind! In these young hopefuls you have the enlightened Rationalists of the future.
 
-In these young hopefuls you have the enlightened Rationalists of the future.
+— Arthur Schopenhauer, *Studies in Pessimism*, "A Few Parables" (trans. T. Bailey Saunders)
 
-~ Arthur Schopenhauer, from *A Few Parables* (Feb 22, 1788 – Sep 21, 1860)
+[A Few Parables — The Sphere of Ideas](https://thesphereofideas.wordpress.com/arthur-schopenhauer-a-few-parables/)
 
 ---
 
