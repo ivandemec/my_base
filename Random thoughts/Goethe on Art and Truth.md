@@ -16,7 +16,7 @@ Source: https://en.wikiquote.org/wiki/Art
 > And serene through time and season
 > Stands for aye in loveliness.
 
-— Johann Wolfgang von Goethe
+— Johann Wolfgang von Goethe, *Wilhelm Meister's Travels*, ch. XIV (trans. Thomas Carlyle)
 
 [Art — Wikiquote](https://en.wikiquote.org/wiki/Art)
 
