@@ -4,33 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "d16d01cd3b7665f1",
+        "id": "ccdb8e5ccdd29d7e",
         "type": "tabs",
         "children": [
           {
-            "id": "cdbf8853c408f7d3",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "Comfort Canvas.canvas",
-                "viewState": {
-                  "x": 0,
-                  "y": -215,
-                  "zoom": 0
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "Comfort Canvas"
-            }
-          },
-          {
-            "id": "187d5db5847bd72b",
+            "id": "736334450ba11815",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Τhe Horror of Living by Tyra Kleen , 1907.md",
+                "file": "Alder's Razor.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -45,16 +28,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Τhe Horror of Living by Tyra Kleen , 1907"
+              "title": "Alder's Razor"
             }
           },
           {
-            "id": "a3b56a95c3fb5e18",
+            "id": "adc619a12d8fb494",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "sudija u svojoj stvari.md",
+                "file": "Bez poznavanja sebe, nema mira.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -69,16 +52,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "sudija u svojoj stvari"
+              "title": "Bez poznavanja sebe, nema mira"
             }
           },
           {
-            "id": "00a210788d5b0499",
+            "id": "c5d5b4f714878da8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "illusion of free will.md",
+                "file": "All of spiritual science can be developed from Goethe.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -93,16 +76,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "illusion of free will"
+              "title": "All of spiritual science can be developed from Goethe"
             }
           },
           {
-            "id": "67e2cb29c461cb27",
+            "id": "17f66f5bfd8c5d01",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "could be written consisting entirely of jokes.md",
+                "file": "Frank Craig - detail from Goblin Market, 1911.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -117,35 +100,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "could be written consisting entirely of jokes"
-            }
-          },
-          {
-            "id": "5c0039b031707dd3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Old paths.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Old paths"
+              "title": "Frank Craig - detail from Goblin Market, 1911"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -179,7 +138,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "demokra",
+                "query": "jan ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -208,7 +167,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "4fa2432a00853e77",
@@ -260,7 +220,7 @@
                 "sortOrder": "frequency",
                 "useHierarchy": true,
                 "showSearch": true,
-                "searchQuery": "tols"
+                "searchQuery": "raz"
               },
               "icon": "lucide-tags",
               "title": "Tags"
@@ -300,7 +260,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 250.1171875
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -313,45 +273,45 @@
       "bases:Create new base": false
     }
   },
-  "active": "67e2cb29c461cb27",
+  "active": "17f66f5bfd8c5d01",
   "lastOpenFiles": [
-    "Old paths.md",
-    "Democracy means the worship of mediocrity.md",
-    "Demokratija je kuća na pola puta između košmara i utopije.md",
-    "Sokrat - O demokratiji.md",
-    "Omnipotent Government.md",
-    "the saddest poem of all.md",
-    "Onaj čovek kojeg ti  voliš u meni.md",
-    "Ne tražim ništa.md",
-    "Sam sebi muka.md",
-    "not sufficiently alone.md",
-    "We live, as we dream -- alone..md",
-    "Ko istinu gudi.md",
-    "„Трговање“ са Богом..md",
-    "The Four Agreements.md",
-    "The 10 Commandments of Logic.md",
-    "We rise towards the infinite.md",
-    "Untitled.md",
-    "illusion of free will.md",
-    "could be written consisting entirely of jokes.md",
-    "sudija u svojoj stvari.md",
-    "Τhe Horror of Living by Tyra Kleen , 1907.md",
-    "Franz von Stuck,The Vision of Saint Hubert (Die Vision des heiligen Hubertus), 1890.md",
-    "Festina lente — “Make haste slowly.”.md",
-    "The Ballad of Lenore, or The Dead Travel Fast.md",
-    "I love not Man the less, but Nature more.md",
-    "Biti nasmejan, prirodan, tih.md",
-    "images/Pasted image 20261011172137.png",
-    "images/Pasted image 20261011172041.png",
-    "images/Pasted image 20261011171851.png",
-    "images/Pasted image 20261011171036.png",
-    "images/Pasted image 20261011170957.png",
-    "images/Pasted image 20261011170823.png",
-    "images/Pasted image 20261011170721.png",
+    "images/Pasted image 20261107102038.png",
+    "All of spiritual science can be developed from Goethe.md",
+    "Frank Craig - detail from Goblin Market, 1911.md",
+    "Bez poznavanja sebe, nema mira.md",
+    "Alder's Razor.md",
+    "Jan Toorop.md",
+    "How certain occult streams can divert mankind from evolution.md",
+    "Remedios Varo • Forest, 1956.md",
+    "Wilhelm Steuerwaldt - A View of Snow-Covered Ruins (1854).md",
+    "Tajna večera.md",
+    "Most people are other people.md",
+    "Никада се ништа не понавља у историји људских бића.md",
+    "Omnipotent 2.md",
+    "Omnipotent.md",
+    "Трагедија већине добрих људи.md",
+    "images/Pasted image 20261107100631.png",
+    "images/Pasted image 20261107100516.png",
+    "images/Pasted image 20261107100435.png",
+    "images/Pasted image 20261107100402.png",
+    "If the future gave us no hope for anything.md",
+    "Bring Out Your Dead.md",
+    "images/Pasted image 20261107100253.png",
+    "Silence.md",
+    "Every man is a creature of the age in which he lives.md",
+    "Cruel men believe in a cruel God.md",
+    "Sada je započelo novo razdoblje ljubavi.md",
+    "Svaka delatnost je prodor u svet duha.md",
+    "Reproduction.md",
+    "What we consider real is also imagined.md",
+    "I say there is no God.md",
+    "Moebius.md",
+    "images/Pasted image 20261107095016.png",
+    "images/Pasted image 20261107094352.png",
+    "images/Pasted image 20261107092821.png",
+    "images/Pasted image 20261107092154.png",
     "Comfort Canvas.canvas",
-    "Pasted image 20261004101720.png",
-    "Pasted image 20261004101648.png",
-    "Pasted image 20260929155455.png",
+    "images/Pasted image 20261011172137.png",
     "images",
     "vault_graph.html",
     "Clippings",
