@@ -8,30 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "af672bd2bf92c480",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Mandragora officinarum by Benjamin Vierling.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Mandragora officinarum by Benjamin Vierling"
-            }
-          },
-          {
             "id": "cdbf8853c408f7d3",
             "type": "leaf",
             "state": {
@@ -47,8 +23,129 @@
               "icon": "lucide-layout-dashboard",
               "title": "Comfort Canvas"
             }
+          },
+          {
+            "id": "187d5db5847bd72b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Τhe Horror of Living by Tyra Kleen , 1907.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Τhe Horror of Living by Tyra Kleen , 1907"
+            }
+          },
+          {
+            "id": "a3b56a95c3fb5e18",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "sudija u svojoj stvari.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "sudija u svojoj stvari"
+            }
+          },
+          {
+            "id": "00a210788d5b0499",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "illusion of free will.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "illusion of free will"
+            }
+          },
+          {
+            "id": "67e2cb29c461cb27",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "could be written consisting entirely of jokes.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "could be written consisting entirely of jokes"
+            }
+          },
+          {
+            "id": "5c0039b031707dd3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Old paths.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Old paths"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -82,7 +179,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "mandr",
+                "query": "demokra",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -216,44 +313,45 @@
       "bases:Create new base": false
     }
   },
-  "active": "af672bd2bf92c480",
+  "active": "67e2cb29c461cb27",
   "lastOpenFiles": [
-    "Comfort Canvas.canvas",
-    "The World in Which Nothing Is Solved.md",
-    "I don’t want harmony.md",
-    "The Divine must speak for itself.md",
-    "Ludvig Hol – Beleške ili O pomirenju bez žurbe.md",
-    "želja za odmorom.md",
-    "Dostoyevsky - The Gentle Spirit.md",
-    "Lightning Struck a Flock of Witches.md",
-    "DICKADEMIC.md",
-    "Право је место рођења.md",
-    "Ukusi.md",
+    "Old paths.md",
+    "Democracy means the worship of mediocrity.md",
+    "Demokratija je kuća na pola puta između košmara i utopije.md",
+    "Sokrat - O demokratiji.md",
     "Omnipotent Government.md",
-    "To live not for oneself, but for others.md",
-    "Fairies in a bird’s nest, 1860.md",
+    "the saddest poem of all.md",
+    "Onaj čovek kojeg ti  voliš u meni.md",
+    "Ne tražim ništa.md",
+    "Sam sebi muka.md",
+    "not sufficiently alone.md",
+    "We live, as we dream -- alone..md",
+    "Ko istinu gudi.md",
+    "„Трговање“ са Богом..md",
+    "The Four Agreements.md",
+    "The 10 Commandments of Logic.md",
+    "We rise towards the infinite.md",
+    "Untitled.md",
+    "illusion of free will.md",
+    "could be written consisting entirely of jokes.md",
+    "sudija u svojoj stvari.md",
+    "Τhe Horror of Living by Tyra Kleen , 1907.md",
+    "Franz von Stuck,The Vision of Saint Hubert (Die Vision des heiligen Hubertus), 1890.md",
+    "Festina lente — “Make haste slowly.”.md",
+    "The Ballad of Lenore, or The Dead Travel Fast.md",
+    "I love not Man the less, but Nature more.md",
+    "Biti nasmejan, prirodan, tih.md",
+    "images/Pasted image 20261011172137.png",
+    "images/Pasted image 20261011172041.png",
+    "images/Pasted image 20261011171851.png",
+    "images/Pasted image 20261011171036.png",
+    "images/Pasted image 20261011170957.png",
+    "images/Pasted image 20261011170823.png",
+    "images/Pasted image 20261011170721.png",
+    "Comfort Canvas.canvas",
     "Pasted image 20261004101720.png",
-    "Mandragora officinarum by Benjamin Vierling.md",
     "Pasted image 20261004101648.png",
-    "Aedh Wishes for the Cloths of Heaven.md",
-    "Everything that a man thinks and feels has its effects in the outer world.md",
-    "Eros is a by-product of society.md",
-    "Mind spiral.md",
     "Pasted image 20260929155455.png",
-    "Moral feelings - Concentration -  Meditation.md",
-    "I think that's just how the world will come to an end - to general applause.md",
-    "The good spirits intervene to the extent that we open up to them.md",
-    "Pasted image 20260929154830.png",
-    "Samo uz pomoć patnje prestajemo biti marioneta.md",
-    "To love somebody is not just a strong feeling.md",
-    "Прољећа Ивана Галеба.md",
-    "This is what you shall do.md",
-    "Pasted image 20260929152704.png",
-    "Pasted image 20260929152240.png",
-    "Pasted image 20260929151537.png",
-    "images/Pasted image 20260514092519.png",
-    "images/Pasted image 20260928090823.png",
-    "images/Pasted image 20260928085135.png",
     "images",
     "vault_graph.html",
     "Clippings",
